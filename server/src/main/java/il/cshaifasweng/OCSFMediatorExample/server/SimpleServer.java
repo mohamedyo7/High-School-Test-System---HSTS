@@ -46,6 +46,7 @@ public class SimpleServer extends AbstractServer {
 			else if(request.startsWith("echo Hello")){
 				message.setMessage("Hello World!and rai");
 				client.sendToClient(message);
+				sendToAllClients(message);
 			}
 			else if(request.startsWith("send Submitters IDs")){
 				//add code here to send submitters IDs to client
