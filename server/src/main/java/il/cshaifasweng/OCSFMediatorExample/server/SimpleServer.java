@@ -41,6 +41,8 @@ public class SimpleServer extends AbstractServer {
 				SubscribersList.add(connection);
 				message.setMessage("client added successfully");
 				client.sendToClient(message);
+				sendToAllClients(message);
+
 			}
 			//we got a message from client requesting to echo Hello, so we will send back to client Hello world!
 			else if(request.startsWith("echo Hello")){
@@ -50,6 +52,9 @@ public class SimpleServer extends AbstractServer {
 			}
 			else if(request.startsWith("send Submitters IDs")){
 				//add code here to send submitters IDs to client
+				message.setMessage("Hello World! how are you");
+				client.sendToClient(message);
+				sendToAllClients(message);
 			}
 			else if (request.startsWith("send Submitters")){
 				//add code here to send submitters names to client

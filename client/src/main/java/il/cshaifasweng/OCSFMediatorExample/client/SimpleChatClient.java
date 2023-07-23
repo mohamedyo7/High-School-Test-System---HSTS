@@ -2,6 +2,8 @@ package il.cshaifasweng.OCSFMediatorExample.client;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -19,12 +21,26 @@ import org.greenrobot.eventbus.Subscribe;
  * JavaFX App
  */
 public class SimpleChatClient extends Application {
-
+    private ObservableList<Student> createSampleStudentData() {
+        ObservableList<Student> students = FXCollections.observableArrayList();
+        students.add(new Student("John Doe", 85));
+        students.add(new Student("Jane Smith", 92));
+        students.add(new Student("Michael Johnson", 78));
+        students.add(new Student("Emily Williams", 95));
+        students.add(new Student("Robert Brown", 88));
+        students.add(new Student("Olivia Davis", 91));
+        students.add(new Student("William Miller", 84));
+        students.add(new Student("Sophia Wilson", 79));
+        students.add(new Student("James Taylor", 87));
+        students.add(new Student("Elizabeth Anderson", 90));
+        return students;
+    }
     private static Scene scene;
     private SimpleClient client;
 
     @Override
     public void start(Stage stage) throws IOException {
+
     	EventBus.getDefault().register(this);
     	client = SimpleClient.getClient();
     	client.openConnection();
