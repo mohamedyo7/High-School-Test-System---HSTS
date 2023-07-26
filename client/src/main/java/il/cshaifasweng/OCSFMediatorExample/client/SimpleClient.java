@@ -1,9 +1,10 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.Message;
+import il.cshaifasweng.OCSFMediatorExample.client.MessageEvent;
 import org.greenrobot.eventbus.EventBus;
 
-import il.cshaifasweng.OCSFMediatorExample.client.ocsf.AbstractClient;
+import il.cshaifasweng.OCSFMediatorExample.client.ocsf.*;
 
 public class SimpleClient extends AbstractClient {
 	
@@ -16,9 +17,9 @@ public class SimpleClient extends AbstractClient {
 	@Override
 	protected void handleMessageFromServer(Object msg) {
 		Message message = (Message) msg;
-		if(message.getMessage().equals("update submitters IDs")){
-			EventBus.getDefault().post(new UpdateMessageEvent(message));
-		}else if(message.getMessage().equals("client added successfully")){
+/*		if(message.getMessage().equals("update submitters IDs")){
+			EventBus.getDefault().post(new UpdateMessageEvent(message));*/
+		if(message.getMessage().equals("client added successfully")){
 			EventBus.getDefault().post(new NewSubscriberEvent(message));
 		}else if(message.getMessage().equals("Error! we got an empty message")){
 			EventBus.getDefault().post(new ErrorEvent(message));
@@ -26,7 +27,7 @@ public class SimpleClient extends AbstractClient {
 			EventBus.getDefault().post(new MessageEvent(message));
 		}
 	}
-	
+
 	public static SimpleClient getClient() {
 		if (client == null) {
 			client = new SimpleClient("localhost", 3000);

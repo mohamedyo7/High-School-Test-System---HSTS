@@ -1,5 +1,5 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
-
+import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -21,7 +21,7 @@ import org.greenrobot.eventbus.Subscribe;
  * JavaFX App
  */
 public class SimpleChatClient extends Application {
-    private ObservableList<Student> createSampleStudentData() {
+/*    private ObservableList<Student> createSampleStudentData() {
         ObservableList<Student> students = FXCollections.observableArrayList();
         students.add(new Student("John Doe", 85));
         students.add(new Student("Jane Smith", 92));
@@ -34,17 +34,20 @@ public class SimpleChatClient extends Application {
         students.add(new Student("James Taylor", 87));
         students.add(new Student("Elizabeth Anderson", 90));
         return students;
-    }
+    }*/
     private static Scene scene;
     private SimpleClient client;
-
     @Override
     public void start(Stage stage) throws IOException {
-
+        System.out.println("server is listening");
     	EventBus.getDefault().register(this);
-    	client = SimpleClient.getClient();
+        System.out.println("server is listening2");
+        SimpleClient client = SimpleClient.getClient();
+        System.out.println("server is listening3");
     	client.openConnection();
-        scene = new Scene(loadFXML("primary"), 640, 480);
+        System.out.println("server is listening4");
+        scene = new Scene(loadFXML("primary"), 600, 400);
+        System.out.println("server is listening5");
         stage.setScene(scene);
         stage.show();
     }
@@ -54,7 +57,9 @@ public class SimpleChatClient extends Application {
     }
 
     private static Parent loadFXML(String fxml) throws IOException {
+        System.out.println("server is listening6");
         FXMLLoader fxmlLoader = new FXMLLoader(SimpleChatClient.class.getResource(fxml + ".fxml"));
+        System.out.println("server is listening 7");
         return fxmlLoader.load();
     }
     

@@ -1,19 +1,76 @@
 package il.cshaifasweng.OCSFMediatorExample.server;
+import il.cshaifasweng.OCSFMediatorExample.server.ocsf.*;
+import il.cshaifasweng.OCSFMediatorExample.entities.Student;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
+
+//my imports
+
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import il.cshaifasweng.OCSFMediatorExample.entities.Message;
+
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.AbstractServer;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.ConnectionToClient;
-import il.cshaifasweng.OCSFMediatorExample.server.ocsf.SubscribedClient;
-
+//import javax.mail.Session;
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class SimpleServer extends AbstractServer {
-	private static ArrayList<SubscribedClient> SubscribersList = new ArrayList<>();
+	private static Session session;
+/*	private static List<Student> getStudents() throws Exception{
+CriteriaBuilder builder = session.getCriteriaBuilder();
+CriteriaQuery<Student> query = builder.createQuery(Student.class);
+query.from(Student.class);
+List<Student> data = session.createQuery(query).getResultList();
+return data;
+
+	}*/
+	public static Session getSession() {
+		return session;
+	}
+
+	public static void setSession(Session session) {
+		SimpleServer.session = session;
+	}
+
+
+	//private static SessionFactory getSessionFactory() throws HibernateException {
+		//Configuration configuration = new Configuration();
+		// Add ALL of your entities here. You can also try adding a whole package.
+		//configuration.addAnnotatedClass(Student.class);
+		// serviceRegistry = new StandardServiceRegistryBuilder()
+		//		.applySettings(configuration.getProperties())
+		//		.build();
+		// configuration.buildSessionFactory(serviceRegistry);
+	//}
+
+
 
 	public SimpleServer(int port) {
 		super(port);
-		
+		//SessionFactory sessionFactory = getSessionFactory();
+		//session = sessionFactory.openSession();
+		//session.beginTransaction();
+		//generateStudents();
+		//session.getTransaction().commit();
+}
+	private static ArrayList<SubscribedClient> SubscribersList = new ArrayList<>();
+
+
+	public static void generateStudents(){
+		Student student1 = new Student("Rai",100);
+		Student student2 = new Student("Muhammad",-10);
+
 	}
 
 	@Override
@@ -45,7 +102,7 @@ public class SimpleServer extends AbstractServer {
 
 			}
 			//we got a message from client requesting to echo Hello, so we will send back to client Hello world!
-			else if(request.startsWith("echo Hello")){
+			else if(request.startsWith("st1")){
 				message.setMessage("Hello World!and rai");
 				client.sendToClient(message);
 				sendToAllClients(message);
@@ -62,11 +119,16 @@ public class SimpleServer extends AbstractServer {
 			else if (request.equals("what’s the time?")) {
 				//add code here to send the time to client
 			}
-			else if (request.startsWith("multiply")){
+			else if (request.startsWith("multiply")) {
 				//add code here to multiply 2 numbers received in the message and send result back to client
 				//(use substring method as shown above)
 				//message format: "multiply n*m"
-			}else{
+			}
+			else if(request.startsWith("change s1 grade")){
+
+
+				}
+			else{
 				//add code here to send received message to all clients.
 				//The string we received in the message is the message we will send back to all clients subscribed.
 				//Example:
@@ -74,6 +136,7 @@ public class SimpleServer extends AbstractServer {
 					// message sent: "Good morning"
 				//see code for changing submitters IDs for help
 			}
+
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
