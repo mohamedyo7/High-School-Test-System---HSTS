@@ -57,10 +57,10 @@ public class SimpleServer extends AbstractServer {
 					client.sendToClient(message);
 
 				} else if (request.equals("give me the student grades")) {
-Message msg2=new Message(177,"smeer");
+					Message msg2=new Message(177,"smeer");
 					//  System.out.println("i am here");
-msg2.setStudents_list_from_server(getAllStudents());
-client.sendToClient(msg2);
+					msg2.setStudents_list_from_server(getAllStudents());
+					client.sendToClient(msg2);
 
 					//  System.out.println("the id is :" + message.getStudentId());
 

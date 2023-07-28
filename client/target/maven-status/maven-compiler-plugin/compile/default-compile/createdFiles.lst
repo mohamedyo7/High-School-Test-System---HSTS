@@ -1,0 +1,9 @@
+il\cshaifasweng\OCSFMediatorExample\client\ocsf\AbstractClient.class
+il\cshaifasweng\OCSFMediatorExample\client\NewSubscriberEvent.class
+il\cshaifasweng\OCSFMediatorExample\client\ocsf\ObservableSWRClient.class
+il\cshaifasweng\OCSFMediatorExample\client\UpdateMessageEvent.class
+il\cshaifasweng\OCSFMediatorExample\client\ocsf\ObservableClient.class
+il\cshaifasweng\OCSFMediatorExample\client\MessageEvent.class
+il\cshaifasweng\OCSFMediatorExample\client\Main.class
+il\cshaifasweng\OCSFMediatorExample\client\ocsf\AdaptableClient.class
+il\cshaifasweng\OCSFMediatorExample\client\ErrorEvent.class

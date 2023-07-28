@@ -26,9 +26,9 @@ public class SimpleClient extends AbstractClient {
 		} else if (message.getMessage().equals("i changed the grade")) {
 			EventBus.getDefault().post(new MessageEvent(message));
 		}
-			else if (message.getMessage().equals("smeer")) {
-				EventBus.getDefault().post(new MessageEvent(message));
-				System.out.println(message.getStudents_list_from_server());
+		else if (message.getMessage().equals("smeer")) {
+			EventBus.getDefault().post(new MessageEvent(message));
+			System.out.println(message.getStudents_list_from_server());
 
 		}else {
 
