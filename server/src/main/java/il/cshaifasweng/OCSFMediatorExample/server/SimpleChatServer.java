@@ -1,16 +1,17 @@
 package il.cshaifasweng.OCSFMediatorExample.server;
 
-import java.io.IOException;
+public class SimpleChatServer {
 
+    private static SimpleServer server;
 
-public class SimpleChatServer
-{
-	
-	private static SimpleServer server;
-    public static void main( String[] args ) throws IOException
-    {
+    public static void main(String[] args) throws Exception {
         server = new SimpleServer(3000);
-        System.out.println("server is listening");
         server.listen();
+        System.out.println("App main end111111111111");
+
+        App.main(args);
+
+        System.out.println("App main end11111111111122222");
+        System.out.println("server is listening");
     }
 }

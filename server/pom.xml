@@ -24,19 +24,23 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
+			<groupId>${groupId}</groupId>
+			<artifactId>entities</artifactId>
+		</dependency>
+
+		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>8.0.19</version>
+			<version>8.0.28</version>
 		</dependency>
+
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
 			<version>5.4.12.Final</version>
 		</dependency>
-		<dependency>
-			<groupId>${groupId}</groupId>
-			<artifactId>entities</artifactId>
-		</dependency>
+
+
 	</dependencies>
 
 	<build>
@@ -46,7 +50,7 @@
 				<artifactId>exec-maven-plugin</artifactId>
 				<version>1.6.0</version>
 				<configuration>
-					<mainClass>il.cshaifasweng.OCSFMediatorExample.server.App</mainClass>
+					<mainClass>il.cshaifasweng.OCSFMediatorExample.server.SimpleChatServer</mainClass>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -59,7 +63,7 @@
 					</descriptorRefs>
 					<archive>
 						<manifest>
-							<mainClass>il.cshaifasweng.OCSFMediatorExample.server.App</mainClass>
+							<mainClass>il.cshaifasweng.OCSFMediatorExample.server.SimpleChatServer</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
