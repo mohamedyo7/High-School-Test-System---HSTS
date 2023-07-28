@@ -1,13 +1,12 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.Message;
-import il.cshaifasweng.OCSFMediatorExample.client.MessageEvent;
 import org.greenrobot.eventbus.EventBus;
 
-import il.cshaifasweng.OCSFMediatorExample.client.ocsf.*;
+import il.cshaifasweng.OCSFMediatorExample.client.ocsf.AbstractClient;
 
 public class SimpleClient extends AbstractClient {
-	
+
 	private static SimpleClient client = null;
 
 	private SimpleClient(String host, int port) {
@@ -17,19 +16,29 @@ public class SimpleClient extends AbstractClient {
 	@Override
 	protected void handleMessageFromServer(Object msg) {
 		Message message = (Message) msg;
-/*		if(message.getMessage().equals("update submitters IDs")){
-			EventBus.getDefault().post(new UpdateMessageEvent(message));*/
-		if(message.getMessage().equals("client added successfully")){
-			EventBus.getDefault().post(new NewSubscriberEvent(message));
-		}else if(message.getMessage().equals("Error! we got an empty message")){
-			EventBus.getDefault().post(new ErrorEvent(message));
-		}else {
+
+		if (message.getMessage().equals("client added successfully")) {
+			//do nothing!!
+		} else if (message.getMessage().equals("i will give you the students")) {
+			EventBus.getDefault().post(new MessageEvent(message));
+		} else if (message.getMessage().equals("i will give you the student grades")) {
+			EventBus.getDefault().post(new MessageEvent(message));
+		} else if (message.getMessage().equals("i changed the grade")) {
 			EventBus.getDefault().post(new MessageEvent(message));
 		}
+			else if (message.getMessage().equals("smeer")) {
+				EventBus.getDefault().post(new MessageEvent(message));
+				System.out.println(message.getStudents_list_from_server());
+
+		}else {
+
+		}
+
 	}
 
 	public static SimpleClient getClient() {
 		if (client == null) {
+
 			client = new SimpleClient("localhost", 3000);
 		}
 		return client;

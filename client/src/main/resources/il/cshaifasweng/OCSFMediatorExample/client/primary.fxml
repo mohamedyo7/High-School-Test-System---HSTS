@@ -1,29 +1,105 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.PrimaryController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="751.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.PrimaryController">
     <children>
-            <!-- Add buttons for each student in a separate row -->
-            <Button fx:id="st1" text="John Doe" onAction="#st1show" />
-            <Button fx:id="st2" text="Jane Smith" onAction="#st2show" />
-            <Button fx:id="st3" text="Michael Johnson" onAction="#st3show" />
-            <Button fx:id="st4" text="Emily Williams" onAction="#st4show" />
-            <Button fx:id="st5" text="Robert Brown" onAction="#st5show" />
-            <Button fx:id="st6" text="Olivia Davis" onAction="#st6show" />
-            <Button fx:id="st7" text="William Miller" onAction="#st7show" />
-            <Button fx:id="st8" text="Sophia Wilson" onAction="#st8show" />
-            <Button fx:id="st9" text="James Taylor" onAction="#st9show" />
-            <Button fx:id="st10" text="Elizabeth Anderson" onAction="#st10show" />
+        <ImageView fitHeight="742.0" fitWidth="826.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@pexels-ben-mack-5326990.jpg" />
+            </image>
+        </ImageView>
 
-            <Button fx:id="showGradeBtn" text="Show Grade" onAction="#show" />
-            <Button fx:id="changeGradeBtn" text="Change Grade" onAction="#changeGrade" />
-
-        <TextField fx:id="messageTextField" promptText="Send a message" onAction="#changeGrade"/>
-        <Label fx:id="resultLabel" />
+        <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="714.0" prefWidth="572.0">
+            <children>
+                <AnchorPane prefHeight="333.0" prefWidth="594.0">
+                    <children>
+                        <Button fx:id="showallstudents_but" layoutX="241.0" layoutY="61.0" mnemonicParsing="false" onAction="#on_show_all_students_pressed" style="-fx-background-radius: 10;" text="Show All Students " textFill="#311740">
+                            <font>
+                                <Font name="Andalus" size="15.0" />
+                            </font>
+                        </Button>
+                        <Label fx:id="showallstudent_label" layoutX="226.0" layoutY="14.0" prefHeight="26.0" prefWidth="165.0" text="Show All Students ">
+                            <font>
+                                <Font name="Andalus" size="20.0" />
+                            </font>
+                        </Label>
+                        <TableView fx:id="show_all_students_table" layoutX="175.0" layoutY="110.0" prefHeight="223.0" prefWidth="267.0" style="-fx-background-radius: 10;">
+                            <columns>
+                                <TableColumn fx:id="student_id_column" prefWidth="96.79998779296875" style="-fx-background-radius: 10;" text="student_id" />
+                                <TableColumn fx:id="first_name_column" prefWidth="87.199951171875" style="-fx-background-radius: 10;" text="first_name" />
+                                <TableColumn fx:id="last_name_column" prefWidth="77.60003662109375" style="-fx-background-radius: 10;" text="last_name" />
+                            </columns>
+                        </TableView>
+                        <TextField fx:id="time_txf" alignment="BOTTOM_LEFT" layoutX="14.0" layoutY="17.0" prefHeight="31.0" prefWidth="78.0" style="-fx-background-color: rgba(255, 255, 255, 0.5); -fx-background-radius: 15;" />
+                    </children>
+                </AnchorPane>
+                <AnchorPane prefHeight="347.0" prefWidth="618.0">
+                    <children>
+                        <TableView fx:id="course_grade_table" layoutX="32.0" layoutY="121.0" prefHeight="166.0" prefWidth="217.0" style="-fx-background-radius: 10;">
+                            <columns>
+                                <TableColumn fx:id="course_column" prefWidth="106.39999628067017" style="-fx-background-radius: 10;" text="courseName" />
+                                <TableColumn fx:id="grade_column" prefWidth="105.60004425048828" style="-fx-background-radius: 10;" text="grade" />
+                            </columns>
+                        </TableView>
+                        <Label layoutX="309.0" layoutY="108.0" prefHeight="35.0" prefWidth="136.0" />
+                        <Label fx:id="choosestudent_view_label" contentDisplay="CENTER" layoutY="30.0" prefHeight="35.0" prefWidth="321.0" style="-fx-region-border: 0.5; -fx-background-color: rgba(255, 255, 255, 0.5); -fx-background-radius: 10px;" text="choose student from the table to view her grades  " textOverrun="CLIP">
+                            <font>
+                                <Font name="Andalus" size="16.0" />
+                            </font>
+                            <cursor>
+                                <Cursor fx:constant="NW_RESIZE" />
+                            </cursor>
+                        </Label>
+                        <Label fx:id="choosestudent_gradeupdate_label" layoutX="322.0" layoutY="80.0" prefHeight="35.0" prefWidth="256.0" style="-fx-background-color: rgba(255, 255, 255, 0.5); -fx-background-radius: 10px;" text="choose grade from the table to update">
+                            <font>
+                                <Font name="Andalus" size="16.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="insert_new_grade_label" layoutX="322.0" layoutY="125.0" prefHeight="35.0" prefWidth="122.0" style="-fx-background-color: rgba(255, 255, 255, 0.5); -fx-background-radius: 10;" text="insert new grade">
+                            <font>
+                                <Font name="Andalus" size="16.0" />
+                            </font>
+                        </Label>
+                        <Button fx:id="show_grade_but" layoutX="93.0" layoutY="81.0" mnemonicParsing="false" onAction="#on_button_show_grades_pressed" style="-fx-background-radius: 10;" text="Show grades" textFill="#311740">
+                            <font>
+                                <Font name="Andalus" size="15.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="change_but" layoutX="432.0" layoutY="174.0" mnemonicParsing="false" onAction="#on_button_change_clicked" style="-fx-background-radius: 10;" text="change" textFill="#311740">
+                            <font>
+                                <Font name="Andalus" size="15.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="show_student_after_update_but" layoutX="431.0" layoutY="270.0" mnemonicParsing="false" onAction="#on_button_show_after_update_pressed" prefHeight="31.0" prefWidth="66.0" style="-fx-background-radius: 10;" text="show" textFill="#311740">
+                            <font>
+                                <Font name="Andalus" size="15.0" />
+                            </font>
+                        </Button>
+                        <Label fx:id="showstudent_grades_after_update_label" layoutX="322.0" layoutY="220.0" prefHeight="31.0" prefWidth="256.0" style="-fx-background-color: rgba(255, 255, 255, 0.5); -fx-background-radius: 10;" text="show the student grades after update" textAlignment="CENTER">
+                            <font>
+                                <Font name="Andalus" size="16.0" />
+                            </font>
+                        </Label>
+                        <TextField fx:id="new_grade_txf" layoutX="508.0" layoutY="130.0" prefHeight="26.0" prefWidth="55.0" style="-fx-background-color: rgba(255, 255, 255, 0.5); -fx-background-radius: 10;" />
+                    </children>
+                </AnchorPane>
+                <Label prefHeight="27.0" prefWidth="33.0">
+                    <font>
+                        <Font name="Andalus" size="14.0" />
+                    </font>
+                </Label>
+            </children>
+        </VBox>
     </children>
-</VBox>
+</StackPane>

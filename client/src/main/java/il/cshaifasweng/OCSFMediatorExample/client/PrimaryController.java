@@ -1,166 +1,110 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
-import il.cshaifasweng.OCSFMediatorExample.entities.Student;
-import il.cshaifasweng.OCSFMediatorExample.entities.Message;
+
 import java.io.IOException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import javafx.collections.ObservableList;
-import javafx.scene.control.*;
 
-import java.util.HashMap;
+import il.cshaifasweng.OCSFMediatorExample.entities.entities.Grade;
+import il.cshaifasweng.OCSFMediatorExample.entities.entities.Student;
+import il.cshaifasweng.OCSFMediatorExample.entities.Message;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Duration;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.sql.SQLException;
+import java.util.List;
+
+
+/**
+ * Sample Skeleton for 'primary.fxml' Controller Class
+ */
+
+
 public class PrimaryController {
 
-	@FXML
-	private TextField submitterID1;
-
-	@FXML
-	private TextField submitterID2;
-
-	@FXML
-	private TextField timeTF;
-
-	@FXML
-	private TextField MessageTF;
-
-	@FXML
-	private Button SendBtn;
-
-	@FXML
-	private TextField DataFromServerTF;
-
-
-		@FXML
-		private Button changeGradeBtn;
-
-		@FXML
-		private TextField messageTextField;
-
-		@FXML
-		private Label resultLabel;
-
-		@FXML
-		private Button showGradeBtn;
-
-		@FXML
-		private Button st1;
-
-		@FXML
-		private Button st10;
-
-		@FXML
-		private Button st2;
-
-		@FXML
-		private Button st3;
-
-		@FXML
-		private Button st4;
-
-		@FXML
-		private Button st5;
-
-		@FXML
-		private Button st6;
-
-		@FXML
-		private Button st7;
-
-		@FXML
-		private Button st8;
-
-		@FXML
-		private Button st9;
-
-		@FXML
-		void changeGrade(ActionEvent event) throws IOException {
-			Message msg = new Message(1,messageTextField.getText());
-			System.out.println(messageTextField.getText());
-			SimpleClient.getClient().sendToServer(msg);
-		}
-
 	private int msgId;
-	private ObservableList<Student> students;
-//	private ListView<Student> studentListView;
-
-/*	private void showGrade(Student student) {
-		int grade = student.getGrade();
-		resultLabel.setText(student.getName() + "'s grade is: " + grade);
-	}*/
-
-		@FXML
-		void st1show(ActionEvent event) throws IOException {
-			Message msg = new Message(1,"st1");
-			System.out.println("dsds");
-			System.out.println("server is listening5");
-			SimpleClient.getClient().sendToServer(msg);
-
-		}
-
-		@FXML
-		void st2show(ActionEvent event) {
-
-		}
-
-		@FXML
-		void st3show(ActionEvent event) {
-
-		}
-
-		@FXML
-		void st4show(ActionEvent event) {
-
-		}
-
-		@FXML
-		void st5show(ActionEvent event) {
-
-		}
-
-		@FXML
-		void st6show(ActionEvent event) {
-
-		}
-
-		@FXML
-		void st7show(ActionEvent event) {
-
-		}
-
-		@FXML
-		void st8show(ActionEvent event) {
-
-		}
-
-		@FXML
-		void st9show(ActionEvent event) {
-
-		}
-
-		@FXML
-		void st10show(ActionEvent event) {
-
-		}
-
-		@FXML
-		void show(ActionEvent event) {
-
-		}
 
 	@FXML
-	void sendMessage(ActionEvent event) {
+	private Button change_but;
+
+	@FXML
+	private Label choosestudent_gradeupdate_label;
+
+	@FXML
+	private Label choosestudent_view_label;
+
+
+	@FXML
+	private Label insert_new_grade_label;
+
+	@FXML
+	private TextField new_grade_txf;
+
+	@FXML
+	private Button show_grade_but;
+
+	@FXML
+	private Button show_student_after_update_but;
+
+	@FXML
+	private Label showallstudent_label;
+
+	@FXML
+	private Button showallstudents_but;
+
+	@FXML
+	private Label showstudent_grades_after_update_label;
+
+
+	@FXML
+	private Label time_label;
+
+	@FXML
+	private TextField time_txf;
+
+
+	@FXML
+	private TableView<Student> show_all_students_table;
+	@FXML
+	private TableColumn<Student, String> first_name_column;
+
+	@FXML
+	private TableColumn<Student, String> last_name_column;
+
+
+	@FXML
+	private TableColumn<Student, Integer> student_id_column;
+
+	@FXML
+	private TableView<Grade> course_grade_table;
+
+	@FXML
+	private TableColumn<Grade, String> course_column;
+
+
+	@FXML
+	private TableColumn<Grade, Integer> grade_column;
+
+	private  Student student_save;
+
+	@FXML
+		//  private TableColumn<Grade, Integer> student_id_gradestable_column;
+
+
+
+
+	void sendMessage(String messageBody) {
 		try {
-			Message message = new Message(msgId++, messageTextField.getText());
-			messageTextField.clear();
+			Message message = new Message(msgId++, messageBody);
+
 			SimpleClient.getClient().sendToServer(message);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -168,57 +112,106 @@ public class PrimaryController {
 		}
 	}
 
-/*	public PrimaryController() {
-
-			students = createSampleStudentData();
-
-			studentListView = new ListView<>(students);
-			studentListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-				if (newValue != null) {
-					showGrade(newValue);
-				}
-			});
-
-			resultLabel = new Label();
-
-			VBox vbox = new VBox(10, studentListView, resultLabel);
-			// Add the VBox to the main scene or another container in your existing layout
-		}*/
-/*	private ObservableList<Student> createSampleStudentData() {
-		ObservableList<Student> students = FXCollections.observableArrayList();
-		students.add(new Student("John Doe", 85));
-		students.add(new Student("Jane Smith", 92));
-		students.add(new Student("Michael Johnson", 78));
-		students.add(new Student("Emily Williams", 95));
-		students.add(new Student("Robert Brown", 88));
-		students.add(new Student("Olivia Davis", 91));
-		students.add(new Student("William Miller", 84));
-		students.add(new Student("Sophia Wilson", 79));
-		students.add(new Student("James Taylor", 87));
-		students.add(new Student("Elizabeth Anderson", 90));
-		return students;
-	}*/
-	@Subscribe
-	public void setDataFromServerTF(MessageEvent event) {
-		//DataFromServerTF.setText(event.getMessage().getMessage());
-	}
-	private HashMap<String, Integer> studentGrades;
-
-
-/*	@Subscribe
-	public void setSubmittersTF(UpdateMessageEvent event) {
-		//submitterID1.setText(event.getMessage().getData().substring(0,9));
-		//submitterID2.setText(event.getMessage().getData().substring(11,20));
-	}*/
-
-	@Subscribe
-	public void getStarterData(NewSubscriberEvent event) {
+	void sendMessage(Message message) {
 		try {
-			Message message = new Message(msgId, "send Submitters IDs");
 			SimpleClient.getClient().sendToServer(message);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+	}
+
+
+	@FXML
+	void on_button_show_after_update_pressed(ActionEvent event) {
+
+
+		if (student_save != null) {
+			showstudent_grades_after_update_label.setVisible(true);
+			show_student_after_update_but.setVisible(true);
+			Message message = new Message(msgId++, "give me the student grades");
+			try {
+
+				SimpleClient.getClient().sendToServer(message);
+				message.setStudentId(student_save.getStudent_id());
+				sendMessage(message);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+
+
+
+
+
+	}
+
+	@FXML
+	void on_show_all_students_pressed(ActionEvent event) throws SQLException {
+
+		show_all_students_table.setVisible(true);
+		show_grade_but.setVisible(true);
+		choosestudent_view_label.setVisible(true);
+		sendMessage("give me the students");
+
+
+	}
+
+	@FXML
+	void on_button_show_grades_pressed(ActionEvent event) {
+		Student selectedItem = show_all_students_table.getSelectionModel().getSelectedItem();
+		student_save=selectedItem;
+		if (selectedItem != null) {
+			// Handle the selected item here
+			// System.out.println("Selected: " + selectedItem.getFirstName());
+
+			Message message = new Message(msgId++, "give me the student grades");
+			message.setStudentId(selectedItem.getStudent_id());
+			sendMessage(message);
+
+		}else {
+			// System.out.println("select student to show his grades");
+			sendMessage("");
+		}
+	}
+
+	@FXML
+	void on_button_change_clicked(ActionEvent event) {
+
+		Grade selectedItem = course_grade_table.getSelectionModel().getSelectedItem();
+		if (selectedItem != null) {
+			// Handle the selected item here
+			//  System.out.println("Selected: " + selectedItem.getCourseName());
+
+			if(!new_grade_txf.getText().isBlank())
+			{
+				course_grade_table.setVisible(true);
+				Message message = new Message(msgId++, "change the student grade");
+				message.setStudentId(selectedItem.getStudent_id());
+				message.setCourse_id(selectedItem.getCourseid());
+				message.setGrade_to_change( Integer.parseInt(new_grade_txf.getText()));
+
+
+				choosestudent_gradeupdate_label.setVisible(true);
+				insert_new_grade_label.setVisible(true);
+				new_grade_txf.setVisible(true);
+				change_but.setVisible(true);
+
+
+				sendMessage(message);
+			}
+			else {
+				///entergrade
+				// System.out.println("enterGrade");
+				sendMessage("");
+			}
+
+		}
+		else{
+			//  System.out.println("select course and grade to change");
+			sendMessage("");
 		}
 	}
 
@@ -238,21 +231,111 @@ public class PrimaryController {
 		});
 	}
 
+	@Subscribe
+	public void setDataFromServerTF(MessageEvent event) {
+
+		// System.out.println("setDataFromServerTF");
+
+		if (event.getMessage().getMessage().equals("i will give you the students")) {
+			//   System.out.println("i will give you the students");
+			List<Student> students_from_server = event.getMessage().getStudents_list_from_server();
+
+			show_all_students_table.getItems().clear();
+			show_all_students_table.refresh();
+
+			// Set up the columns
+			student_id_column.setCellValueFactory(new PropertyValueFactory<>("student_id"));
+			last_name_column.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+			first_name_column.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+
+			for (int i = 0; i < students_from_server.size(); i++) {
+				// Set the data to the table
+				show_all_students_table.getItems().add(students_from_server.get(i));
+			}
+
+		} else if (event.getMessage().getMessage().equals("i will give you the student grades")) {
+
+			// System.out.println("i will give you the student grades");
+
+			course_grade_table.setVisible(true);
+			choosestudent_gradeupdate_label.setVisible(true);
+			insert_new_grade_label.setVisible(true);
+			new_grade_txf.setVisible(true);
+			change_but.setVisible(true);
+			showstudent_grades_after_update_label.setVisible(true);
+			show_student_after_update_but.setVisible(true);
+
+			// student_id_gradestable_column.setVisible(false);
+
+
+
+			List<Grade> grades_from_server = event.getMessage().getGrades_list_from_server();
+
+
+			course_grade_table.getItems().clear();
+			course_grade_table.refresh();
+
+			// Set up the columns
+			// student_id_gradestable_column.setCellValueFactory(new PropertyValueFactory<>("student_id"));
+			grade_column.setCellValueFactory(new PropertyValueFactory<>("grade"));
+			course_column.setCellValueFactory(new PropertyValueFactory<>("courseName"));
+
+			for (int i = 0; i < grades_from_server.size(); i++) {
+				// Set the data to the table
+				course_grade_table.getItems().add(grades_from_server.get(i));
+			}
+
+			///System.out.println("end");
+
+
+		} else if (event.getMessage().getMessage().equals("i changed the grade")) {
+			// System.out.println("i changed the grade");
+
+			new_grade_txf.setText("");
+			showstudent_grades_after_update_label.setVisible(true);
+			show_student_after_update_but.setVisible(true);
+
+		} else {
+			//  System.out.println("else");
+
+		}
+
+	}
+
+//    @Subscribe
+//    public void setSubmittersTF(UpdateMessageEvent event) {
+//
+//        System.out.println("setSubmittersTF");
+//
+//    }
+//
+//    @Subscribe
+//    public void getStarterData(NewSubscriberEvent event) {
+//
+//    }
+//
+//    @Subscribe
+//    public void errorEvent(ErrorEvent event) {
+//
+//    }
+
 	@FXML
 	void initialize() {
-		EventBus.getDefault().register(this);
-		//MessageTF.clear();
-		//DataFromServerTF.clear();
-		msgId=0;
+
+		EventBus.getDefault().register(this); /// this line did lot of problems to me!!
+
+		msgId = 0;
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
 		Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
 			LocalTime currentTime = LocalTime.now();
-			//timeTF.setText(currentTime.format(dtf));
+			time_txf.setText(currentTime.format(dtf));
 		}),
 				new KeyFrame(Duration.seconds(1))
 		);
+
 		clock.setCycleCount(Animation.INDEFINITE);
 		clock.play();
+
 		try {
 			Message message = new Message(msgId, "add client");
 			SimpleClient.getClient().sendToServer(message);
@@ -261,5 +344,23 @@ public class PrimaryController {
 			e.printStackTrace();
 		}
 
+
+		show_all_students_table.setVisible(true);
+		change_but.setVisible(true);
+		course_grade_table.setVisible(true);
+//        choose_grade_update_label.setVisible(false);
+//        choosegrade_update_choisebox.setVisible(false);
+		insert_new_grade_label.setVisible(true);
+		new_grade_txf.setVisible(true);
+		change_but.setVisible(true);
+		showstudent_grades_after_update_label.setVisible(true);
+		show_student_after_update_but.setVisible(true);
+		// choosestudent_choisebox.setVisible(false);
+//        choosestudent_update_choisebox.setVisible(false);
+		show_grade_but.setVisible(true);
+		choosestudent_gradeupdate_label.setVisible(true);
+		choosestudent_view_label.setVisible(true);
 	}
+
+
 }
