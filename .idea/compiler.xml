@@ -12,5 +12,9 @@
         <module name="entities" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="OCSFMediatorExample (1)" target="15" />
+      <module name="OCSFMediatorExample (2)" target="15" />
+    </bytecodeTargetLevel>
   </component>
 </project>
