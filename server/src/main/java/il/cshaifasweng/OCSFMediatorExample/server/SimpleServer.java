@@ -1,13 +1,17 @@
 package il.cshaifasweng.OCSFMediatorExample.server;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.Message;
+import il.cshaifasweng.OCSFMediatorExample.entities.entities.Grade;
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.Student;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.AbstractServer;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.ConnectionToClient;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.SubscribedClient;
 
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.Root;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +26,17 @@ public class SimpleServer extends AbstractServer {
 	public SimpleServer(int port) {
 		super(port);
 
+
+	}
+	private static <T> List<T> getAll(Class<T> object) {
+
+
+		CriteriaBuilder builder = session.getCriteriaBuilder();
+		CriteriaQuery<T> criteriaQuery = builder.createQuery(object);
+		Root<T> rootEntry = criteriaQuery.from(object);
+		CriteriaQuery<T> allCriteriaQuery = criteriaQuery.select(rootEntry);
+		TypedQuery<T> allQuery = session.createQuery(allCriteriaQuery);
+		return allQuery.getResultList();
 	}
 	public static List<Student> getAllStudents() throws Exception {
 		CriteriaBuilder builder = session.getCriteriaBuilder();
@@ -29,6 +44,34 @@ public class SimpleServer extends AbstractServer {
 		query.from(Student.class);
 		List<Student> data = session.createQuery(query).getResultList();
 		return data;
+	}
+	public static List<Grade> getGradesByStudentId(int studentId) throws Exception{
+
+		// System.out.println("getGradesByStudentId Begin");
+
+		boolean found=false;
+
+		List<Student> students = getAll(Student.class);
+		for(int i =0;i<students.size() && !found ;i++)
+		{
+			if(students.get(i).getStudent_id()==studentId) {
+				found=true;
+			}
+		}
+		if(found)
+		{
+			CriteriaBuilder builder = session.getCriteriaBuilder();
+			CriteriaQuery<Grade> query = builder.createQuery(Grade.class);
+			Root<Grade> gradeRoot = query.from(Grade.class);
+			Join<Grade, Student> studentJoin = gradeRoot.join("student");
+			query.select(gradeRoot).where(builder.equal(studentJoin.get("student_id"), studentId));
+			List<Grade> grades = session.createQuery(query).getResultList();
+			return grades;
+		}
+		return null;
+
+		// System.out.println("getGradesByStudentId End");
+
 	}
 
 
@@ -59,18 +102,20 @@ public class SimpleServer extends AbstractServer {
 				} else if (request.equals("give me the student grades")) {
 					Message msg2=new Message(177,"smeer");
 					//  System.out.println("i am here");
-					msg2.setStudents_list_from_server(getAllStudents());
-					client.sendToClient(msg2);
+					//msg2.setStudents_list_from_server(getAllStudents());
+					//client.sendToClient(msg2);
 
 					//  System.out.println("the id is :" + message.getStudentId());
-
+					//message.setGrades_list_from_server(getGradesByStudentId(message.getStudentId()));
+					message.setCourses_list_from_server(getAllCoursess());
 					message.setMessage("i will give you the student grades");
 
-					message.setGrades_list_from_server(getGradesByStudentId(message.getStudentId()));
+
 
 					// System.out.println("back from getgradesbystudent");
 
 					client.sendToClient(message);
+					//client.sendToClient(msg2);
 
 
 				} else if (request.equals("change the student grade")) {
