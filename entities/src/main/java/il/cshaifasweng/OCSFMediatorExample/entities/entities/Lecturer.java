@@ -81,7 +81,7 @@ public class Lecturer implements Serializable {
 
     public void setStudentGrade(Student student, float grade, int course_id){
 
-    }
+}
 
 
 }

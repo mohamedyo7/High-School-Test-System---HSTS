@@ -64,7 +64,7 @@ public class Course implements Serializable {
         this.name = name;
         setLecturer(lecturer); // IMPORTANT: Why are we doing this?
         //this.students = new ArrayList<Student>();
-    }
+}
 
 
 }

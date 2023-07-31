@@ -1,6 +1,5 @@
 package il.cshaifasweng.OCSFMediatorExample.entities;
 
-import il.cshaifasweng.OCSFMediatorExample.entities.entities.Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.Grade;
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.Student;
 
@@ -24,7 +23,6 @@ public class Message implements Serializable {
 
     private List<Student> students_list_from_server;
     private List<Grade> grades_list_from_server;
-    private List<Course> courses_list_from_server;
 
     public int getCourse_id()
     {
@@ -77,16 +75,6 @@ public class Message implements Serializable {
 
         this.students_list_from_server=students_list_from_server;
 
-    }
-    public List<Course> getCourses_list_from_server_list_from_server() {
-
-        return this.courses_list_from_server;
-
-    }
-
-    public void setCourses_list_from_server(List<Course> courses_list_from_server) {
-
-        this.courses_list_from_server = courses_list_from_server;
     }
 
     public Message(int id, LocalDateTime timeStamp, String message) {

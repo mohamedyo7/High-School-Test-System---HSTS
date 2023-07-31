@@ -19,8 +19,7 @@ public class Student implements Serializable {
 
     @OneToMany(mappedBy = "student")
     private List<Grade> grades = new ArrayList<>();
-    @OneToMany(mappedBy = "student")
-private List<Course> courses=new ArrayList<>();
+
 
     public int getStudent_id() {
         return student_id;
@@ -48,10 +47,6 @@ private List<Course> courses=new ArrayList<>();
 
     public List<Grade> getGrades() {
         return grades;
-    }
-    public List<Course> getCourses() {
-        return courses;
-
     }
 
 

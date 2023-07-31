@@ -39,7 +39,21 @@ public class App {
 
         return configuration.buildSessionFactory(serviceRegistry);
     }
+    private static void generateGrades(){
 
+        List<Student> students = getAll(Student.class);
+        List<Course> courses = getAll(Course.class);
+        for (int i=0; i<students.size();i++){
+            for(int j=0;j<students.size();j++){
+            System.out.print(students.get(i).getStudent_id());
+            System.out.print(courses.get(i).getName());
+            Grade grade = new Grade(students.get(i),courses.get(j),100);
+            session.save(grade);
+            session.flush();
+        }
+        }
+
+    }
 
     private static void generateLecturers() throws Exception {
 
@@ -113,37 +127,36 @@ public class App {
 
     private static void generateStudents() throws Exception {
 
-        Student std0 = new Student(1,"Emma", "Johnson");
+        Student std0 = new Student(123456789,"Emma", "Johnson");
         session.save(std0);
         session.flush();
-        Student std1 = new Student(2,"Noah", "Williams");
+        Student std1 = new Student(987654321,"Noah", "Williams");
         session.save(std1);
         session.flush();
-        Student std2 = new Student(3,"Olivia", "Jones");
+        Student std2 = new Student(456789123,"Olivia", "Jones");
         session.save(std2);
         session.flush();
-        Student std3 = new Student(4,"Liam", "Smith");
+        Student std3 = new Student(321654987,"Liam", "Smith");
         session.save(std3);
         session.flush();
-        Student std4 = new Student(5,"Ava", "Brown");
+        Student std4 = new Student(987123456,"Ava", "Brown");
         session.save(std4);
         session.flush();
-        Student std5 = new Student(6,"Isabella", "Davis");
+        Student std5 = new Student(654321789,"Isabella", "Davis");
         session.save(std5);
         session.flush();
-        Student std6 = new Student(7,"Sophia", "Miller");
+        Student std6 = new Student(789456123,"Sophia", "Miller");
         session.save(std6);
         session.flush();
-        Student std7 = new Student(8,"Mia", "Wilson");
+        Student std7 = new Student(159753468,"Mia", "Wilson");
         session.save(std7);
         session.flush();
-        Student std8 = new Student(9,"Jackson", "Moore");
+        Student std8 = new Student(369852147,"Jackson", "Moore");
         session.save(std8);
         session.flush();
-        Student std9 = new Student(10,"Aiden", "Taylor");
+        Student std9 = new Student(852741963,"Aiden", "Taylor");
         session.save(std9);
         session.flush();
-
 
     }
 
@@ -168,13 +181,6 @@ public class App {
         List<Student> data = session.createQuery(query).getResultList();
         return data;
     }
-    public static List<Course> getAllCoursess() throws Exception {
-        CriteriaBuilder builder = session.getCriteriaBuilder();
-        CriteriaQuery<Course> query = builder.createQuery(Course.class);
-        query.from(Course.class);
-        List<Course> courses = session.createQuery(query).getResultList();
-        return courses;
-    }
 
 
 
@@ -193,7 +199,6 @@ public class App {
         }
         if(found)
         {
-
             CriteriaBuilder builder = session.getCriteriaBuilder();
             CriteriaQuery<Grade> query = builder.createQuery(Grade.class);
             Root<Grade> gradeRoot = query.from(Grade.class);
@@ -267,7 +272,7 @@ public class App {
     }
 
     public static void main(String[] args) {
-
+        System.out.println("App main wwwwwwwwwwwwwwwww2");
         try {
             try {
                 session = sessionFactory.openSession();
@@ -280,11 +285,10 @@ public class App {
 
 
             generateStudents();
-
+            generateGrades();
             List<Student> students = getAll(Student.class);
             List<Course> courses = getAll(Course.class);
             List<Lecturer> lecturers = getAll(Lecturer.class);
-            //List<Grade> grades=getAll(Grade.class);
 
             lecturers.get(0).addCourse(courses.get(8));
             lecturers.get(0).addCourse(courses.get(6));
