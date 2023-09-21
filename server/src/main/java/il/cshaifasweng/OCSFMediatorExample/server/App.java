@@ -1,5 +1,5 @@
 package il.cshaifasweng.OCSFMediatorExample.server;
-
+import java.util.Random;
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.Grade;
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.Lecturer;
@@ -55,111 +55,93 @@ public class App {
 
     }
 
-    private static void generateLecturers() throws Exception {
-
-        Lecturer lect = new Lecturer("Ethan", "Simmons");
-        session.save(lect);
-        session.flush();
-        Lecturer lect0 = new Lecturer("Sophia", "Hayes");
-        session.save(lect0);
-        session.flush();
-        Lecturer lect1 = new Lecturer("Caleb", "Parker");
-        session.save(lect1);
-        session.flush();
-        Lecturer lect2 = new Lecturer("Lily", "Turner");
-        session.save(lect2);
-        session.flush();
-        Lecturer lect3 = new Lecturer("Lucas", "Edwards");
-        session.save(lect3);
-        session.flush();
-        Lecturer lect4 = new Lecturer("Ava", "Mitchell");
-        session.save(lect4);
-        session.flush();
-        Lecturer lect5 = new Lecturer("Benjamin", "Martinez");
-        session.save(lect5);
-        session.flush();
-        Lecturer lect6 = new Lecturer("Olivia", "Thompson");
-        session.save(lect6);
-        session.flush();
-        Lecturer lect7 = new Lecturer("Gabriel", "Johnson");
-        session.save(lect7);
-        session.flush();
-        Lecturer lect8 = new Lecturer("Emma", "Anderson");
-        session.save(lect8);
-        session.flush();
 
 
+    private static final String[] sFIRST_NAMES = {
+            "Sophia", "Oliver", "Emma", "Liam", "Ava", "Noah",
+            "Isabella", "Olivia", "Elijah", "Charlotte", "William", // Add more names here if needed
+    };
+
+    private static final String[] sLAST_NAMES = {
+            "Smith", "Johnson", "Brown", "Jones", "Garcia", "Miller",
+            "Davis", "Rodriguez", "Martinez", "Taylor", "Anderson", // Add more names here if needed
+    };
+
+    private static final String[] FIRST_NAMES = {
+            "Ethan", "Sophia", "Caleb", "Lily", "Lucas", "Ava",
+            "Benjamin", "Olivia", "Gabriel", "Emma", "Michael", // Add more names here if needed
+    };
+
+    private static final String[] LAST_NAMES = {
+            "Simmons", "Hayes", "Parker", "Turner", "Edwards", "Mitchell",
+            "Martinez", "Thompson", "Johnson", "Anderson", "Williams", // Add more names here if needed
+    };
+
+    private static String generateRandomName(String[] names) {
+        Random random = new Random();
+        int index = random.nextInt(names.length);
+        return names[index];
     }
 
+    private static void generateLecturers() throws Exception {
+        for(int i=0;i<10 ; i++) {
+            Lecturer lect = new Lecturer(generateRandomName(FIRST_NAMES), generateRandomName(LAST_NAMES));
+            session.save(lect);
+            session.flush();
+        }
+
+    }
     private static void generateCourses() throws Exception {
 
-        Course course0 = new Course("Biology" );
+        Course course0 = new Course("Math" );
         session.save(course0);
         session.flush();
-        Course course1 = new Course("Alchemy" );
+        Course course1 = new Course("English" );
         session.save(course1);
         session.flush();
-        Course course2 = new Course("Swimming" );
+        Course course2 = new Course("Arabic" );
         session.save(course2);
         session.flush();
-        Course course3 = new Course("HorseRiding" );
+        Course course3 = new Course("Hebrew" );
         session.save(course3);
         session.flush();
-        Course course4 = new Course("Drawing");
+        Course course4 = new Course("Music");
         session.save(course4);
         session.flush();
-        Course course5 = new Course("VolleyBall" );
+        Course course5 = new Course("Data Structure" );
         session.save(course5);
         session.flush();
-        Course course6 = new Course("Guitar" );
+        Course course6 = new Course("Algorithmes" );
         session.save(course6);
         session.flush();
-        Course course7 = new Course("Flute" );
+        Course course7 = new Course("Object Oriented Programming" );
         session.save(course7);
         session.flush();
-        Course course8 = new Course("Piano" );
+        Course course8 = new Course("Assemble" );
         session.save(course8);
         session.flush();
-        Course course9 = new Course("Violin" );
+        Course course9 = new Course("Sport" );
         session.save(course9);
         session.flush();
     }
 
-    private static void generateStudents() throws Exception {
+// ...
 
-        Student std0 = new Student(123456789,"Emma", "Johnson");
-        session.save(std0);
-        session.flush();
-        Student std1 = new Student(987654321,"Noah", "Williams");
-        session.save(std1);
-        session.flush();
-        Student std2 = new Student(456789123,"Olivia", "Jones");
-        session.save(std2);
-        session.flush();
-        Student std3 = new Student(321654987,"Liam", "Smith");
-        session.save(std3);
-        session.flush();
-        Student std4 = new Student(987123456,"Ava", "Brown");
-        session.save(std4);
-        session.flush();
-        Student std5 = new Student(654321789,"Isabella", "Davis");
-        session.save(std5);
-        session.flush();
-        Student std6 = new Student(789456123,"Sophia", "Miller");
-        session.save(std6);
-        session.flush();
-        Student std7 = new Student(159753468,"Mia", "Wilson");
-        session.save(std7);
-        session.flush();
-        Student std8 = new Student(369852147,"Jackson", "Moore");
-        session.save(std8);
-        session.flush();
-        Student std9 = new Student(852741963,"Aiden", "Taylor");
-        session.save(std9);
-        session.flush();
 
+
+    private static int generateRandomID() {
+        Random random = new Random();
+        return 100000000 + random.nextInt(900000000); // Generates a random 9-digit ID
     }
 
+    private static void generateStudents() throws Exception {
+        for (int i=0 ;i<10;i++) {
+            int id = generateRandomID();
+            Student std0 = new Student(id, generateRandomName(sFIRST_NAMES), generateRandomName(sLAST_NAMES));
+            session.save(std0);
+            session.flush();
+        }
+    }
     private static <T> List<T> getAll(Class<T> object) {
 
 
@@ -270,7 +252,10 @@ public class App {
             System.out.print('\n');
         }
     }
-
+    private static int generateRandomlecture() {
+        Random random = new Random();
+        return random.nextInt(9);
+    }
     public static void main(String[] args) {
         System.out.println("App main wwwwwwwwwwwwwwwww2");
         try {
@@ -282,15 +267,15 @@ public class App {
             }
             generateCourses();
             generateLecturers();
-
-
             generateStudents();
             generateGrades();
             List<Student> students = getAll(Student.class);
             List<Course> courses = getAll(Course.class);
             List<Lecturer> lecturers = getAll(Lecturer.class);
+            for(int i=0;i<lecturers.size();i++){
+                lecturers.get(i).addCourse(courses.get(generateRandomlecture()));}
 
-            lecturers.get(0).addCourse(courses.get(8));
+           /* lecturers.get(0).addCourse(courses.get(8));
             lecturers.get(0).addCourse(courses.get(6));
             lecturers.get(1).addCourse(courses.get(0));
             lecturers.get(2).addCourse(courses.get(7));
@@ -300,17 +285,7 @@ public class App {
             lecturers.get(6).addCourse(courses.get(4));
             lecturers.get(7).addCourse(courses.get(3));
             lecturers.get(8).addCourse(courses.get(9));
-            lecturers.get(9).addCourse(courses.get(8));
-
-
-
-         /*   for(int i=0;i<10;i++)
-            {
-                students.get(i).addGrade(courses.get(0),i+90);
-                students.get(i).addGrade(courses.get(1),i+40);
-            }*/
-
-            //  printAllStudents();
+            lecturers.get(9).addCourse(courses.get(8));*/
 
             session.getTransaction().commit(); // Save everything.
 

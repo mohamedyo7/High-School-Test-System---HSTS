@@ -26,7 +26,6 @@ public class Course implements Serializable {
     @OneToMany(mappedBy = "course")
     private List<Grade> grades = new ArrayList<>();
 
-
     public int getId() {
         return id;
     }
@@ -51,8 +50,6 @@ public class Course implements Serializable {
         this.lecturer = lecturer;
         lecturer.getCourses().add(this); // IMPORTANT!
     }
-
-
     public Course() {
     }
 
@@ -64,7 +61,7 @@ public class Course implements Serializable {
         this.name = name;
         setLecturer(lecturer); // IMPORTANT: Why are we doing this?
         //this.students = new ArrayList<Student>();
-}
+    }
 
 
 }

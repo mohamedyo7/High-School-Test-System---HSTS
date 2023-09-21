@@ -79,7 +79,10 @@ public class PrimaryController {
 	@FXML
 	private TableColumn<Student, String> last_name_column;
 
-
+	@FXML
+	void BackB(ActionEvent event) throws IOException {
+	SimpleChatClient.setRoot("TeacherPage");
+	}
 	@FXML
 	private TableColumn<Student, Integer> student_id_column;
 
@@ -102,17 +105,20 @@ public class PrimaryController {
 
 
 	void sendMessage(String messageBody) {
+		System.out.println("give me the students 22");
 		try {
-			Message message = new Message(msgId++, messageBody);
+			Message message = new Message(messageBody);
 
 			SimpleClient.getClient().sendToServer(message);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		System.out.println("give me the students 3");
 	}
 
 	void sendMessage(Message message) {
+
 		try {
 			SimpleClient.getClient().sendToServer(message);
 		} catch (IOException e) {
@@ -128,8 +134,10 @@ public class PrimaryController {
 		if (student_save != null) {
 			showstudent_grades_after_update_label.setVisible(true);
 			show_student_after_update_but.setVisible(true);
-			Message message = new Message(msgId++, "give me the student grades");
-			try {
+			Message message = new Message("give me the student grades");
+			message.setStudentId(student_save.getStudent_id());
+			sendMessage(message);
+			/*try {
 
 				SimpleClient.getClient().sendToServer(message);
 				message.setStudentId(student_save.getStudent_id());
@@ -137,7 +145,7 @@ public class PrimaryController {
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
+			}*/
 
 		}
 
@@ -149,9 +157,10 @@ public class PrimaryController {
 
 	@FXML
 	void on_show_all_students_pressed(ActionEvent event) throws SQLException {
-		show_all_students_table.setVisible(true);
+		/*show_all_students_table.setVisible(true);
 		show_grade_but.setVisible(true);
-		choosestudent_view_label.setVisible(true);
+		choosestudent_view_label.setVisible(true);*/
+		System.out.println("give me the students");
 		sendMessage("give me the students");
 
 	}
@@ -165,32 +174,15 @@ public class PrimaryController {
 			// Handle the selected item here
 			// System.out.println("Selected: " + selectedItem.getFirstName());
 
-			Message message = new Message(msgId++, "give me the student grades");
+			Message message = new Message( "give me the student grades");
 			message.setStudentId(selectedItem.getStudent_id());
 			sendMessage(message);
 
 		}
-/*		else if (true) {
-
-			// System.out.println("i will give you the student grades");
-
-			course_column.setCellValueFactory(new PropertyValueFactory<>("course"));
-			course_column.setCellValueFactory(new PropertyValueFactory<>("Grade"));
-			List<Grade> students_from_server = student_save.getGrades();
-			course_grade_table.getItems().removeAll();
-			for (int i = 0; i < students_from_server.size(); i++) {
-				// Set the data to the table
-				course_grade_table.getItems().add(students_from_server.get(i));
-			}*/
-		/*else {
-			// System.out.println("select student to show his grades");
-			sendMessage("");
-			}*/
 		}
 
 	@FXML
 	void on_button_change_clicked(ActionEvent event) {
-		System.out.println("on buttin clicked");
 		Grade selectedItem = course_grade_table.getSelectionModel().getSelectedItem();
 		if (selectedItem != null) {
 			// Handle the selected item here
@@ -199,7 +191,7 @@ public class PrimaryController {
 			if(!new_grade_txf.getText().isBlank())
 			{
 				course_grade_table.setVisible(true);
-				Message message = new Message(msgId++, "change the student grade");
+				Message message = new Message("change the student grade");
 				message.setStudentId(selectedItem.getStudent_id());
 				//message.setCourse_id(selectedItem.getCourse());
 				message.setGrade_to_change( Integer.parseInt(new_grade_txf.getText()));
@@ -242,13 +234,11 @@ public class PrimaryController {
 
 	@Subscribe
 	public void setDataFromServerTF(MessageEvent event) {
-
-		// System.out.println("setDataFromServerTF");
-		System.out.println("should get in");
+		System.out.println("give me the students3");
+		System.out.println("give me the students4");
+		System.out.println("give me the students5");
 		if (event.getMessage().getMessage().equals("i will give you the students")) {
-			System.out.println("got in baby");
-			//   System.out.println("i will give you the students");
-			List<Student> students_from_server = event.getMessage().getStudents_list_from_server();
+			List<Student> students_from_server = (List<Student>) event.getMessage().getObject();
 
 			show_all_students_table.getItems().clear();
 			show_all_students_table.refresh();
@@ -259,17 +249,15 @@ public class PrimaryController {
 			first_name_column.setCellValueFactory(new PropertyValueFactory<>("firstName"));
 
 			for (int i = 0; i < students_from_server.size(); i++) {
-				// Set the data to the table
 				show_all_students_table.getItems().add(students_from_server.get(i));
-				System.out.println("should get in222");
 			}
 
 		} else if (event.getMessage().getMessage().equals("i will give you the student grades")) {
 
-			 System.out.println("i will give you the student grades");
+			System.out.println("i will give you the student grades");
 			course_column.setCellValueFactory(new PropertyValueFactory<>("course"));
 			course_column.setCellValueFactory(new PropertyValueFactory<>("Grade"));
-			List<Grade> students_from_server = event.getMessage().getGrades_list_from_server();
+			List<Grade> students_from_server = (List<Grade>)event.getMessage().getObject();
 
 			course_grade_table.setVisible(true);
 			choosestudent_gradeupdate_label.setVisible(true);
@@ -278,19 +266,11 @@ public class PrimaryController {
 			change_but.setVisible(true);
 			showstudent_grades_after_update_label.setVisible(true);
 			show_student_after_update_but.setVisible(true);
-
-			//student_id_gradestable_column.setVisible(false);
-
-
-
-			List<Grade> grades_from_server = event.getMessage().getGrades_list_from_server();
+			List<Grade> grades_from_server = (List<Grade>)event.getMessage().getObject();
 
 
 			course_grade_table.getItems().clear();
 			course_grade_table.refresh();
-
-			// Set up the columns
-			// student_id_gradestable_column.setCellValueFactory(new PropertyValueFactory<>("student_id"));
 			grade_column.setCellValueFactory(new PropertyValueFactory<>("grade"));
 			course_column.setCellValueFactory(new PropertyValueFactory<>("courseName"));
 
@@ -298,14 +278,7 @@ public class PrimaryController {
 				// Set the data to the table
 				course_grade_table.getItems().add(grades_from_server.get(i));
 			}
-			//course_grade_table.refresh();
-			///System.out.println("end");
-
-
 		} else if (event.getMessage().getMessage().equals("i changed the grade")) {
-			// System.out.println("i changed the grade");
-			System.out.println("hey mr policeman");
-			int ngrade = Integer.valueOf(new_grade_txf.getText());
 			new_grade_txf.setText("");
 			Student student  = course_grade_table.getSelectionModel().getSelectedItem().getStudent();
 
@@ -319,22 +292,6 @@ public class PrimaryController {
 
 	}
 
-//    @Subscribe
-//    public void setSubmittersTF(UpdateMessageEvent event) {
-//
-//        System.out.println("setSubmittersTF");
-//
-//    }
-//
-//    @Subscribe
-//    public void getStarterData(NewSubscriberEvent event) {
-//
-//    }
-//
-//    @Subscribe
-//    public void errorEvent(ErrorEvent event) {
-//
-//    }
 
 	@FXML
 	void initialize() {
@@ -353,27 +310,23 @@ public class PrimaryController {
 		clock.setCycleCount(Animation.INDEFINITE);
 		clock.play();
 
-		try {
+/*		try {
 			Message message = new Message(msgId, "add client");
 			SimpleClient.getClient().sendToServer(message);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 
 
 		show_all_students_table.setVisible(true);
 		change_but.setVisible(true);
 		course_grade_table.setVisible(true);
-//        choose_grade_update_label.setVisible(false);
-//        choosegrade_update_choisebox.setVisible(false);
 		insert_new_grade_label.setVisible(true);
 		new_grade_txf.setVisible(true);
 		change_but.setVisible(true);
 		showstudent_grades_after_update_label.setVisible(true);
 		show_student_after_update_but.setVisible(true);
-		// choosestudent_choisebox.setVisible(false);
-//        choosestudent_update_choisebox.setVisible(false);
 		show_grade_but.setVisible(true);
 		choosestudent_gradeupdate_label.setVisible(true);
 		choosestudent_view_label.setVisible(true);

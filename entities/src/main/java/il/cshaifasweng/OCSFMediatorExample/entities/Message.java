@@ -1,16 +1,17 @@
 package il.cshaifasweng.OCSFMediatorExample.entities;
 
+import il.cshaifasweng.OCSFMediatorExample.entities.entities.Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.Grade;
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.Student;
-
+import il.cshaifasweng.OCSFMediatorExample.entities.entities.Lecturer;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
-
+import java.util.ArrayList;
 
 
 public class Message implements Serializable {
-
+    private static final long serialVersionUID = -8224097662914849956L;
     int id;
     LocalDateTime timeStamp;
     String message;
@@ -21,9 +22,7 @@ public class Message implements Serializable {
 
     int grade_to_change;
 
-    private List<Student> students_list_from_server;
-    private List<Grade> grades_list_from_server;
-
+    private Object obj;
     public int getCourse_id()
     {
         return course_id;
@@ -41,7 +40,6 @@ public class Message implements Serializable {
         this.grade_to_change = grade_to_change;
     }
 
-
     public int getStudentId() {
         return studentId;
     }
@@ -50,45 +48,30 @@ public class Message implements Serializable {
         this.studentId = number;
     }
 
-    public Message(String message, List<Student> students, List<Grade> grades) {
-        this.students_list_from_server=students;
-        this.grades_list_from_server=grades;
-        this.message = message;
+    public void setObject(Object obj1) {
+        this.obj = obj1;
     }
-
-    public List<Grade> getGrades_list_from_server() {
-        return grades_list_from_server;
+    public Object getObject() {
+        return this.obj;
     }
-
-    public List<Student> getStudents_list_from_server() {
-
-        return this.students_list_from_server;
-
+    public Message(String body){
+        this.id=0;
+        this.message=body;
+        this.data = null;
+        this.timeStamp = LocalDateTime.now();
     }
-
-    public void setGrades_list_from_server(List<Grade> grades_list_from_server) {
-
-        this.grades_list_from_server = grades_list_from_server;
-    }
-
-    public void setStudents_list_from_server(List<Student> students_list_from_server) {
-
-        this.students_list_from_server=students_list_from_server;
-
-    }
-
     public Message(int id, LocalDateTime timeStamp, String message) {
         this.id = id;
         this.timeStamp = timeStamp;
         this.message = message;
     }
 
-    public Message(int id, String message) {
+  /*  public Message(int id, String message) {
         this.id = id;
         this.timeStamp = LocalDateTime.now();
         this.message = message;
         this.data = null;
-    }
+    }*/
 
     public Message(int id, String message,String data) {
         this.id = id;
