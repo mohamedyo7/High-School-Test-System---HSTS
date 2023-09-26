@@ -150,9 +150,6 @@ public class PrimaryController {
 		}
 
 
-
-
-
 	}
 
 	@FXML
@@ -234,11 +231,8 @@ public class PrimaryController {
 
 	@Subscribe
 	public void setDataFromServerTF(MessageEvent event) {
-		System.out.println("give me the students3");
-		System.out.println("give me the students4");
-		System.out.println("give me the students5");
 		if (event.getMessage().getMessage().equals("i will give you the students")) {
-			List<Student> students_from_server = (List<Student>) event.getMessage().getObject();
+			List<Student> students_from_server = event.getMessage().getStudents_list_from_server();
 
 			show_all_students_table.getItems().clear();
 			show_all_students_table.refresh();
@@ -257,8 +251,6 @@ public class PrimaryController {
 			System.out.println("i will give you the student grades");
 			course_column.setCellValueFactory(new PropertyValueFactory<>("course"));
 			course_column.setCellValueFactory(new PropertyValueFactory<>("Grade"));
-			List<Grade> students_from_server = (List<Grade>)event.getMessage().getObject();
-
 			course_grade_table.setVisible(true);
 			choosestudent_gradeupdate_label.setVisible(true);
 			insert_new_grade_label.setVisible(true);
@@ -266,7 +258,7 @@ public class PrimaryController {
 			change_but.setVisible(true);
 			showstudent_grades_after_update_label.setVisible(true);
 			show_student_after_update_but.setVisible(true);
-			List<Grade> grades_from_server = (List<Grade>)event.getMessage().getObject();
+			List<Grade> grades_list_from_server1 = event.getMessage().getGrades_list_from_server();
 
 
 			course_grade_table.getItems().clear();
@@ -274,9 +266,9 @@ public class PrimaryController {
 			grade_column.setCellValueFactory(new PropertyValueFactory<>("grade"));
 			course_column.setCellValueFactory(new PropertyValueFactory<>("courseName"));
 
-			for (int i = 0; i < grades_from_server.size(); i++) {
+			for (int i = 0; i < grades_list_from_server1.size(); i++) {
 				// Set the data to the table
-				course_grade_table.getItems().add(grades_from_server.get(i));
+				course_grade_table.getItems().add(grades_list_from_server1.get(i));
 			}
 		} else if (event.getMessage().getMessage().equals("i changed the grade")) {
 			new_grade_txf.setText("");

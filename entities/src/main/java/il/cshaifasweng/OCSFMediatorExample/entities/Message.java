@@ -2,32 +2,60 @@ package il.cshaifasweng.OCSFMediatorExample.entities;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.Grade;
+import il.cshaifasweng.OCSFMediatorExample.entities.entities.Questions;
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.Student;
-import il.cshaifasweng.OCSFMediatorExample.entities.entities.Lecturer;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.ArrayList;
+
 
 
 public class Message implements Serializable {
-    private static final long serialVersionUID = -8224097662914849956L;
+
     int id;
+
+    List<Object> object;
     LocalDateTime timeStamp;
     String message;
     String data;
+    String test;
     int studentId;
 
     int course_id;
-
+    private Questions question ;
     int grade_to_change;
+    private List<Student> students_list_from_server;
+    private List<Grade> grades_list_from_server;
+    private List<Course> courses_list_from_server;
+    private String courseName;
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
+    }
 
-    private Object obj;
+    public String getCourseName() {
+        return courseName;
+    }
+    public Questions getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(Questions question) {
+        this.question = question;
+    }
+
+
     public int getCourse_id()
     {
         return course_id;
     }
+    public void setObject(List<Object> object) {
+        this.object = object;
+    }
 
+    public List<Object> getObject() {
+        return object;
+    }
     public void setCourse_id(int course_id) {
         this.course_id = course_id;
     }
@@ -48,36 +76,76 @@ public class Message implements Serializable {
         this.studentId = number;
     }
 
-    public void setObject(Object obj1) {
-        this.obj = obj1;
+    public Message(String message, List<Student> students, List<Grade> grades) {
+        System.out.println("2444210sd");
+        this.students_list_from_server=students;
+        this.grades_list_from_server=grades;
+        this.message = message;
     }
-    public Object getObject() {
-        return this.obj;
+
+    public List<Grade> getGrades_list_from_server() {
+        return grades_list_from_server;
     }
-    public Message(String body){
-        this.id=0;
-        this.message=body;
-        this.data = null;
-        this.timeStamp = LocalDateTime.now();
+
+    public List<Student> getStudents_list_from_server() {
+
+        return this.students_list_from_server;
+
+    }
+    public List<Course> getCourses_list_from_server() {
+
+        return this.courses_list_from_server;
+
+    }
+    public void setGrades_list_from_server(List<Grade> grades_list_from_server) {
+
+        this.grades_list_from_server = grades_list_from_server;
+    }
+
+    public void setStudents_list_from_server(List<Student> students_list_from_server) {
+        System.out.println("440sd");
+        this.students_list_from_server=students_list_from_server;
+
+    }
+    public void setCourses_list_from_server(List<Course> courses_list_from_server){
+        System.out.println("20sd");
+        this.courses_list_from_server = courses_list_from_server ;
     }
     public Message(int id, LocalDateTime timeStamp, String message) {
+        System.out.println("10sd");
         this.id = id;
         this.timeStamp = timeStamp;
         this.message = message;
     }
 
-  /*  public Message(int id, String message) {
+
+    public Message(int id, String message) {
+        System.out.println("110sd");
         this.id = id;
         this.timeStamp = LocalDateTime.now();
         this.message = message;
         this.data = null;
-    }*/
+    }
+    public Message(String message){
+        this.id=0;
+        this.message=message;
+        this.timeStamp = LocalDateTime.now();
+        this.data = null;
+    }
 
     public Message(int id, String message,String data) {
+        System.out.println("220sd");
         this.id = id;
         this.timeStamp = LocalDateTime.now();
         this.message = message;
         this.data = data;
+    }
+    public Message(int id, String s1, String message,String s2) {
+        System.out.println("10sd");
+        this.id = id;
+        this.message = s1;
+        this.data = message;
+        this.test=s2;
     }
 
     public int getId() {

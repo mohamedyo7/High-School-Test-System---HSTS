@@ -60,12 +60,23 @@ public class TeacherEamsController {
 
     @FXML
     void ExamsB(ActionEvent event) {
+        Message message = new Message("add questions to course");
+        String name = CourseTable.getSelectionModel().getSelectedItem().getName();
+        message.setCourseName(name);
         sendMessage("give me the courses");
     }
 
     @FXML
-    void QuestionB(ActionEvent event) {
+    void QuestionB(ActionEvent event) throws IOException {
 
+        String name = CourseTable.getSelectionModel().getSelectedItem().getName();
+        SimpleChatClient.setRoot("QustionsPage");
+        System.out.println("TeacherEamspage1");
+        Message message = new Message("add questions to course");
+        message.setCourseName(name);
+        System.out.println("TeacherEamspage2");
+        sendMessage(message);
+        System.out.println("TeacherEamspage3");
     }
     void sendMessage(Message message) {
 
@@ -88,24 +99,26 @@ public class TeacherEamsController {
     }
 @Subscribe
     public void setDataFromServerTF(MessageEvent event) {
-        //if(event.getMessage().equals("i will give you the courses")){
-    //EventBus.getDefault().register(this);
+        if(event.getMessage().getMessage().equals("i will give you the courses")){
         System.out.println("Gellooooooooooo");
-        System.out.println("i will give you the student grades");
-        /*List<Course> Courses_from_server = event.getMessage().getCourses_list_from_server();
-        List<Grade> grades_from_server = event.getMessage().getGrades_list_from_server();
+        CourseTable.getItems().clear();
+        List<Course> Courses_from_server = event.getMessage().getCourses_list_from_server();
         System.out.println(Courses_from_server.size());
-        grade_column.setCellValueFactory(new PropertyValueFactory<>("grade"));
-        course_column.setCellValueFactory(new PropertyValueFactory<>("courseName"));
+    course_column.setCellValueFactory(new PropertyValueFactory<>("id"));
+    course_column.setCellValueFactory(new PropertyValueFactory<>("name"));
 
-        for (int i = 0; i < grades_from_server.size(); i++) {
+        for (int i = 0; i < Courses_from_server.size(); i++) {
             // Set the data to the table
             CourseTable.getItems().add(Courses_from_server.get(i));
-        }}
-*/}
+            System.out.println(Courses_from_server.get(i).getName());
+        }
+
+        CourseTable.refresh();
+    }}
+
     @FXML
     void initialize() {
-        //EventBus.getDefault().register(this); /// this line did lot of problems to me!!
+        EventBus.getDefault().register(this); /// this line did lot of problems to me!!
 
 /*        int msgId = 0;
         try {

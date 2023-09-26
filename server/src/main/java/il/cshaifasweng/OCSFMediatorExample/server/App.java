@@ -1,9 +1,7 @@
 package il.cshaifasweng.OCSFMediatorExample.server;
 import java.util.Random;
-import il.cshaifasweng.OCSFMediatorExample.entities.entities.Course;
-import il.cshaifasweng.OCSFMediatorExample.entities.entities.Grade;
-import il.cshaifasweng.OCSFMediatorExample.entities.entities.Lecturer;
-import il.cshaifasweng.OCSFMediatorExample.entities.entities.Student;
+
+import il.cshaifasweng.OCSFMediatorExample.entities.entities.*;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -31,8 +29,7 @@ public class App {
         configuration.addAnnotatedClass(Grade.class);
         configuration.addAnnotatedClass(Lecturer.class);
         configuration.addAnnotatedClass(Student.class);
-
-
+        configuration.addAnnotatedClass(Questions.class);
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                 .applySettings(configuration.getProperties())
                 .build();
@@ -93,7 +90,7 @@ public class App {
     }
     private static void generateCourses() throws Exception {
 
-        Course course0 = new Course("Math" );
+        Course course0 = new Course("Math");
         session.save(course0);
         session.flush();
         Course course1 = new Course("English" );
@@ -164,8 +161,15 @@ public class App {
         return data;
     }
 
-
-
+public static void generateQuestion(Questions questions){
+        session.save(questions);
+        session.flush();
+}
+    public static void generateQuestions(){
+        Questions ques = new Questions();
+        session.save(ques);
+        session.flush();
+    }
     public static List<Grade> getGradesByStudentId(int studentId) throws Exception{
 
         // System.out.println("getGradesByStudentId Begin");
@@ -269,6 +273,7 @@ public class App {
             generateLecturers();
             generateStudents();
             generateGrades();
+            generateQuestions();
             List<Student> students = getAll(Student.class);
             List<Course> courses = getAll(Course.class);
             List<Lecturer> lecturers = getAll(Lecturer.class);

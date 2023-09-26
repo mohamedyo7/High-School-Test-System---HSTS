@@ -24,6 +24,9 @@ public class SimpleClient extends AbstractClient {
 		} else if (message.getMessage().equals("i will give you the student grades")) {
 			EventBus.getDefault().post(new MessageEvent(message));
 		}
+		else if (message.getMessage().equals("i created question")) {
+			EventBus.getDefault().post(new MessageEvent(message));
+		}
 		else if (message.getMessage().equals("i will give you the courses")) {
 			System.out.println("simple chat");
 			EventBus.getDefault().post(new MessageEvent(message));
@@ -33,7 +36,9 @@ public class SimpleClient extends AbstractClient {
 			EventBus.getDefault().post(new MessageEvent(message));
 
 		}
-		else {
+		else if(message.getMessage().equals("i added the course")) {
+			EventBus.getDefault().post(new MessageEvent(message));
+		}else {
 			System.out.println("else");
 		}
 

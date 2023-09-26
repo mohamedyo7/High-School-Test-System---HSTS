@@ -39,7 +39,7 @@ public class TeacherPage {
 
 
         try {
-            Message message = new Message( "add client");
+            Message message = new Message(1,"add client");
             SimpleClient.getClient().sendToServer(message);
         } catch (IOException e) {
             // TODO Auto-generated catch block

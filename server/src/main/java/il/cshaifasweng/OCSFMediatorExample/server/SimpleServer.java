@@ -2,6 +2,7 @@ package il.cshaifasweng.OCSFMediatorExample.server;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.Lecturer;
+import il.cshaifasweng.OCSFMediatorExample.entities.entities.Questions;
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.Student;
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.Course;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.AbstractServer;
@@ -48,6 +49,17 @@ public class SimpleServer extends AbstractServer {
 		List<Lecturer> Letcurers = session.createQuery(query).getResultList();
 		return Letcurers;
 	}
+	public static List<Questions> getAllQuestions() {
+		System.out.println("server get all questions1");
+		CriteriaBuilder builder = session.getCriteriaBuilder();
+		System.out.println("server get all questions2");
+		CriteriaQuery<Questions> query = builder.createQuery(Questions.class);
+		query.from(Questions.class);
+		System.out.println("server get all questions3");
+		List<Questions> ques = session.createQuery(query).getResultList();
+		System.out.println("server get all questions4");
+		return ques;
+	}
 	@Override
 	protected void handleMessageFromClient(Object msg, ConnectionToClient client) {
 		try {
@@ -70,7 +82,7 @@ public class SimpleServer extends AbstractServer {
 					System.out.println("in ?");
 					message.setMessage("i will give you the students");
 
-					message.setObject(getAllStudents());
+					message.setStudents_list_from_server(getAllStudents());
 					System.out.println("in ?");
 					//message.setCourses_list_from_server(getAllCourses());
 					client.sendToClient(message);
@@ -78,30 +90,23 @@ public class SimpleServer extends AbstractServer {
 				} else if (request.equals("give me the student grades")) {
 					System.out.println("whyy god why");
 					message.setMessage("i will give you the student grades");
-					message.setObject(getGradesByStudentId(message.getStudentId()));
+					message.setGrades_list_from_server(getGradesByStudentId(message.getStudentId()));
 					client.sendToClient(message);
 					sendToAllClients(message);
 
 				} else if (request.equals("give me the courses")) {
 
-				message.setMessage("i will give you the courses");
-				System.out.println("server students 2");
-					Course course0 = new Course("Math" );
-					Course course1 = new Course("Math1" );
-					Course course2 = new Course("Math2" );
-				List<Course> courses=new ArrayList<Course>();
-				courses.add(course0);
-					courses.add(course1);
-					courses.add(course2);
-					message.setObject(getAllStudents());
-				//message.setCourses_list_from_server(null);
-				System.out.println("server tudents 3");
-				client.sendToClient(message);
-				sendToAllClients(message);
+					message.setMessage("i will give you the courses");
+					System.out.println("server students 2");
+					message.setCourses_list_from_server(getAllCourses());
+					System.out.println("server tudents 3");
+					client.sendToClient(message);
+					sendToAllClients(message);
+
 				/*}/*else if (request.equals("i will give you the courses")) {
 				System.out.println("whyy god why");
 				message.setMessage("i will give you the student courses");
-				message.setGrades_list_from_server(getGradesByStudentId(message.getStudentId()));
+				message.setGrades_list_from_server(getGradesByStudentId(messageId()));.getStudent
 				client.sendToClient(message);
 				sendToAllClients(message);*/
 				} else if (request.equals("change the student grade")) {
@@ -110,7 +115,29 @@ public class SimpleServer extends AbstractServer {
 					client.sendToClient(message);
 					sendToAllClients(message);
 
-				} else {
+				}else if(request.equals("add questions to course")){
+				message.setMessage("i added question to course");
+				client.sendToClient(message);
+			}
+				else if(request.equals("create question")) {
+					message.setMessage("i created question");
+					System.out.println("server create question1");
+				String name= message.getCourseName();
+				Questions question = message.getQuestion();
+					System.out.println("server create question2");
+				question.setCourse_name(name);
+					System.out.println("server create question3");
+				generateQuestion(question);
+					System.out.println("server create question4");
+
+				client.sendToClient(message);
+				}else if(request.equals("show questions")){
+					message.setMessage("i will show questions");
+					List<Questions> ques = getAllQuestions();
+					for (int i=0;i< ques.size();i++){
+					System.out.println(ques.get(i).getQuestion());}
+					client.sendToClient(message);
+				}else {
 					sendToAllClients(message);
 				}
 
