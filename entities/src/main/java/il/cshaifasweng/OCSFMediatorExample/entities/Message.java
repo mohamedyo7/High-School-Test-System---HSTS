@@ -25,6 +25,16 @@ public class Message implements Serializable {
     int course_id;
     private Questions question ;
     int grade_to_change;
+    private List<Questions> questions_list_from_server;
+
+    public List<Questions> getQuestions_list_from_server() {
+        return questions_list_from_server;
+    }
+
+    public void setQuestions_list_from_server(List<Questions> questions_list_from_server) {
+        this.questions_list_from_server = questions_list_from_server;
+    }
+
     private List<Student> students_list_from_server;
     private List<Grade> grades_list_from_server;
     private List<Course> courses_list_from_server;

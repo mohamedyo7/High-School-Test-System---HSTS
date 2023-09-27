@@ -38,6 +38,9 @@ public class SimpleClient extends AbstractClient {
 		}
 		else if(message.getMessage().equals("i added the course")) {
 			EventBus.getDefault().post(new MessageEvent(message));
+		}
+		else if(message.getMessage().equals("i will show questions")) {
+			EventBus.getDefault().post(new MessageEvent(message));
 		}else {
 			System.out.println("else");
 		}

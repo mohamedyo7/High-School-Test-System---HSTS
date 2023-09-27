@@ -79,16 +79,13 @@ public class SimpleServer extends AbstractServer {
 					message.setMessage("client added successfully");
 					client.sendToClient(message);
 				} else if (request.equals("give me the students")) {
-					System.out.println("in ?");
 					message.setMessage("i will give you the students");
 
 					message.setStudents_list_from_server(getAllStudents());
-					System.out.println("in ?");
 					//message.setCourses_list_from_server(getAllCourses());
 					client.sendToClient(message);
 					sendToAllClients(message);
 				} else if (request.equals("give me the student grades")) {
-					System.out.println("whyy god why");
 					message.setMessage("i will give you the student grades");
 					message.setGrades_list_from_server(getGradesByStudentId(message.getStudentId()));
 					client.sendToClient(message);
@@ -97,9 +94,7 @@ public class SimpleServer extends AbstractServer {
 				} else if (request.equals("give me the courses")) {
 
 					message.setMessage("i will give you the courses");
-					System.out.println("server students 2");
 					message.setCourses_list_from_server(getAllCourses());
-					System.out.println("server tudents 3");
 					client.sendToClient(message);
 					sendToAllClients(message);
 
@@ -121,21 +116,14 @@ public class SimpleServer extends AbstractServer {
 			}
 				else if(request.equals("create question")) {
 					message.setMessage("i created question");
-					System.out.println("server create question1");
-				String name= message.getCourseName();
-				Questions question = message.getQuestion();
-					System.out.println("server create question2");
-				question.setCourse_name(name);
-					System.out.println("server create question3");
-				generateQuestion(question);
-					System.out.println("server create question4");
-
-				client.sendToClient(message);
+					Questions question = message.getQuestion();
+					generateQuestion(question);
+					client.sendToClient(message);
 				}else if(request.equals("show questions")){
 					message.setMessage("i will show questions");
 					List<Questions> ques = getAllQuestions();
-					for (int i=0;i< ques.size();i++){
-					System.out.println(ques.get(i).getQuestion());}
+
+					message.setQuestions_list_from_server(ques);
 					client.sendToClient(message);
 				}else {
 					sendToAllClients(message);

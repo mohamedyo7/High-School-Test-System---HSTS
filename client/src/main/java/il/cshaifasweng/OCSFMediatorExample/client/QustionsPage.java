@@ -2,13 +2,19 @@ package il.cshaifasweng.OCSFMediatorExample.client;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
+import il.cshaifasweng.OCSFMediatorExample.entities.entities.Course;
+import javafx.scene.control.ListView;
 import il.cshaifasweng.OCSFMediatorExample.entities.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.Questions;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 public class QustionsPage {
 
@@ -18,6 +24,8 @@ public class QustionsPage {
     @FXML
     private URL location;
 
+    @FXML
+    private ListView<String> list;
     @FXML
     private TextField answerText1;
 
@@ -36,6 +44,10 @@ public class QustionsPage {
     @FXML
     private TextField quesionText;
     @FXML
+    void listac(ActionEvent event) {
+
+    }
+    @FXML
     void backB(ActionEvent event) throws IOException {
         SimpleChatClient.setRoot("TeacherEamsController");
     }
@@ -50,7 +62,10 @@ public class QustionsPage {
         String ans4 = answerText4.getText();
         String cans = answerText5.getText();
         Message msg=new Message("create question");
+        System.out.println("create question");
+        System.out.println();
         Questions q = new Questions(question,ans1,ans2,ans3,ans4,cans);
+        q.setCourse_name(list.getSelectionModel().getSelectedItem());
         msg.setQuestion(q);
         System.out.println("1");
         sendMessage(msg);
@@ -80,8 +95,28 @@ public class QustionsPage {
             e.printStackTrace();
         }
     }
+    @Subscribe
+    public void setDataFromServerTF(MessageEvent event) {
+        if (event.getMessage().getMessage().equals("i will give you the courses")) {
+            System.out.println("Gellooooooooooo");
+            list.getItems().clear();
+            List<Course> Courses_from_server = event.getMessage().getCourses_list_from_server();
+            System.out.println(Courses_from_server.size());
+/*            course_column.setCellValueFactory(new PropertyValueFactory<>("id"));
+            course_column.setCellValueFactory(new PropertyValueFactory<>("name"));*/
+
+            for (int i = 0; i < Courses_from_server.size(); i++) {
+                // Set the data to the table
+                list.getItems().add(Courses_from_server.get(i).getName());
+                System.out.println(Courses_from_server.get(i).getName());
+            }
+            list.refresh();
+        }
+    }
     @FXML
     void initialize() {
+        EventBus.getDefault().register(this);
+        sendMessage("give me the courses");
         assert answerText1 != null : "fx:id=\"answerText1\" was not injected: check your FXML file 'QustionsPage.fxml'.";
         assert answerText2 != null : "fx:id=\"answerText2\" was not injected: check your FXML file 'QustionsPage.fxml'.";
         assert answerText3 != null : "fx:id=\"answerText3\" was not injected: check your FXML file 'QustionsPage.fxml'.";
