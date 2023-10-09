@@ -5,6 +5,7 @@ import il.cshaifasweng.OCSFMediatorExample.entities.entities.*;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
@@ -25,11 +26,13 @@ public class App {
         Configuration configuration = new Configuration();
 
         // Add ALL of your entities here. You can also try adding a whole package.
+        configuration.addAnnotatedClass(Exams.class);
         configuration.addAnnotatedClass(Course.class);
         configuration.addAnnotatedClass(Grade.class);
         configuration.addAnnotatedClass(Lecturer.class);
         configuration.addAnnotatedClass(Student.class);
         configuration.addAnnotatedClass(Questions.class);
+
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                 .applySettings(configuration.getProperties())
                 .build();
@@ -42,8 +45,6 @@ public class App {
         List<Course> courses = getAll(Course.class);
         for (int i=0; i<students.size();i++){
             for(int j=0;j<students.size();j++){
-            System.out.print(students.get(i).getStudent_id());
-            System.out.print(courses.get(i).getName());
             Grade grade = new Grade(students.get(i),courses.get(j),100);
             session.save(grade);
             session.flush();
@@ -161,18 +162,160 @@ public class App {
         return data;
     }
 
-public static void generateQuestion(Questions questions){
+    public static void generateQuestion(Questions questions){
         session.save(questions);
         session.flush();
 }
     public static void generateQuestions(){
-        Questions ques = new Questions();
+        Questions ques = new Questions("test","1","2","3","4","2");
         session.save(ques);
         session.flush();
     }
+
+
+    public static void addQuestionToExam(int examId, Questions questionToAdd) throws Exception {
+        List<Exams> exams = getAllExams();
+        try {
+            // Find the corresponding Grade entity
+            Exams exam = null;
+            for (Exams e : exams) {
+                if (e.getId() == examId) {
+                    exam=e;
+                    break;
+                }
+            }
+
+            if (exam == null) {
+                throw new Exception("No grade found for the specified student and course.");
+            }
+
+
+            // Update the grade
+            //exam.add_Ques(questionToAdd);
+            exam.add_Ques(questionToAdd);
+            exam.setQues_number(exam.getQuestions().size());
+            System.out.println("it is valid grade.");
+            session.update(exam);
+
+            session.getTransaction().commit(); // Save everything..commit();
+        } catch (Exception e) {
+            session.getTransaction().rollback();
+        } finally {
+            session.close();
+        }
+    }
+    public static void updateExamStat(int examId, boolean newStat) throws Exception {
+        List<Exams> exams = getAllExams();
+        try {
+            // Find the corresponding Exam entity
+            Exams exam = null;
+            for (Exams e : exams) {
+                if (e.getId() == examId) {
+                    exam = e;
+                    break;
+                }
+            }
+
+            if (exam == null) {
+                throw new Exception("No exam found with the specified ID.");
+            }
+
+            // Update the stat
+            exam.setStat(newStat);
+
+            // Save the updated exam object
+            session.update(exam);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            // Handle the exception appropriately, e.g., log it or rethrow it
+            e.printStackTrace();
+        }
+    }
+    public static void updateExam(Exams updatedExam) throws Exception {
+        List<Exams> exams = getAllExams();
+        try {
+
+            // Find the corresponding Grade entity
+            Exams exam = null;
+            for (Exams e : exams) {
+                System.out.println("id in app "+e.getId() + "arrival id "+updatedExam.getId());
+                if (e.getId() == updatedExam.getId()) {
+
+                    exam=e;
+                // Update the exam properties
+                    exam.setId(updatedExam.getId());
+                    exam.setQues_number(updatedExam.getQues_number());
+                    exam.setCourse_name(updatedExam.getCourse_name());
+                    exam.setStat(updatedExam.getStat());
+                // Update other properties as needed
+
+                // Clear the existing list of questions
+                    exam.getQuestions().clear();
+
+                // Add the updated list of questions
+                List<Questions> updatedQuestions = updatedExam.getQuestions();
+                for (Questions question : updatedQuestions) {
+                    exam.add_Ques(question);
+                }
+
+                // Save the updated exam object
+                session.update(exam);
+                session.getTransaction().commit();
+                break;
+            } else {
+                // Handle the case where the exam is not found
+                System.out.println("Exam not found");
+            }
+        }} catch (Exception e) {
+            if (session != null) {
+                session.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            assert session != null;
+            session.close();
+        }
+    }
+
+    public static void updateExamques(Exams updatedExam) {
+        //Session session = sessionFactory.openSession();
+        //Transaction tx = null;
+
+        try {
+            //tx = session.beginTransaction();
+
+            // Retrieve the existing exam object from the database by its ID
+            Exams existingExam = session.get(Exams.class, updatedExam.getId());
+
+            if (existingExam != null) {
+
+                existingExam.getQuestions().clear();
+
+                // Add the updated list of questions
+                List<Questions> updatedQuestions = updatedExam.getQuestions();
+                for (Questions question : updatedQuestions) {
+                    existingExam.add_Ques(question);
+                }
+
+                // Save the updated exam object
+                session.update(existingExam);
+                session.getTransaction().commit();
+            } else {
+                // Handle the case where the exam is not found
+                System.out.println("Exam not found");
+            }
+        } catch (Exception e) {
+            if (session != null) {
+                session.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            assert session != null;
+            session.close();
+        }
+    }
     public static List<Grade> getGradesByStudentId(int studentId) throws Exception{
 
-        // System.out.println("getGradesByStudentId Begin");
 
         boolean found=false;
 
@@ -195,28 +338,20 @@ public static void generateQuestion(Questions questions){
         }
         return null;
 
-        // System.out.println("getGradesByStudentId End");
 
     }
-
-
-
     public static void  changeGrade(int studentId, int courseId, int newGrade) throws Exception {
 
-        //  System.out.println("changeGrade");
 
 
         List<Grade> student_grades = getGradesByStudentId(studentId);
         try {
 
-            //  System.out.println("start");
             // Find the corresponding Grade entity
             Grade grade = null;
             for (Grade g : student_grades) {
-                //  System.out.println(g.getCourseid());
                 if (g.getCourseid() == courseId) {
                     grade = g;
-                    //   System.out.println("it is valid grade.");
                     break;
                 }
             }
@@ -225,21 +360,42 @@ public static void generateQuestion(Questions questions){
                 throw new Exception("No grade found for the specified student and course.");
             }
 
-            //System.out.println("it is valid grade.");
 
             // Update the grade
             grade.setGrade(newGrade);
             session.update(grade);
 
             session.getTransaction().commit(); // Save everything..commit();
-            //  System.out.println("Grade updated successfully.");
         } catch (Exception e) {
             session.getTransaction().rollback();
-            //  System.out.println("Error updating grade: " + e.getMessage());
         } finally {
             session.close();
         }
     }
+
+    public static List<Exams> getAllExams() throws Exception {
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Exams> query = builder.createQuery(Exams.class);
+        query.from(Exams.class);
+        List<Exams> exams = session.createQuery(query).getResultList();
+        return exams;
+    }
+    public static void generateExam(Exams exam){
+
+        session.save(exam);
+        session.flush();
+    }
+    public static void generateExams(){
+        Exams exam = new Exams(1);
+        session.save(exam);
+        session.flush();
+    }
+
+    public static void changeexamstat(String id) {
+
+    }
+
+
 
 
     public static void printAllStudents() throws Exception {
@@ -261,7 +417,7 @@ public static void generateQuestion(Questions questions){
         return random.nextInt(9);
     }
     public static void main(String[] args) {
-        System.out.println("App main wwwwwwwwwwwwwwwww2");
+
         try {
             try {
                 session = sessionFactory.openSession();
@@ -269,11 +425,12 @@ public static void generateQuestion(Questions questions){
             }catch (HibernateException e){
                 e.printStackTrace();
             }
+            generateQuestions();
             generateCourses();
             generateLecturers();
             generateStudents();
             generateGrades();
-            generateQuestions();
+            generateExams();
             List<Student> students = getAll(Student.class);
             List<Course> courses = getAll(Course.class);
             List<Lecturer> lecturers = getAll(Lecturer.class);
@@ -305,6 +462,5 @@ public static void generateQuestion(Questions questions){
             session.close();
         }
 
-        // System.out.println("App main end");
     }
 }

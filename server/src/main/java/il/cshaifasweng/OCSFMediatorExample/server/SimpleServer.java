@@ -1,10 +1,7 @@
 package il.cshaifasweng.OCSFMediatorExample.server;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.Message;
-import il.cshaifasweng.OCSFMediatorExample.entities.entities.Lecturer;
-import il.cshaifasweng.OCSFMediatorExample.entities.entities.Questions;
-import il.cshaifasweng.OCSFMediatorExample.entities.entities.Student;
-import il.cshaifasweng.OCSFMediatorExample.entities.entities.Course;
+import il.cshaifasweng.OCSFMediatorExample.entities.entities.*;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.AbstractServer;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.ConnectionToClient;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.SubscribedClient;
@@ -49,15 +46,18 @@ public class SimpleServer extends AbstractServer {
 		List<Lecturer> Letcurers = session.createQuery(query).getResultList();
 		return Letcurers;
 	}
-	public static List<Questions> getAllQuestions() {
-		System.out.println("server get all questions1");
+	public static List<Exams> getAllExams1() throws Exception {
 		CriteriaBuilder builder = session.getCriteriaBuilder();
-		System.out.println("server get all questions2");
+		CriteriaQuery<Exams> query = builder.createQuery(Exams.class);
+		query.from(Exams.class);
+		List<Exams> exams = session.createQuery(query).getResultList();
+		return exams;
+	}
+	public static List<Questions> getAllQuestions() {
+		CriteriaBuilder builder = session.getCriteriaBuilder();
 		CriteriaQuery<Questions> query = builder.createQuery(Questions.class);
 		query.from(Questions.class);
-		System.out.println("server get all questions3");
 		List<Questions> ques = session.createQuery(query).getResultList();
-		System.out.println("server get all questions4");
 		return ques;
 	}
 	@Override
@@ -98,18 +98,41 @@ public class SimpleServer extends AbstractServer {
 					client.sendToClient(message);
 					sendToAllClients(message);
 
-				/*}/*else if (request.equals("i will give you the courses")) {
-				System.out.println("whyy god why");
-				message.setMessage("i will give you the student courses");
-				message.setGrades_list_from_server(getGradesByStudentId(messageId()));.getStudent
-				client.sendToClient(message);
-				sendToAllClients(message);*/
+				}else if (request.equals("update exam")) {
+					Exams exams = message.getExam();
+					exams.setQues_number(exams.getQuestions().size());
+					updateExam(exams);
+
+				}else if (request.equals("add exam")) {
+					Exams exam = message.getExam();
+					System.out.println("id " + exam.getId());
+					generateExam(exam);
+					List<Exams> ex = getAllExams1();
+					for(int i=0;i<ex.size();i++) {
+						System.out.println("first " + ex.get(i).getId());
+					}
+					updateExam(exam);
+					ex = getAllExams1();
+					for(int i=0;i<ex.size();i++) {
+						System.out.println("sec " + ex.get(i).getId());
+					}
+
+					message.setMessage("i added the exam");
+					client.sendToClient(message);
+				}else if (request.equals("show exams")) {
+					message.setMessage("i will give you the exams");
+					List<Exams> exams= getAllExams1();
+					message.setExams_list_from_server(exams);
+					client.sendToClient(message);
 				} else if (request.equals("change the student grade")) {
 					changeGrade(message.getStudentId(), message.getCourse_id(), message.getGrade_to_change());
 					message.setMessage("i changed the grade");
 					client.sendToClient(message);
 					sendToAllClients(message);
-
+				}else if(request.equals("start exam")){
+					updateExamStat(message.getExam().getId(),true);
+					message.setMessage("i will start exam");
+					client.sendToClient(message);
 				}else if(request.equals("add questions to course")){
 				message.setMessage("i added question to course");
 				client.sendToClient(message);

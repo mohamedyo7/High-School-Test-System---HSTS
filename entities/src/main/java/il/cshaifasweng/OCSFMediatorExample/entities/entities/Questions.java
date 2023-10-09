@@ -3,12 +3,28 @@ package il.cshaifasweng.OCSFMediatorExample.entities.entities;
 import javax.persistence.*;
 import java.io.Serializable;
 
+
 @Entity
 @Table(name = "Questions")
 public class Questions implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int ques_id;
+    private  int id;
+    private String ques_id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    @ManyToOne
+    @JoinColumn(name = "exam")
+    private Exams exam;
+
+    @Column(name = "question")
+    private String question;
     private String course_name;
 
     public String getCourse_name() {
@@ -20,7 +36,7 @@ public class Questions implements Serializable {
     }
 
 
-    private String question;
+    //private String question;
     private String Ans1;
     private String Ans2;
     private String Ans3;
@@ -87,11 +103,11 @@ public class Questions implements Serializable {
 
     }
 
-    public void setQues_id(int quesId) {
+    public void setQues_id(String quesId) {
         this.ques_id = quesId;
     }
 
-    public int getQues_id() {
+    public String getQues_id() {
         return ques_id;
     }
 }

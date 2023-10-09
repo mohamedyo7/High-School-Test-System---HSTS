@@ -105,7 +105,6 @@ public class PrimaryController {
 
 
 	void sendMessage(String messageBody) {
-		System.out.println("give me the students 22");
 		try {
 			Message message = new Message(messageBody);
 
@@ -114,7 +113,6 @@ public class PrimaryController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("give me the students 3");
 	}
 
 	void sendMessage(Message message) {
@@ -130,7 +128,6 @@ public class PrimaryController {
 
 	@FXML
 	void on_button_show_after_update_pressed(ActionEvent event) {
-			System.out.println("on button show after update");
 		if (student_save != null) {
 			showstudent_grades_after_update_label.setVisible(true);
 			show_student_after_update_but.setVisible(true);
@@ -157,19 +154,16 @@ public class PrimaryController {
 		/*show_all_students_table.setVisible(true);
 		show_grade_but.setVisible(true);
 		choosestudent_view_label.setVisible(true);*/
-		System.out.println("give me the students");
 		sendMessage("give me the students");
 
 	}
 
 	@FXML
 	void on_button_show_grades_pressed(ActionEvent event) {
-		System.out.println("on button show grade pressed");
 		Student selectedItem = show_all_students_table.getSelectionModel().getSelectedItem();
 		student_save=selectedItem;
 		if (selectedItem != null) {
 			// Handle the selected item here
-			// System.out.println("Selected: " + selectedItem.getFirstName());
 
 			Message message = new Message( "give me the student grades");
 			message.setStudentId(selectedItem.getStudent_id());
@@ -183,7 +177,6 @@ public class PrimaryController {
 		Grade selectedItem = course_grade_table.getSelectionModel().getSelectedItem();
 		if (selectedItem != null) {
 			// Handle the selected item here
-			//  System.out.println("Selected: " + selectedItem.getCourseName());
 
 			if(!new_grade_txf.getText().isBlank())
 			{
@@ -197,18 +190,15 @@ public class PrimaryController {
 				insert_new_grade_label.setVisible(true);
 				new_grade_txf.setVisible(true);
 				change_but.setVisible(true);
-				System.out.println("change grade");
 				sendMessage(message);
 			}
 			else {
 				///entergrade
-				// System.out.println("enterGrade");
 				sendMessage("");
 			}
 
 		}
 		else{
-			//  System.out.println("select course and grade to change");
 			sendMessage("");
 		}
 	}
@@ -248,7 +238,6 @@ public class PrimaryController {
 
 		} else if (event.getMessage().getMessage().equals("i will give you the student grades")) {
 
-			System.out.println("i will give you the student grades");
 			course_column.setCellValueFactory(new PropertyValueFactory<>("course"));
 			course_column.setCellValueFactory(new PropertyValueFactory<>("Grade"));
 			course_grade_table.setVisible(true);
@@ -278,7 +267,6 @@ public class PrimaryController {
 			show_student_after_update_but.setVisible(true);
 
 		} else {
-			//  System.out.println("else");
 
 		}
 

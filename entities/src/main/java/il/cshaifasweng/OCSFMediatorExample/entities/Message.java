@@ -1,9 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.entities;
 
-import il.cshaifasweng.OCSFMediatorExample.entities.entities.Course;
-import il.cshaifasweng.OCSFMediatorExample.entities.entities.Grade;
-import il.cshaifasweng.OCSFMediatorExample.entities.entities.Questions;
-import il.cshaifasweng.OCSFMediatorExample.entities.entities.Student;
+import il.cshaifasweng.OCSFMediatorExample.entities.entities.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -21,6 +18,15 @@ public class Message implements Serializable {
     String data;
     String test;
     int studentId;
+    Exams exam;
+
+    public Exams getExam() {
+        return exam;
+    }
+
+    public void setExam(Exams exam) {
+        this.exam = exam;
+    }
 
     int course_id;
     private Questions question ;
@@ -33,6 +39,15 @@ public class Message implements Serializable {
 
     public void setQuestions_list_from_server(List<Questions> questions_list_from_server) {
         this.questions_list_from_server = questions_list_from_server;
+    }
+    private List<Exams> exams_list_from_server;
+
+    public List<Exams> getExams_list_from_server() {
+        return exams_list_from_server;
+    }
+
+    public void setExams_list_from_server(List<Exams> exams_list_from_server) {
+        this.exams_list_from_server = exams_list_from_server;
     }
 
     private List<Student> students_list_from_server;

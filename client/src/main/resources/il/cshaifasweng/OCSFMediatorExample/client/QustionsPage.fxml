@@ -6,23 +6,23 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="505.0" prefWidth="798.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.QustionsPage">
+<AnchorPane prefHeight="505.0" prefWidth="624.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.QustionsPage">
    <children>
-      <TextField fx:id="quesionText" layoutX="155.0" layoutY="39.0" prefHeight="69.0" prefWidth="290.0" />
-      <TextField fx:id="answerText1" layoutX="155.0" layoutY="155.0" prefHeight="25.0" prefWidth="376.0" />
-      <TextField fx:id="answerText5" layoutX="155.0" layoutY="316.0" prefHeight="25.0" prefWidth="376.0" />
-      <TextField fx:id="answerText4" layoutX="155.0" layoutY="277.0" prefHeight="25.0" prefWidth="376.0" />
-      <TextField fx:id="answerText3" layoutX="155.0" layoutY="238.0" prefHeight="25.0" prefWidth="376.0" />
-      <TextField fx:id="answerText2" layoutX="155.0" layoutY="200.0" prefHeight="25.0" prefWidth="376.0" />
-      <Button layoutX="743.0" layoutY="14.0" mnemonicParsing="false" onAction="#backB" text="Back" />
-      <Button layoutX="364.0" layoutY="121.0" mnemonicParsing="false" onAction="#deleteButton" text="Button" />
-      <Button layoutX="176.0" layoutY="121.0" mnemonicParsing="false" onAction="#addButton" text="Add" />
+      <TextField fx:id="quesionText" layoutX="94.0" layoutY="27.0" prefHeight="69.0" prefWidth="290.0" />
+      <TextField fx:id="answerText1" layoutX="94.0" layoutY="238.0" prefHeight="25.0" prefWidth="303.0" />
+      <TextField fx:id="answerText5" layoutX="94.0" layoutY="395.0" prefHeight="25.0" prefWidth="303.0" />
+      <TextField fx:id="answerText4" layoutX="94.0" layoutY="357.0" prefHeight="25.0" prefWidth="303.0" />
+      <TextField fx:id="answerText3" layoutX="94.0" layoutY="315.0" prefHeight="25.0" prefWidth="303.0" />
+      <TextField fx:id="answerText2" layoutX="94.0" layoutY="277.0" prefHeight="25.0" prefWidth="303.0" />
+      <Button layoutX="582.0" layoutY="27.0" mnemonicParsing="false" onAction="#backB" text="Back" />
+      <Button layoutX="273.0" layoutY="132.0" mnemonicParsing="false" onAction="#deleteButton" text="Button" />
+      <Button layoutX="148.0" layoutY="132.0" mnemonicParsing="false" onAction="#addButton" text="Add" />
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-      <Text layoutX="62.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Answer 1" wrappingWidth="62.13671875" />
-      <Text layoutX="62.0" layoutY="217.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Answer 2" wrappingWidth="62.13671875" />
-      <Text layoutX="62.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Answer 3" wrappingWidth="62.13671875" />
-      <Text layoutX="62.0" layoutY="294.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Answer 4" wrappingWidth="62.13671875" />
-      <Text layoutX="62.0" layoutY="333.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Correct Answer" wrappingWidth="83.13671875" />
-      <ListView fx:id="list" layoutX="564.0" layoutY="151.0" onEditStart="#listac" prefHeight="193.0" prefWidth="200.0" />
+      <Text layoutX="11.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Answer 1" wrappingWidth="62.13671875" />
+      <Text layoutX="11.0" layoutY="294.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Answer 2" wrappingWidth="62.13671875" />
+      <Text layoutX="11.0" layoutY="332.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Answer 3" wrappingWidth="62.13671875" />
+      <Text layoutX="11.0" layoutY="374.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Answer 4" wrappingWidth="62.13671875" />
+      <Text layoutX="11.0" layoutY="412.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Correct Answer" wrappingWidth="83.13671875" />
+      <ListView fx:id="list" layoutX="397.0" layoutY="27.0" onEditStart="#listac" prefHeight="210.0" prefWidth="173.0" />
    </children>
 </AnchorPane>
