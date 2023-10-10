@@ -39,20 +39,20 @@ public class App {
 
         return configuration.buildSessionFactory(serviceRegistry);
     }
-    private static void generateGrades(){
+
+    private static void generateGrades() {
 
         List<Student> students = getAll(Student.class);
         List<Course> courses = getAll(Course.class);
-        for (int i=0; i<students.size();i++){
-            for(int j=0;j<students.size();j++){
-            Grade grade = new Grade(students.get(i),courses.get(j),100);
-            session.save(grade);
-            session.flush();
-        }
+        for (int i = 0; i < students.size(); i++) {
+            for (int j = 0; j < students.size(); j++) {
+                Grade grade = new Grade(students.get(i), courses.get(j), 100);
+                session.save(grade);
+                session.flush();
+            }
         }
 
     }
-
 
 
     private static final String[] sFIRST_NAMES = {
@@ -82,49 +82,49 @@ public class App {
     }
 
     private static void generateLecturers() throws Exception {
-        for(int i=0;i<10 ; i++) {
+        for (int i = 0; i < 10; i++) {
             Lecturer lect = new Lecturer(generateRandomName(FIRST_NAMES), generateRandomName(LAST_NAMES));
             session.save(lect);
             session.flush();
         }
 
     }
+
     private static void generateCourses() throws Exception {
 
         Course course0 = new Course("Math");
         session.save(course0);
         session.flush();
-        Course course1 = new Course("English" );
+        Course course1 = new Course("English");
         session.save(course1);
         session.flush();
-        Course course2 = new Course("Arabic" );
+        Course course2 = new Course("Arabic");
         session.save(course2);
         session.flush();
-        Course course3 = new Course("Hebrew" );
+        Course course3 = new Course("Hebrew");
         session.save(course3);
         session.flush();
         Course course4 = new Course("Music");
         session.save(course4);
         session.flush();
-        Course course5 = new Course("Data Structure" );
+        Course course5 = new Course("Data Structure");
         session.save(course5);
         session.flush();
-        Course course6 = new Course("Algorithmes" );
+        Course course6 = new Course("Algorithmes");
         session.save(course6);
         session.flush();
-        Course course7 = new Course("Object Oriented Programming" );
+        Course course7 = new Course("Object Oriented Programming");
         session.save(course7);
         session.flush();
-        Course course8 = new Course("Assemble" );
+        Course course8 = new Course("Assemble");
         session.save(course8);
         session.flush();
-        Course course9 = new Course("Sport" );
+        Course course9 = new Course("Sport");
         session.save(course9);
         session.flush();
     }
 
 // ...
-
 
 
     private static int generateRandomID() {
@@ -133,13 +133,14 @@ public class App {
     }
 
     private static void generateStudents() throws Exception {
-        for (int i=0 ;i<10;i++) {
+        for (int i = 0; i < 10; i++) {
             int id = generateRandomID();
             Student std0 = new Student(id, generateRandomName(sFIRST_NAMES), generateRandomName(sLAST_NAMES));
             session.save(std0);
             session.flush();
         }
     }
+
     private static <T> List<T> getAll(Class<T> object) {
 
 
@@ -152,8 +153,6 @@ public class App {
     }
 
 
-
-
     public static List<Student> getAllStudents() throws Exception {
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Student> query = builder.createQuery(Student.class);
@@ -162,51 +161,24 @@ public class App {
         return data;
     }
 
-    public static void generateQuestion(Questions questions){
+    public static void generateQuestion(Questions questions) {
         session.save(questions);
         session.flush();
-}
-    public static void generateQuestions(){
-        Questions ques = new Questions("test","1","2","3","4","2");
+    }
+
+    public static void generateQuestions() {
+        Questions ques = new Questions("test", "1", "2", "3", "4", "2");
         session.save(ques);
         session.flush();
     }
 
 
-    public static void addQuestionToExam(int examId, Questions questionToAdd) throws Exception {
-        List<Exams> exams = getAllExams();
-        try {
-            // Find the corresponding Grade entity
-            Exams exam = null;
-            for (Exams e : exams) {
-                if (e.getId() == examId) {
-                    exam=e;
-                    break;
-                }
-            }
-
-            if (exam == null) {
-                throw new Exception("No grade found for the specified student and course.");
-            }
-
-
-            // Update the grade
-            //exam.add_Ques(questionToAdd);
-            exam.add_Ques(questionToAdd);
-            exam.setQues_number(exam.getQuestions().size());
-            System.out.println("it is valid grade.");
-            session.update(exam);
-
-            session.getTransaction().commit(); // Save everything..commit();
-        } catch (Exception e) {
-            session.getTransaction().rollback();
-        } finally {
-            session.close();
-        }
-    }
     public static void updateExamStat(int examId, boolean newStat) throws Exception {
+
         List<Exams> exams = getAllExams();
         try {
+
+
             // Find the corresponding Exam entity
             Exams exam = null;
             for (Exams e : exams) {
@@ -225,95 +197,63 @@ public class App {
 
             // Save the updated exam object
             session.update(exam);
-            session.getTransaction().commit();
+            session.getTransaction().commit(); // Save everything..commit();
         } catch (Exception e) {
-            // Handle the exception appropriately, e.g., log it or rethrow it
-            e.printStackTrace();
+            session.getTransaction().rollback();
+        } finally {
+            session.close();
         }
     }
-    public static void updateExam(Exams updatedExam) throws Exception {
-        List<Exams> exams = getAllExams();
-        try {
 
-            // Find the corresponding Grade entity
+
+    public static void updateExam(Exams updatedExam) throws Exception {
+
+        Transaction tx = null;
+        try (Session session = sessionFactory.openSession()) {
+            tx = session.beginTransaction();
+
+            List<Exams> exams = getAllExams();
+
             Exams exam = null;
             for (Exams e : exams) {
-                System.out.println("id in app "+e.getId() + "arrival id "+updatedExam.getId());
                 if (e.getId() == updatedExam.getId()) {
-
-                    exam=e;
-                // Update the exam properties
-                    exam.setId(updatedExam.getId());
-                    exam.setQues_number(updatedExam.getQues_number());
-                    exam.setCourse_name(updatedExam.getCourse_name());
-                    exam.setStat(updatedExam.getStat());
-                // Update other properties as needed
-
-                // Clear the existing list of questions
-                    exam.getQuestions().clear();
-
-                // Add the updated list of questions
-                List<Questions> updatedQuestions = updatedExam.getQuestions();
-                for (Questions question : updatedQuestions) {
-                    exam.add_Ques(question);
+                    exam = e;
+                    break;
                 }
-
-                // Save the updated exam object
-                session.update(exam);
-                session.getTransaction().commit();
-                break;
-            } else {
-                // Handle the case where the exam is not found
-                System.out.println("Exam not found");
             }
-        }} catch (Exception e) {
-            if (session != null) {
-                session.getTransaction().rollback();
+
+            if (exam == null) {
+                throw new Exception("No exam found with the specified ID.");
             }
-            e.printStackTrace();
-        } finally {
-            assert session != null;
-            session.close();
-        }
-    }
 
-    public static void updateExamques(Exams updatedExam) {
-        //Session session = sessionFactory.openSession();
-        //Transaction tx = null;
+            // Update exam properties
+            exam.setId(updatedExam.getId());
+            exam.setQues_number(updatedExam.getQues_number());
+            exam.setCourse_name(updatedExam.getCourse_name());
+            exam.setStat(updatedExam.getStat());
 
-        try {
-            //tx = session.beginTransaction();
+            // Clear the existing list of questions
+            //exam.getQuestions().clear();
 
-            // Retrieve the existing exam object from the database by its ID
-            Exams existingExam = session.get(Exams.class, updatedExam.getId());
+            // Add the updated list of questions
+/*            List<Questions> updatedQuestions = updatedExam.getQuestions();
+            for (Questions question : updatedQuestions) {
+                exam.add_Ques(question);
+            }*/
 
-            if (existingExam != null) {
-
-                existingExam.getQuestions().clear();
-
-                // Add the updated list of questions
-                List<Questions> updatedQuestions = updatedExam.getQuestions();
-                for (Questions question : updatedQuestions) {
-                    existingExam.add_Ques(question);
-                }
-
-                // Save the updated exam object
-                session.update(existingExam);
-                session.getTransaction().commit();
-            } else {
-                // Handle the case where the exam is not found
-                System.out.println("Exam not found");
-            }
+            // Update the exam
+            session.update(exam);
+            tx.commit();
         } catch (Exception e) {
-            if (session != null) {
-                session.getTransaction().rollback();
+            if (tx != null) {
+                tx.rollback();
             }
             e.printStackTrace();
-        } finally {
-            assert session != null;
-            session.close();
+            throw e; // Rethrow the exception for higher-level error handling
         }
     }
+
+
     public static List<Grade> getGradesByStudentId(int studentId) throws Exception{
 
 
@@ -390,11 +330,6 @@ public class App {
         session.save(exam);
         session.flush();
     }
-
-    public static void changeexamstat(String id) {
-
-    }
-
 
 
 

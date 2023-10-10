@@ -74,18 +74,22 @@ public class SimpleServer extends AbstractServer {
 					message.setMessage("Error! we got an empty message");
 					client.sendToClient(message);
 				} else if (request.equals("add client")) {
+
 					SubscribedClient connection = new SubscribedClient(client);
 					SubscribersList.add(connection);
 					message.setMessage("client added successfully");
 					client.sendToClient(message);
-				} else if (request.equals("give me the students")) {
-					message.setMessage("i will give you the students");
 
+				} else if (request.equals("give me the students")) {
+
+					message.setMessage("i will give you the students");
 					message.setStudents_list_from_server(getAllStudents());
 					//message.setCourses_list_from_server(getAllCourses());
 					client.sendToClient(message);
 					sendToAllClients(message);
+
 				} else if (request.equals("give me the student grades")) {
+
 					message.setMessage("i will give you the student grades");
 					message.setGrades_list_from_server(getGradesByStudentId(message.getStudentId()));
 					client.sendToClient(message);
@@ -99,55 +103,78 @@ public class SimpleServer extends AbstractServer {
 					sendToAllClients(message);
 
 				}else if (request.equals("update exam")) {
+
 					Exams exams = message.getExam();
-					exams.setQues_number(exams.getQuestions().size());
+					//exams.setQues_number(exams.getQuestions().size());
+					//System.out.println(exams.getQuestions().size());
 					updateExam(exams);
-
-				}else if (request.equals("add exam")) {
-					Exams exam = message.getExam();
-					System.out.println("id " + exam.getId());
-					generateExam(exam);
-					List<Exams> ex = getAllExams1();
-					for(int i=0;i<ex.size();i++) {
-						System.out.println("first " + ex.get(i).getId());
-					}
-					updateExam(exam);
-					ex = getAllExams1();
-					for(int i=0;i<ex.size();i++) {
-						System.out.println("sec " + ex.get(i).getId());
-					}
-
-					message.setMessage("i added the exam");
+					message.setMessage("i updated the exam");
 					client.sendToClient(message);
+
 				}else if (request.equals("show exams")) {
+
 					message.setMessage("i will give you the exams");
-					List<Exams> exams= getAllExams1();
+					List<Exams> exams= getAllExams();
 					message.setExams_list_from_server(exams);
 					client.sendToClient(message);
+
+				}else if (request.equals("add exam")) {
+
+					Exams exam = message.getExam();
+					generateExam(exam);
+					message.setMessage("i added the exam");
+					client.sendToClient(message);
+
+				} else if (request.equals("add ques to exam")) {
+
+					generateQuestion(message.getQuestion());
+
 				} else if (request.equals("change the student grade")) {
+
 					changeGrade(message.getStudentId(), message.getCourse_id(), message.getGrade_to_change());
 					message.setMessage("i changed the grade");
 					client.sendToClient(message);
 					sendToAllClients(message);
+
 				}else if(request.equals("start exam")){
+
 					updateExamStat(message.getExam().getId(),true);
 					message.setMessage("i will start exam");
 					client.sendToClient(message);
+
+				}else if(request.equals("end exam")){
+
+					updateExamStat(message.getExam().getId(),false);
+
 				}else if(request.equals("add questions to course")){
+
 				message.setMessage("i added question to course");
 				client.sendToClient(message);
+
 			}
 				else if(request.equals("create question")) {
+
 					message.setMessage("i created question");
 					Questions question = message.getQuestion();
 					generateQuestion(question);
 					client.sendToClient(message);
+
 				}else if(request.equals("show questions")){
+
 					message.setMessage("i will show questions");
 					List<Questions> ques = getAllQuestions();
-
 					message.setQuestions_list_from_server(ques);
 					client.sendToClient(message);
+
+				}else if(request.equals("show questions2")){
+
+					message.setMessage("i will show questions2");
+					List<Questions> ques = getAllQuestions();
+					List<Exams> exams = getAllExams1();
+					message.setExams_list_from_server(exams);
+					message.setQuestions_list_from_server(ques);
+					client.sendToClient(message);
+
 				}else {
 					sendToAllClients(message);
 				}

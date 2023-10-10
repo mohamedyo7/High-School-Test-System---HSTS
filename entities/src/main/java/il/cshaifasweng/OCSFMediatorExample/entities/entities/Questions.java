@@ -92,15 +92,22 @@ public class Questions implements Serializable {
     }
 
     public Questions(String q , String a1,String a2 ,String a3,String a4,String cA) {
-    this.question=q;
-    this.Ans1=a1;
-    this.Ans2=a2;
-    this.Ans3=a3;
-    this.Ans4=a4;
-    this.correct_ans=cA;
+        this.question=q;
+        this.Ans1=a1;
+        this.Ans2=a2;
+        this.Ans3=a3;
+        this.Ans4=a4;
+        this.correct_ans=cA;
+        this.ques_id="empty";
     }
     public Questions() {
-
+        this.question="empty";
+        this.Ans1="empty";
+        this.Ans2="empty";
+        this.Ans3="empty";
+        this.Ans4="empty";
+        this.correct_ans="empty";
+        this.ques_id="empty";
     }
 
     public void setQues_id(String quesId) {

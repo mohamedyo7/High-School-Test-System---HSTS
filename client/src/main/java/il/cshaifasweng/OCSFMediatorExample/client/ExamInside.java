@@ -2,6 +2,7 @@ package il.cshaifasweng.OCSFMediatorExample.client;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -16,7 +17,15 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 public class ExamInside {
+    int i=1;
+    double mark;
+    String cAns;
+    int quenum;
+    List<Questions> ques=new ArrayList<>();
+    List<Questions> fques=new ArrayList<>();
 
+    List<Exams> exams=new ArrayList<>();
+    String id="0";
     @FXML
     private ResourceBundle resources;
 
@@ -59,35 +68,100 @@ public class ExamInside {
     }
 
     @FXML
-    void backB(ActionEvent event) {
-
+    void backB(ActionEvent event) throws IOException {
+        SimpleChatClient.setRoot("examsFinal");
     }
 
     @FXML
-    void doneB(ActionEvent event) {
-
+    void doneB(ActionEvent event) throws IOException {
+        for (Exams value : exams) {
+            if (value.getStat()) {
+                fques.clear();
+                i = 0;
+                id = String.valueOf(value.getId());
+                Message msg = new Message("end exam");
+                msg.setExam(value);
+                sendMessage(msg);
+                SimpleChatClient.setRoot("ExamsPage");
+                break;
+            }
+        }
     }
 
     @FXML
     void nextb(ActionEvent event) {
 
+        if(ans1.isSelected()){
+            if(ans1.getText().equals(cAns)){
+                mark+= ((double) 100 /quenum);
+            }
+            ans1.setSelected(false);
+        }
+        if(ans2.isSelected()){
+            if(ans2.getText().equals(cAns)){
+                mark+= ((double) 100 /quenum);
+            }
+            ans2.setSelected(false);
+        }
+        if(ans3.isSelected()){
+            if(ans3.getText().equals(cAns)){
+                mark+= ((double) 100 /quenum);
+            }
+            ans3.setSelected(false);
+        }
+        if(ans4.isSelected()){
+            if(ans4.getText().equals(cAns)){
+                mark+= ((double) 100 /quenum);
+            }
+            ans4.setSelected(false);
+        }
+        if(i<fques.size()){
+                question.setText(fques.get(i).getQuestion());
+                ans1.setText(fques.get(i).getAns1());
+                ans2.setText(fques.get(i).getAns2());
+                ans3.setText(fques.get(i).getAns3());
+                ans4.setText(fques.get(i).getAns4());
+                cAns=fques.get(i).getCorrect_ans();
+                i++;
+        }
+        else {
+            System.out.println("mark is " + mark);
+        }
     }
 
     @Subscribe
     public void setDataFromServerTF(MessageEvent event) {
-        if (event.getMessage().getMessage().equals("i will give you the exams")){
-            List<Exams> exam=event.getMessage().getExams_list_from_server();
-            Exams exams = null;
-
-            for (int j=1;j<exam.size();j++){
-                if(exam.get(j).getStat()){
-                   List<Questions> ques=exam.get(j).getQuestions();
-                   exams=exam.get(j);
-                }}
-            if(exams!=null){
-                //start from here to set the exam and quesions
+        if (event.getMessage().getMessage().equals("i will show questions2")){
+            ques = event.getMessage().getQuestions_list_from_server();
+            exams = event.getMessage().getExams_list_from_server();
+            for (Exams value : exams) {
+                if (value.getStat()) {
+                    id = String.valueOf(value.getId());
+                    break;
+                }
             }
-            question.setText("hi how are you");
+            for (Questions que : ques) {
+                if (que.getQues_id().equals(id)) {
+                    fques.add(que);
+                } else {
+                    continue;
+                }
+
+            }
+            if(fques!=null){
+                question.setText(fques.get(i).getQuestion());
+                ans1.setText(fques.get(i).getAns1());
+                ans2.setText(fques.get(i).getAns2());
+                ans3.setText(fques.get(i).getAns3());
+                ans4.setText(fques.get(i).getAns4());
+                cAns=fques.get(i).getCorrect_ans();
+                i++;
+                quenum=fques.size();
+            }
+            else {
+                System.out.println("its null");
+            }
+
             }
 
             //start from here exam.question have problem
@@ -116,7 +190,12 @@ public class ExamInside {
     @FXML
     void initialize() {
         EventBus.getDefault().register(this);
-        sendMessage("show exams");
+        fques.clear();
+        i=0;
+        mark=0.0;
+        cAns="";
+        quenum=0;
+        sendMessage("show questions2");
         assert ans1 != null : "fx:id=\"ans1\" was not injected: check your FXML file 'examInside.fxml'.";
         assert ans2 != null : "fx:id=\"ans2\" was not injected: check your FXML file 'examInside.fxml'.";
         assert ans3 != null : "fx:id=\"ans3\" was not injected: check your FXML file 'examInside.fxml'.";

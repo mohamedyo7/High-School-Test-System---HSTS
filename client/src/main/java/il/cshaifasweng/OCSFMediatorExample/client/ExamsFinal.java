@@ -77,7 +77,6 @@ public class ExamsFinal {
             numberTable.setCellValueFactory(new PropertyValueFactory<>("ques_number"));
 
             for(int i=1;i<exams.size();i++){
-                System.out.println("exam id is" + exams.get(i).getId());
                 if(coursesList.getSelectionModel().getSelectedItem().equals(exams.get(i).getCourse_name())){
                         examsTable.getItems().add(exams.get(i));
                 }

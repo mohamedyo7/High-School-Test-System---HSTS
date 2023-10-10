@@ -42,6 +42,8 @@ public class SimpleClient extends AbstractClient {
 			EventBus.getDefault().post(new MessageEvent(message));}
 		else if(message.getMessage().equals("i will show questions")) {
 			EventBus.getDefault().post(new MessageEvent(message));}
+		else if(message.getMessage().equals("i will show questions2")) {
+			EventBus.getDefault().post(new MessageEvent(message));}
 		else {System.out.println("else");
 		}
 

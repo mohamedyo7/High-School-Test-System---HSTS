@@ -20,6 +20,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 public class ExamsPage {
     Exams exam = new Exams();
+    int qnum;
     @FXML
     private TextField exam_id;
     @FXML
@@ -56,6 +57,7 @@ public class ExamsPage {
 
         //sendMessage(msg);
         Message msg = new Message("update exam");
+        exam.setQues_number(qnum);
         msg.setExam(exam);
         sendMessage(msg);
         SimpleChatClient.setRoot("examsFinal");
@@ -66,7 +68,13 @@ public class ExamsPage {
         Questions ques = tableviewq.getSelectionModel().getSelectedItem();
         ques.setQues_id(exam_id.getText());
         exam.setId(Integer.parseInt(exam_id.getText()));
-        exam.add_Ques(ques);
+        //exam.add_Ques(ques);
+
+        Message msg = new Message("add ques to exam");
+        msg.setQuestion(ques);
+        sendMessage(msg);
+        qnum++;
+
         //exam.setCourse_name(coursesList.getSelectionModel().getSelectedItem());
 
     }
@@ -121,6 +129,7 @@ public class ExamsPage {
             for(int i=1;i<ques.size();i++){
 
                 if(coursesList.getSelectionModel().getSelectedItem().equals(ques.get(i).getCourse_name())){
+                    if(ques.get(i).getQues_id().equals("empty"))
                     tableviewq.getItems().add(ques.get(i));
                 }
 
@@ -149,7 +158,9 @@ public class ExamsPage {
     }
     @FXML
     void initialize() {
+
         EventBus.getDefault().register(this);
+        qnum=0;
         sendMessage("give me the courses");
 
             assert coursesList != null : "fx:id=\"coursesList\" was not injected: check your FXML file 'ExamsPage.fxml'.";
