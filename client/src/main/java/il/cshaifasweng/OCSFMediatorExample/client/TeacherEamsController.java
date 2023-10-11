@@ -42,7 +42,10 @@ public class TeacherEamsController {
     @FXML
     private URL location;
 
-
+    @FXML
+    void existExamsB(ActionEvent event) throws IOException {
+        SimpleChatClient.setRoot("examsFinal");
+    }
     @FXML
     void BackB(ActionEvent event) throws IOException {
         SimpleChatClient.setRoot("TeacherPage");

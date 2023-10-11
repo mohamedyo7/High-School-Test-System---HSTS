@@ -11,6 +11,9 @@ import java.util.List;
 public class Message implements Serializable {
 
     int id;
+    double grade;
+
+
 
     List<Object> object;
     LocalDateTime timeStamp;
@@ -19,7 +22,13 @@ public class Message implements Serializable {
     String test;
     int studentId;
     Exams exam;
+    public double getGrade() {
+        return grade;
+    }
 
+    public void setGrade(double grade) {
+        this.grade = grade;
+    }
     public Exams getExam() {
         return exam;
     }

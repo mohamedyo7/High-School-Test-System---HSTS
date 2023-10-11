@@ -7,6 +7,7 @@ import org.greenrobot.eventbus.EventBus;
 import il.cshaifasweng.OCSFMediatorExample.client.ocsf.AbstractClient;
 
 public class SimpleClient extends AbstractClient {
+
 	//public Exams examclient=new Exams();
 	private static SimpleClient client = null;
 
@@ -44,6 +45,9 @@ public class SimpleClient extends AbstractClient {
 			EventBus.getDefault().post(new MessageEvent(message));}
 		else if(message.getMessage().equals("i will show questions2")) {
 			EventBus.getDefault().post(new MessageEvent(message));}
+		else if(message.getMessage().equals("the grade is")) {
+			EventBus.getDefault().post(new MessageEvent(message));}
+
 		else {System.out.println("else");
 		}
 
@@ -56,5 +60,9 @@ public class SimpleClient extends AbstractClient {
 		}
 		return client;
 	}
+
+	public static double client_grade;
+
+
 
 }

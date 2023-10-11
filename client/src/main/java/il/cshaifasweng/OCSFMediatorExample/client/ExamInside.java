@@ -5,7 +5,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-
+import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import il.cshaifasweng.OCSFMediatorExample.entities.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.Exams;
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.Questions;
@@ -89,7 +89,7 @@ public class ExamInside {
     }
 
     @FXML
-    void nextb(ActionEvent event) {
+    void nextb(ActionEvent event) throws IOException {
 
         if(ans1.isSelected()){
             if(ans1.getText().equals(cAns)){
@@ -126,6 +126,10 @@ public class ExamInside {
         }
         else {
             System.out.println("mark is " + mark);
+            Message msg = new Message("the grade is");
+            msg.setGrade(mark);
+            SimpleChatClient.setRoot("gradeExam");
+            sendMessage(msg);
         }
     }
 

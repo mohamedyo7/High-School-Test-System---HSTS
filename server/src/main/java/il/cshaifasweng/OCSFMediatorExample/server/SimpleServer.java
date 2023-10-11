@@ -175,6 +175,11 @@ public class SimpleServer extends AbstractServer {
 					message.setQuestions_list_from_server(ques);
 					client.sendToClient(message);
 
+				}else if(request.equals("the grade is")){
+					message.setMessage("the grade is");
+					client.sendToClient(message);
+
+
 				}else {
 					sendToAllClients(message);
 				}
