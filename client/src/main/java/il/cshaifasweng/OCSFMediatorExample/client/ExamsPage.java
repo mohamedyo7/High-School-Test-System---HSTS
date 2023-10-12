@@ -1,23 +1,23 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.List;
-import java.util.ResourceBundle;
-
 import il.cshaifasweng.OCSFMediatorExample.entities.Message;
-import il.cshaifasweng.OCSFMediatorExample.entities.entities.Course;
+import il.cshaifasweng.OCSFMediatorExample.entities.entities.CourseReg;
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.Exams;
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.Questions;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.List;
+import java.util.ResourceBundle;
 public class ExamsPage {
     Exams exam = new Exams();
     int qnum;
@@ -111,13 +111,16 @@ public class ExamsPage {
     public void setDataFromServerTF(MessageEvent event) {
         if (event.getMessage().getMessage().equals("i will give you the courses")) {
             coursesList.getItems().clear();
-            List<Course> Courses_from_server = event.getMessage().getCourses_list_from_server();
-/*            course_column.setCellValueFactory(new PropertyValueFactory<>("id"));
-            course_column.setCellValueFactory(new PropertyValueFactory<>("name"));*/
+            List<CourseReg> Courses_from_server_reg = event.getMessage().getCourses_list_from_server_reg();
 
-            for (int i = 0; i < Courses_from_server.size(); i++) {
+            for (int i = 0; i < Courses_from_server_reg.size(); i++) {
                 // Set the data to the table
-                coursesList.getItems().add(Courses_from_server.get(i).getName());
+                if (Courses_from_server_reg.get(i).getLecturer() != null)
+                    if (Courses_from_server_reg.get(i).getLecturer().getId() == SimpleClient.ID) {
+
+                        coursesList.getItems().add(Courses_from_server_reg.get(i).getName());
+                    }
+
             }
             coursesList.refresh();
         }
@@ -127,7 +130,7 @@ public class ExamsPage {
             tablecol.setCellValueFactory(new PropertyValueFactory<>("question"));
             exam.setCourse_name(coursesList.getSelectionModel().getSelectedItem());
             for(int i=1;i<ques.size();i++){
-
+                if(coursesList.getSelectionModel().getSelectedItem()!=null)
                 if(coursesList.getSelectionModel().getSelectedItem().equals(ques.get(i).getCourse_name())){
                     if(ques.get(i).getQues_id().equals("empty"))
                     tableviewq.getItems().add(ques.get(i));

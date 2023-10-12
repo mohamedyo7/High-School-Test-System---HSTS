@@ -1,11 +1,5 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
-import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import il.cshaifasweng.OCSFMediatorExample.entities.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.Exams;
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.Questions;
@@ -16,11 +10,19 @@ import javafx.scene.text.Text;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
+
 public class ExamInside {
     int i=1;
     double mark;
+    int exam_id;
     String cAns;
     int quenum;
+
     List<Questions> ques=new ArrayList<>();
     List<Questions> fques=new ArrayList<>();
 
@@ -116,55 +118,49 @@ public class ExamInside {
             ans4.setSelected(false);
         }
         if(i<fques.size()){
-                question.setText(fques.get(i).getQuestion());
-                ans1.setText(fques.get(i).getAns1());
-                ans2.setText(fques.get(i).getAns2());
-                ans3.setText(fques.get(i).getAns3());
-                ans4.setText(fques.get(i).getAns4());
-                cAns=fques.get(i).getCorrect_ans();
-                i++;
+            question.setText(fques.get(i).getQuestion());
+            ans1.setText(fques.get(i).getAns1());
+            ans2.setText(fques.get(i).getAns2());
+            ans3.setText(fques.get(i).getAns3());
+            ans4.setText(fques.get(i).getAns4());
+            cAns=fques.get(i).getCorrect_ans();
+            i++;
         }
         else {
-            for (Exams value : exams) {
-                if (value.getStat()) {
-                    fques.clear();
-                    i = 0;
-                    id = String.valueOf(value.getId());
-                    Message msg = new Message("end exam");
-                    msg.setExam(value);
-                    sendMessage(msg);
-                    break;
-                }
-            }
-            System.out.println("mark is " + mark);
-            Message msg = new Message("the grade is");
-            msg.setGrade(mark);
 
+            fques.clear();
+            i = 0;
+            cAns = "";
+            quenum = 0;
+            Message msg = new Message("end exam");
+            msg.setId(exam_id);
+            sendMessage(msg);
+            System.out.println("mark is " + mark);
+            msg.setMessage("the grade is");
+            msg.setGrade(mark);
+            mark = 0.0;
             SimpleChatClient.setRoot("gradeExam");
             sendMessage(msg);
         }
     }
+
 
     @Subscribe
     public void setDataFromServerTF(MessageEvent event) {
         if (event.getMessage().getMessage().equals("i will show questions2")){
             ques = event.getMessage().getQuestions_list_from_server();
             exams = event.getMessage().getExams_list_from_server();
-            for (Exams value : exams) {
-                if (value.getStat()) {
-                    id = String.valueOf(value.getId());
-                    break;
-                }
-            }
+            fques.clear();
+            id = String.valueOf(exam_id);
+            i=0;
             for (Questions que : ques) {
                 if (que.getQues_id().equals(id)) {
+                    System.out.println("id is"+ que.getQuestion()+ " " + id);
                     fques.add(que);
-                } else {
-                    continue;
                 }
 
             }
-            if(fques!=null){
+            if(!fques.isEmpty()){
                 question.setText(fques.get(i).getQuestion());
                 ans1.setText(fques.get(i).getAns1());
                 ans2.setText(fques.get(i).getAns2());
@@ -178,9 +174,14 @@ public class ExamInside {
                 System.out.println("its null");
             }
 
-            }
+        } else if (event.getMessage().getMessage().equals("i will start exam")) {
+            exam_id=event.getMessage().getExam().getId();
+            System.out.println("hi"+exam_id);
+            sendMessage("show questions2");
 
-            //start from here exam.question have problem
+        }
+
+        //start from here exam.question have problem
 
 
     }
@@ -211,7 +212,7 @@ public class ExamInside {
         mark=0.0;
         cAns="";
         quenum=0;
-        sendMessage("show questions2");
+
         assert ans1 != null : "fx:id=\"ans1\" was not injected: check your FXML file 'examInside.fxml'.";
         assert ans2 != null : "fx:id=\"ans2\" was not injected: check your FXML file 'examInside.fxml'.";
         assert ans3 != null : "fx:id=\"ans3\" was not injected: check your FXML file 'examInside.fxml'.";

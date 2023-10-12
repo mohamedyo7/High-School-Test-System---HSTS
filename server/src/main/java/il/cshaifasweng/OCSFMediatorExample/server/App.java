@@ -1,5 +1,4 @@
 package il.cshaifasweng.OCSFMediatorExample.server;
-import java.util.Random;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.*;
 import org.hibernate.HibernateException;
@@ -33,61 +32,14 @@ public class App {
         configuration.addAnnotatedClass(Student.class);
         configuration.addAnnotatedClass(Questions.class);
 
+        configuration.addAnnotatedClass(CourseReg.class);
+        configuration.addAnnotatedClass(Mediator.class);
+
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                 .applySettings(configuration.getProperties())
                 .build();
 
         return configuration.buildSessionFactory(serviceRegistry);
-    }
-
-    private static void generateGrades() {
-
-        List<Student> students = getAll(Student.class);
-        List<Course> courses = getAll(Course.class);
-        for (int i = 0; i < students.size(); i++) {
-            for (int j = 0; j < students.size(); j++) {
-                Grade grade = new Grade(students.get(i), courses.get(j), 100);
-                session.save(grade);
-                session.flush();
-            }
-        }
-
-    }
-
-
-    private static final String[] sFIRST_NAMES = {
-            "Sophia", "Oliver", "Emma", "Liam", "Ava", "Noah",
-            "Isabella", "Olivia", "Elijah", "Charlotte", "William", // Add more names here if needed
-    };
-
-    private static final String[] sLAST_NAMES = {
-            "Smith", "Johnson", "Brown", "Jones", "Garcia", "Miller",
-            "Davis", "Rodriguez", "Martinez", "Taylor", "Anderson", // Add more names here if needed
-    };
-
-    private static final String[] FIRST_NAMES = {
-            "Ethan", "Sophia", "Caleb", "Lily", "Lucas", "Ava",
-            "Benjamin", "Olivia", "Gabriel", "Emma", "Michael", // Add more names here if needed
-    };
-
-    private static final String[] LAST_NAMES = {
-            "Simmons", "Hayes", "Parker", "Turner", "Edwards", "Mitchell",
-            "Martinez", "Thompson", "Johnson", "Anderson", "Williams", // Add more names here if needed
-    };
-
-    private static String generateRandomName(String[] names) {
-        Random random = new Random();
-        int index = random.nextInt(names.length);
-        return names[index];
-    }
-
-    private static void generateLecturers() throws Exception {
-        for (int i = 0; i < 10; i++) {
-            Lecturer lect = new Lecturer(generateRandomName(FIRST_NAMES), generateRandomName(LAST_NAMES));
-            session.save(lect);
-            session.flush();
-        }
-
     }
 
     private static void generateCourses() throws Exception {
@@ -126,21 +78,6 @@ public class App {
 
 // ...
 
-
-    private static int generateRandomID() {
-        Random random = new Random();
-        return 100000000 + random.nextInt(900000000); // Generates a random 9-digit ID
-    }
-
-    private static void generateStudents() throws Exception {
-        for (int i = 0; i < 10; i++) {
-            int id = generateRandomID();
-            Student std0 = new Student(id, generateRandomName(sFIRST_NAMES), generateRandomName(sLAST_NAMES));
-            session.save(std0);
-            session.flush();
-        }
-    }
-
     private static <T> List<T> getAll(Class<T> object) {
 
 
@@ -153,6 +90,8 @@ public class App {
     }
 
 
+
+
     public static List<Student> getAllStudents() throws Exception {
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Student> query = builder.createQuery(Student.class);
@@ -161,12 +100,13 @@ public class App {
         return data;
     }
 
-    public static void generateQuestion(Questions questions) {
+
+    public static void generateQuestion(Questions questions){
         session.save(questions);
         session.flush();
     }
 
-    public static void generateQuestions() {
+    public static void generateQuestions(){
         Questions ques = new Questions("test", "1", "2", "3", "4", "2");
         session.save(ques);
         session.flush();
@@ -232,16 +172,6 @@ public class App {
             exam.setCourse_name(updatedExam.getCourse_name());
             exam.setStat(updatedExam.getStat());
 
-            // Clear the existing list of questions
-            //exam.getQuestions().clear();
-
-            // Add the updated list of questions
-/*            List<Questions> updatedQuestions = updatedExam.getQuestions();
-            for (Questions question : updatedQuestions) {
-                exam.add_Ques(question);
-            }*/
-
-            // Update the exam
             session.update(exam);
             tx.commit();
         } catch (Exception e) {
@@ -302,7 +232,7 @@ public class App {
 
 
             // Update the grade
-            grade.setGrade(newGrade);
+            grade.setGrade(String.valueOf(newGrade));
             session.update(grade);
 
             session.getTransaction().commit(); // Save everything..commit();
@@ -333,24 +263,8 @@ public class App {
 
 
 
-    public static void printAllStudents() throws Exception {
-        List<Student> students = getAllStudents();
 
-        for(int i =0;i<students.size();i++)
-        {
-            System.out.print("student "+ students.get(i).getStudent_id()+": Grades: ");
-            System.out.print('\n');
 
-            for(int j=0;j<students.get(i).getGrades().size();j++) {
-                System.out.print(" "+students.get(i).getGrades().get(j).getGrade());
-            }
-            System.out.print('\n');
-        }
-    }
-    private static int generateRandomlecture() {
-        Random random = new Random();
-        return random.nextInt(9);
-    }
     public static void main(String[] args) {
 
         try {
@@ -362,27 +276,8 @@ public class App {
             }
             generateQuestions();
             generateCourses();
-            generateLecturers();
-            generateStudents();
-            generateGrades();
             generateExams();
-            List<Student> students = getAll(Student.class);
-            List<Course> courses = getAll(Course.class);
-            List<Lecturer> lecturers = getAll(Lecturer.class);
-            for(int i=0;i<lecturers.size();i++){
-                lecturers.get(i).addCourse(courses.get(generateRandomlecture()));}
 
-           /* lecturers.get(0).addCourse(courses.get(8));
-            lecturers.get(0).addCourse(courses.get(6));
-            lecturers.get(1).addCourse(courses.get(0));
-            lecturers.get(2).addCourse(courses.get(7));
-            lecturers.get(3).addCourse(courses.get(5));
-            lecturers.get(4).addCourse(courses.get(2));
-            lecturers.get(5).addCourse(courses.get(1));
-            lecturers.get(6).addCourse(courses.get(4));
-            lecturers.get(7).addCourse(courses.get(3));
-            lecturers.get(8).addCourse(courses.get(9));
-            lecturers.get(9).addCourse(courses.get(8));*/
 
             session.getTransaction().commit(); // Save everything.
 

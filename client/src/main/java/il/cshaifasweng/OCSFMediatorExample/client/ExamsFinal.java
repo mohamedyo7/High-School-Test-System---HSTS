@@ -1,21 +1,21 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.List;
-import java.util.ResourceBundle;
-import javafx.scene.control.TableColumn;
 import il.cshaifasweng.OCSFMediatorExample.entities.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.Exams;
-import il.cshaifasweng.OCSFMediatorExample.entities.entities.Questions;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.List;
+import java.util.ResourceBundle;
 
 public class ExamsFinal {
     @FXML
@@ -43,11 +43,13 @@ public class ExamsFinal {
 
     @FXML
     void startB(ActionEvent event) throws IOException {
+        SimpleChatClient.setRoot("examInside");
         Message msg = new Message("start exam");
         //examsTable.getSelectionModel().getSelectedItem().setStat(1);
         msg.setExam(examsTable.getSelectionModel().getSelectedItem());
-        SimpleChatClient.setRoot("examInside");
         sendMessage(msg);
+
+
     }
     @FXML
     void showExams(ActionEvent event) {

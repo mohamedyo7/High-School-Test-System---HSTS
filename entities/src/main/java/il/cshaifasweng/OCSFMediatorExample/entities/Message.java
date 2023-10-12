@@ -39,6 +39,45 @@ public class Message implements Serializable {
 
     int course_id;
     private Questions question ;
+    private Lecturer lec;
+
+    public Lecturer getLec() {
+        return lec;
+    }
+
+    public void setLec(Lecturer lec) {
+        this.lec = lec;
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
+    private CourseReg course;
+    private Student student;
+
+    public Mediator getMediator() {
+        return mediator;
+    }
+
+    public void setMediator(Mediator mediator) {
+        this.mediator = mediator;
+    }
+
+    private Mediator mediator;
+
+    public CourseReg getCourse() {
+        return course;
+    }
+
+    public void setCourse(CourseReg course) {
+        this.course = course;
+    }
+
     int grade_to_change;
     private List<Questions> questions_list_from_server;
 
@@ -62,7 +101,78 @@ public class Message implements Serializable {
     private List<Student> students_list_from_server;
     private List<Grade> grades_list_from_server;
     private List<Course> courses_list_from_server;
+    private List<CourseReg> courses_list_from_server_reg;
+
+    public List<Mediator> getMediators_list_from_server() {
+        return mediators_list_from_server;
+    }
+
+    public void setMediators_list_from_server(List<Mediator> mediators_list_from_server) {
+        this.mediators_list_from_server = mediators_list_from_server;
+    }
+
+    private List<Mediator> mediators_list_from_server;
+
+    public List<Lecturer> getLecturers_list_from_server() {
+        return lecturers_list_from_server;
+    }
+
+    public void setLecturers_list_from_server(List<Lecturer> lecturers_list_from_server) {
+        this.lecturers_list_from_server = lecturers_list_from_server;
+    }
+
+    private List<Lecturer> lecturers_list_from_server;
+
+
+    public List<CourseReg> getCourses_list_from_server_reg() {
+        return courses_list_from_server_reg;
+    }
+
+    public void setCourses_list_from_server_reg(List<CourseReg> courses_list_from_server_reg) {
+        this.courses_list_from_server_reg = courses_list_from_server_reg;
+    }
+
+
+
+
     private String courseName;
+    private String Login_name;
+
+    public String getLogin_name() {
+        return Login_name;
+    }
+
+    public void setLogin_name(String login_name) {
+        Login_name = login_name;
+    }
+
+    public String getFirst_name() {
+        return First_name;
+    }
+
+    public void setFirst_name(String first_name) {
+        First_name = first_name;
+    }
+
+    public String getLast_name() {
+        return Last_name;
+    }
+
+    public void setLast_name(String last_name) {
+        Last_name = last_name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    private String First_name;
+    private String Last_name;
+    private String password;
     public void setCourseName(String courseName) {
         this.courseName = courseName;
     }
@@ -111,7 +221,6 @@ public class Message implements Serializable {
     }
 
     public Message(String message, List<Student> students, List<Grade> grades) {
-        System.out.println("2444210sd");
         this.students_list_from_server=students;
         this.grades_list_from_server=grades;
         this.message = message;
@@ -137,16 +246,13 @@ public class Message implements Serializable {
     }
 
     public void setStudents_list_from_server(List<Student> students_list_from_server) {
-        System.out.println("440sd");
         this.students_list_from_server=students_list_from_server;
 
     }
     public void setCourses_list_from_server(List<Course> courses_list_from_server){
-        System.out.println("20sd");
         this.courses_list_from_server = courses_list_from_server ;
     }
     public Message(int id, LocalDateTime timeStamp, String message) {
-        System.out.println("10sd");
         this.id = id;
         this.timeStamp = timeStamp;
         this.message = message;
@@ -154,7 +260,6 @@ public class Message implements Serializable {
 
 
     public Message(int id, String message) {
-        System.out.println("110sd");
         this.id = id;
         this.timeStamp = LocalDateTime.now();
         this.message = message;
@@ -168,14 +273,12 @@ public class Message implements Serializable {
     }
 
     public Message(int id, String message,String data) {
-        System.out.println("220sd");
         this.id = id;
         this.timeStamp = LocalDateTime.now();
         this.message = message;
         this.data = data;
     }
     public Message(int id, String s1, String message,String s2) {
-        System.out.println("10sd");
         this.id = id;
         this.message = s1;
         this.data = message;

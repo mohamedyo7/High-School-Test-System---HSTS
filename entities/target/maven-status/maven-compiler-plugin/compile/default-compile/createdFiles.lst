@@ -1,8 +1,9 @@
 il\cshaifasweng\OCSFMediatorExample\entities\entities\Student.class
-il\cshaifasweng\OCSFMediatorExample\entities\entities\Exams.class
 il\cshaifasweng\OCSFMediatorExample\entities\entities\Questions.class
 il\cshaifasweng\OCSFMediatorExample\entities\entities\Course.class
 il\cshaifasweng\OCSFMediatorExample\entities\entities\Grade.class
+il\cshaifasweng\OCSFMediatorExample\entities\entities\Mediator.class
 il\cshaifasweng\OCSFMediatorExample\entities\Message.class
+il\cshaifasweng\OCSFMediatorExample\entities\entities\CourseReg.class
 il\cshaifasweng\OCSFMediatorExample\entities\entities\Lecturer.class
 il\cshaifasweng\OCSFMediatorExample\entities\Warning.class
