@@ -46,9 +46,8 @@ public class ExamsFinal {
         Message msg = new Message("start exam");
         //examsTable.getSelectionModel().getSelectedItem().setStat(1);
         msg.setExam(examsTable.getSelectionModel().getSelectedItem());
-        sendMessage(msg);
         SimpleChatClient.setRoot("examInside");
-
+        sendMessage(msg);
     }
     @FXML
     void showExams(ActionEvent event) {
@@ -80,6 +79,7 @@ public class ExamsFinal {
                 if(coursesList.getSelectionModel().getSelectedItem().equals(exams.get(i).getCourse_name())){
                         examsTable.getItems().add(exams.get(i));
                 }
+
 
             }
             examsTable.refresh();
