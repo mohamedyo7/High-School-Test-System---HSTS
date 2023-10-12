@@ -1,23 +1,24 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.text.Text;
-import com.google.protobuf.StringValue;
 import il.cshaifasweng.OCSFMediatorExample.entities.Message;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.text.Text;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class GradeExam {
 
     @FXML
     void okB(ActionEvent event) throws IOException {
         SimpleChatClient.setRoot("TeacherPage");
+        Message msg = new Message("give me teacher data");
+        msg.setId(SimpleClient.ID);
+        sendMessage(msg);
     }
     @FXML
     private ResourceBundle resources;

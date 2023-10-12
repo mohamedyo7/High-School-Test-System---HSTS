@@ -262,6 +262,7 @@ public class PrimaryController {
 				showallstudents_but.setVisible(false);
 
 			}
+			showallstudents_but.setVisible(false);
 
 			List<Student> students_from_server = event.getMessage().getStudents_list_from_server();
 
@@ -302,7 +303,9 @@ public class PrimaryController {
 				change_but.setVisible(true);
 				showstudent_grades_after_update_label.setVisible(true);
 				show_student_after_update_but.setVisible(true);
+				showallstudents_but.setVisible(false);
 			}
+			showallstudents_but.setVisible(false);
 
 			List<Grade> grades_list_from_server1 = event.getMessage().getGrades_list_from_server();
 

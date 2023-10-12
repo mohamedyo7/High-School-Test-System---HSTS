@@ -1,38 +1,13 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
 
+import il.cshaifasweng.OCSFMediatorExample.entities.Message;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
-
-import il.cshaifasweng.OCSFMediatorExample.entities.Message;
-import il.cshaifasweng.OCSFMediatorExample.entities.entities.*;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
-import org.greenrobot.eventbus.Subscribe;
-import java.io.IOException;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-
-import il.cshaifasweng.OCSFMediatorExample.entities.entities.Grade;
-import il.cshaifasweng.OCSFMediatorExample.entities.Message;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.util.Duration;
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-
-import java.sql.SQLException;
-import java.util.List;
 
 public class TeacherEamsController {
 
@@ -64,8 +39,8 @@ public class TeacherEamsController {
     void QuestionB(ActionEvent event) throws IOException {
 
         SimpleChatClient.setRoot("QustionsPage");
-/*        Message message = new Message("add questions to course");
-        sendMessage(message);*/
+      Message message = new Message("give me the courses");
+        sendMessage(message);
     }
     void sendMessage(Message message) {
 
@@ -93,7 +68,7 @@ public class TeacherEamsController {
 
     @FXML
     void initialize() {
-        EventBus.getDefault().register(this); /// this line did lot of problems to me!!
+        //EventBus.getDefault().register(this); /// this line did lot of problems to me!!
 
 /*        int msgId = 0;
         try {

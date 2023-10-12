@@ -252,6 +252,7 @@ public class SimpleServer extends AbstractServer {
 					message.setMessage("i will give you the courses");
 					message.setCourses_list_from_server(getAllCourses());
 					message.setStudents_list_from_server(getAllStudents());
+					message.setCourses_list_from_server_reg(getAllregCourses());
 					client.sendToClient(message);
 					//sendToAllClients(message);
 				}
@@ -377,9 +378,65 @@ public class SimpleServer extends AbstractServer {
 					client.sendToClient(message);
 					//sendToAllClients(message);
 				}
+				else if (request.equals("update exam")) {
+
+					Exams exams = message.getExam();
+					//exams.setQues_number(exams.getQuestions().size());
+					//System.out.println(exams.getQuestions().size());
+					updateExam(exams);
+					message.setMessage("i updated the exam");
+					client.sendToClient(message);
+
+				}
+				else if (request.equals("show exams")) {
+
+					message.setMessage("i will give you the exams");
+					List<Exams> exams= getAllExams();
+					message.setExams_list_from_server(exams);
+					client.sendToClient(message);
+
+				}
+				else if (request.equals("add exam")) {
+
+					Exams exam = message.getExam();
+					generateExam(exam);
+					message.setMessage("i added the exam");
+					client.sendToClient(message);
+
+				} else if (request.equals("add ques to exam")) {
+
+					generateQuestion(message.getQuestion());
+
+				} else if(request.equals("start exam")){
+
+					updateExamStat(message.getExam().getId(),true);
+					message.setMessage("i will start exam");
+					client.sendToClient(message);
+
+				}else if(request.equals("end exam")){
+
+					updateExamStat(message.getId(),false);
+
+				}
+				else if(request.equals("show questions2")){
+
+					message.setMessage("i will show questions2");
+					List<Questions> ques = getAllQuestions();
+					List<Exams> exams = getAllExams();
+					message.setExams_list_from_server(exams);
+					message.setQuestions_list_from_server(ques);
+					client.sendToClient(message);
+
+				}else if(request.equals("the grade is")){
+					message.setMessage("the grade is");
+					client.sendToClient(message);
+
+
+				}
 				else {
 					//sendToAllClients(message);
 				}
+
 
 			} catch (IOException e1) {
 				e1.printStackTrace();
@@ -390,6 +447,7 @@ public class SimpleServer extends AbstractServer {
 			assert session != null;
 			session.close();
 		}
+
 	}
 
 	public void sendToAllClients(Message message) {

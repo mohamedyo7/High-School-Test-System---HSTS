@@ -1,20 +1,19 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
 
+import il.cshaifasweng.OCSFMediatorExample.entities.Message;
+import il.cshaifasweng.OCSFMediatorExample.entities.entities.CourseReg;
+import il.cshaifasweng.OCSFMediatorExample.entities.entities.Questions;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-
-import il.cshaifasweng.OCSFMediatorExample.entities.entities.Course;
-import javafx.scene.control.ListView;
-import il.cshaifasweng.OCSFMediatorExample.entities.Message;
-import il.cshaifasweng.OCSFMediatorExample.entities.entities.Questions;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 public class QustionsPage {
 
@@ -95,14 +94,22 @@ public class QustionsPage {
     public void setDataFromServerTF(MessageEvent event) {
         if (event.getMessage().getMessage().equals("i will give you the courses")) {
             list.getItems().clear();
-            List<Course> Courses_from_server = event.getMessage().getCourses_list_from_server();
+            List<CourseReg> Courses_from_server_reg = event.getMessage().getCourses_list_from_server_reg();
 
 /*            course_column.setCellValueFactory(new PropertyValueFactory<>("id"));
             course_column.setCellValueFactory(new PropertyValueFactory<>("name"));*/
 
-            for (int i = 0; i < Courses_from_server.size(); i++) {
+
+            for (int i = 0; i < Courses_from_server_reg.size(); i++) {
                 // Set the data to the table
-                list.getItems().add(Courses_from_server.get(i).getName());
+                if(Courses_from_server_reg.get(i).getLecturer()!=null)
+                    if(Courses_from_server_reg.get(i).getLecturer().getId()==SimpleClient.ID){
+
+
+
+                        list.getItems().add(Courses_from_server_reg.get(i).getName());
+
+                    }
             }
             list.refresh();
         }
@@ -110,7 +117,7 @@ public class QustionsPage {
     @FXML
     void initialize() {
         EventBus.getDefault().register(this);
-        sendMessage("give me the courses");
+
         assert answerText1 != null : "fx:id=\"answerText1\" was not injected: check your FXML file 'QustionsPage.fxml'.";
         assert answerText2 != null : "fx:id=\"answerText2\" was not injected: check your FXML file 'QustionsPage.fxml'.";
         assert answerText3 != null : "fx:id=\"answerText3\" was not injected: check your FXML file 'QustionsPage.fxml'.";
