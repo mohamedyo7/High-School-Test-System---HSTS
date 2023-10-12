@@ -99,13 +99,12 @@ public class PrimaryController {
 	private  Student student_save;
 
 	@FXML
-		//  private TableColumn<Grade, Integer> student_id_gradestable_column;
+	private ListView<String> ID_prime;
 
 
 
 
 	void sendMessage(String messageBody) {
-		System.out.println("give me the students 22");
 		try {
 			Message message = new Message(messageBody);
 
@@ -114,7 +113,6 @@ public class PrimaryController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("give me the students 3");
 	}
 
 	void sendMessage(Message message) {
@@ -130,7 +128,6 @@ public class PrimaryController {
 
 	@FXML
 	void on_button_show_after_update_pressed(ActionEvent event) {
-			System.out.println("on button show after update");
 		if (student_save != null) {
 			showstudent_grades_after_update_label.setVisible(true);
 			show_student_after_update_but.setVisible(true);
@@ -149,6 +146,23 @@ public class PrimaryController {
 
 		}
 
+
+	}
+	@FXML
+	void Back_but(ActionEvent event)throws IOException {
+		if(ID_prime.getItems().get(1).equals("Teacher")) {
+			SimpleChatClient.setRoot("TeacherPage");
+			Message msg = new Message("give me teacher data");
+			msg.setId(Integer.parseInt(ID_prime.getItems().get(0)));
+			sendMessage(msg);
+		}
+		else if(ID_prime.getItems().get(1).equals("Mediator")){
+			SimpleChatClient.setRoot("MediatorPage");
+			Message msg=new Message("give me mediator data");
+					msg.setId(Integer.parseInt(ID_prime.getItems().get(0)));
+					msg.setLogin_name("Mediator");
+			sendMessage(msg);
+		}
 
 	}
 
@@ -232,6 +246,23 @@ public class PrimaryController {
 	@Subscribe
 	public void setDataFromServerTF(MessageEvent event) {
 		if (event.getMessage().getMessage().equals("i will give you the students")) {
+			if(ID_prime.getItems().isEmpty()){
+				ID_prime.getItems().add (String.valueOf(event.getMessage().getId()));
+				ID_prime.getItems().add(event.getMessage().getLogin_name());
+			}
+			if(ID_prime.getItems().get(1).equals("Mediator")) {
+				insert_new_grade_label.setVisible(false);
+				new_grade_txf.setVisible(false);
+				change_but.setVisible(false);
+				showstudent_grades_after_update_label.setVisible(false);
+				show_student_after_update_but.setVisible(false);
+				insert_new_grade_label.setVisible(false);
+				choosestudent_gradeupdate_label.setVisible(false);
+				choosestudent_gradeupdate_label.setVisible(false);
+				showallstudents_but.setVisible(false);
+
+			}
+
 			List<Student> students_from_server = event.getMessage().getStudents_list_from_server();
 
 			show_all_students_table.getItems().clear();
@@ -252,12 +283,27 @@ public class PrimaryController {
 			course_column.setCellValueFactory(new PropertyValueFactory<>("course"));
 			course_column.setCellValueFactory(new PropertyValueFactory<>("Grade"));
 			course_grade_table.setVisible(true);
-			choosestudent_gradeupdate_label.setVisible(true);
-			insert_new_grade_label.setVisible(true);
-			new_grade_txf.setVisible(true);
-			change_but.setVisible(true);
-			showstudent_grades_after_update_label.setVisible(true);
-			show_student_after_update_but.setVisible(true);
+			if(ID_prime.getItems().get(1).equals("Mediator")) {
+				insert_new_grade_label.setVisible(false);
+				new_grade_txf.setVisible(false);
+				change_but.setVisible(false);
+				showstudent_grades_after_update_label.setVisible(false);
+				show_student_after_update_but.setVisible(false);
+				insert_new_grade_label.setVisible(false);
+				choosestudent_gradeupdate_label.setVisible(false);
+				choosestudent_gradeupdate_label.setVisible(false);
+				showallstudents_but.setVisible(false);
+
+			}
+			else {
+				choosestudent_gradeupdate_label.setVisible(true);
+				insert_new_grade_label.setVisible(true);
+				new_grade_txf.setVisible(true);
+				change_but.setVisible(true);
+				showstudent_grades_after_update_label.setVisible(true);
+				show_student_after_update_but.setVisible(true);
+			}
+
 			List<Grade> grades_list_from_server1 = event.getMessage().getGrades_list_from_server();
 
 
@@ -267,21 +313,24 @@ public class PrimaryController {
 			course_column.setCellValueFactory(new PropertyValueFactory<>("courseName"));
 
 			for (int i = 0; i < grades_list_from_server1.size(); i++) {
-				// Set the data to the table
-				course_grade_table.getItems().add(grades_list_from_server1.get(i));
+				if (grades_list_from_server1.get(i).getStudent().getStudent_id() == event.getMessage().getStudentId())
+					// Set the data to the table
+					course_grade_table.getItems().add(grades_list_from_server1.get(i));
 			}
 		} else if (event.getMessage().getMessage().equals("i changed the grade")) {
 			new_grade_txf.setText("");
-			Student student  = course_grade_table.getSelectionModel().getSelectedItem().getStudent();
+			Student student = course_grade_table.getSelectionModel().getSelectedItem().getStudent();
 
 			showstudent_grades_after_update_label.setVisible(true);
 			show_student_after_update_but.setVisible(true);
 
 		} else {
-			//  System.out.println("else");
+			if (ID_prime.getItems().isEmpty()) {
+				ID_prime.getItems().add(String.valueOf(event.getMessage().getId()));
+
+			}
 
 		}
-
 	}
 
 

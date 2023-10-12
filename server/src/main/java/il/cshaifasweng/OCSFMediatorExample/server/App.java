@@ -1,5 +1,4 @@
 package il.cshaifasweng.OCSFMediatorExample.server;
-import java.util.Random;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.*;
 import org.hibernate.HibernateException;
@@ -30,64 +29,18 @@ public class App {
         configuration.addAnnotatedClass(Lecturer.class);
         configuration.addAnnotatedClass(Student.class);
         configuration.addAnnotatedClass(Questions.class);
+        configuration.addAnnotatedClass(CourseReg.class);
+        configuration.addAnnotatedClass(Mediator.class);
+
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                 .applySettings(configuration.getProperties())
                 .build();
 
         return configuration.buildSessionFactory(serviceRegistry);
     }
-    private static void generateGrades(){
-
-        List<Student> students = getAll(Student.class);
-        List<Course> courses = getAll(Course.class);
-        for (int i=0; i<students.size();i++){
-            for(int j=0;j<students.size();j++){
-            System.out.print(students.get(i).getStudent_id());
-            System.out.print(courses.get(i).getName());
-            Grade grade = new Grade(students.get(i),courses.get(j),100);
-            session.save(grade);
-            session.flush();
-        }
-        }
-
-    }
 
 
 
-    private static final String[] sFIRST_NAMES = {
-            "Sophia", "Oliver", "Emma", "Liam", "Ava", "Noah",
-            "Isabella", "Olivia", "Elijah", "Charlotte", "William", // Add more names here if needed
-    };
-
-    private static final String[] sLAST_NAMES = {
-            "Smith", "Johnson", "Brown", "Jones", "Garcia", "Miller",
-            "Davis", "Rodriguez", "Martinez", "Taylor", "Anderson", // Add more names here if needed
-    };
-
-    private static final String[] FIRST_NAMES = {
-            "Ethan", "Sophia", "Caleb", "Lily", "Lucas", "Ava",
-            "Benjamin", "Olivia", "Gabriel", "Emma", "Michael", // Add more names here if needed
-    };
-
-    private static final String[] LAST_NAMES = {
-            "Simmons", "Hayes", "Parker", "Turner", "Edwards", "Mitchell",
-            "Martinez", "Thompson", "Johnson", "Anderson", "Williams", // Add more names here if needed
-    };
-
-    private static String generateRandomName(String[] names) {
-        Random random = new Random();
-        int index = random.nextInt(names.length);
-        return names[index];
-    }
-
-    private static void generateLecturers() throws Exception {
-        for(int i=0;i<10 ; i++) {
-            Lecturer lect = new Lecturer(generateRandomName(FIRST_NAMES), generateRandomName(LAST_NAMES));
-            session.save(lect);
-            session.flush();
-        }
-
-    }
     private static void generateCourses() throws Exception {
 
         Course course0 = new Course("Math");
@@ -126,19 +79,8 @@ public class App {
 
 
 
-    private static int generateRandomID() {
-        Random random = new Random();
-        return 100000000 + random.nextInt(900000000); // Generates a random 9-digit ID
-    }
 
-    private static void generateStudents() throws Exception {
-        for (int i=0 ;i<10;i++) {
-            int id = generateRandomID();
-            Student std0 = new Student(id, generateRandomName(sFIRST_NAMES), generateRandomName(sLAST_NAMES));
-            session.save(std0);
-            session.flush();
-        }
-    }
+
     private static <T> List<T> getAll(Class<T> object) {
 
 
@@ -161,14 +103,52 @@ public class App {
         return data;
     }
 
-public static void generateQuestion(Questions questions){
+    public static void generateQuestion(Questions questions){
         session.save(questions);
         session.flush();
-}
+    }
     public static void generateQuestions(){
         Questions ques = new Questions();
         session.save(ques);
         session.flush();
+    }
+    public static void generateregcourse(String course,int id){
+
+
+            List<CourseReg> cor = getAll(CourseReg.class);
+
+            //List<Course> courses = getAll(Course.class);
+
+            for (int i=0; i<cor.size();i++){
+
+                    if(cor.get(i).getStudent().getStudent_id()==id){
+                        if(cor.get(i).getName()==null) {
+                            cor.get(i).setName(course);
+                            session.update(cor.get(i));
+                            session.getTransaction().commit();
+                            break;
+                        }
+                    }
+
+
+                    //session.flush();
+
+            }
+
+    }
+
+    public static void generateStdReg(Student s,List<CourseReg> reg){
+        //Student s0=new Student(s);
+        s.setCoursesReg(reg);
+        //s0.setStudent_id(id);
+        //session.remove(s);
+
+        session.update(s);
+        session.getTransaction().commit();
+        //session.close();
+        //session.flush();
+
+
     }
     public static List<Grade> getGradesByStudentId(int studentId) throws Exception{
 
@@ -228,7 +208,7 @@ public static void generateQuestion(Questions questions){
             //System.out.println("it is valid grade.");
 
             // Update the grade
-            grade.setGrade(newGrade);
+            grade.setGrade(String.valueOf(newGrade));
             session.update(grade);
 
             session.getTransaction().commit(); // Save everything..commit();
@@ -242,26 +222,9 @@ public static void generateQuestion(Questions questions){
     }
 
 
-    public static void printAllStudents() throws Exception {
-        List<Student> students = getAllStudents();
 
-        for(int i =0;i<students.size();i++)
-        {
-            System.out.print("student "+ students.get(i).getStudent_id()+": Grades: ");
-            System.out.print('\n');
 
-            for(int j=0;j<students.get(i).getGrades().size();j++) {
-                System.out.print(" "+students.get(i).getGrades().get(j).getGrade());
-            }
-            System.out.print('\n');
-        }
-    }
-    private static int generateRandomlecture() {
-        Random random = new Random();
-        return random.nextInt(9);
-    }
     public static void main(String[] args) {
-        System.out.println("App main wwwwwwwwwwwwwwwww2");
         try {
             try {
                 session = sessionFactory.openSession();
@@ -270,15 +233,16 @@ public static void generateQuestion(Questions questions){
                 e.printStackTrace();
             }
             generateCourses();
-            generateLecturers();
-            generateStudents();
-            generateGrades();
+            //generateLecturers();
+            //generateStudents();
+            //generateGrades();
             generateQuestions();
-            List<Student> students = getAll(Student.class);
+            //generateregcourse();
+            //List<Student> students = getAll(Student.class);
             List<Course> courses = getAll(Course.class);
             List<Lecturer> lecturers = getAll(Lecturer.class);
-            for(int i=0;i<lecturers.size();i++){
-                lecturers.get(i).addCourse(courses.get(generateRandomlecture()));}
+         /*   for(int i=0;i<lecturers.size();i++){
+                lecturers.get(i).addCourse(courses.get(generateRandomlecture()));}*/
 
            /* lecturers.get(0).addCourse(courses.get(8));
             lecturers.get(0).addCourse(courses.get(6));

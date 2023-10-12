@@ -76,12 +76,12 @@ public class Questions implements Serializable {
     }
 
     public Questions(String q , String a1,String a2 ,String a3,String a4,String cA) {
-    this.question=q;
-    this.Ans1=a1;
-    this.Ans2=a2;
-    this.Ans3=a3;
-    this.Ans4=a4;
-    this.correct_ans=cA;
+        this.question=q;
+        this.Ans1=a1;
+        this.Ans2=a2;
+        this.Ans3=a3;
+        this.Ans4=a4;
+        this.correct_ans=cA;
     }
     public Questions() {
 

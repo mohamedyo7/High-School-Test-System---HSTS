@@ -21,6 +21,7 @@ public class Course implements Serializable {
     @JoinColumn(name = "lecturer_id")
     private Lecturer lecturer;
 
+
 /*
     @ManyToOne
     @JoinColumn(name = "ques_id")
@@ -31,6 +32,7 @@ public class Course implements Serializable {
     //////////////
     @OneToMany(mappedBy = "course")
     private List<Grade> grades = new ArrayList<>();
+
 
 /*
     public List<Questions> getQuestion() {
