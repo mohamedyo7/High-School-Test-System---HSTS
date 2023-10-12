@@ -18,7 +18,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Duration;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-
 import java.sql.SQLException;
 import java.util.List;
 

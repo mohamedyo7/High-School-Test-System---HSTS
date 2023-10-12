@@ -125,9 +125,21 @@ public class ExamInside {
                 i++;
         }
         else {
+            for (Exams value : exams) {
+                if (value.getStat()) {
+                    fques.clear();
+                    i = 0;
+                    id = String.valueOf(value.getId());
+                    Message msg = new Message("end exam");
+                    msg.setExam(value);
+                    sendMessage(msg);
+                    break;
+                }
+            }
             System.out.println("mark is " + mark);
             Message msg = new Message("the grade is");
             msg.setGrade(mark);
+
             SimpleChatClient.setRoot("gradeExam");
             sendMessage(msg);
         }
