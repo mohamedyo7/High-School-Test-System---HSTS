@@ -54,20 +54,16 @@ public class QustionsPage {
 
     @FXML
     void addButton(ActionEvent event) {
-        System.out.println("QuestionPage1");
         String question = quesionText.getText();
         String ans1 = answerText1.getText();
         String ans2 = answerText2.getText();
         String ans3 = answerText3.getText();
         String ans4 = answerText4.getText();
         String cans = answerText5.getText();
-        Message msg=new Message("create question");
-        System.out.println("create question");
-        System.out.println();
+        Message msg=new Message("create question");;
         Questions q = new Questions(question,ans1,ans2,ans3,ans4,cans);
         q.setCourse_name(list.getSelectionModel().getSelectedItem());
         msg.setQuestion(q);
-        System.out.println("1");
         sendMessage(msg);
     }
 
@@ -98,17 +94,15 @@ public class QustionsPage {
     @Subscribe
     public void setDataFromServerTF(MessageEvent event) {
         if (event.getMessage().getMessage().equals("i will give you the courses")) {
-            System.out.println("Gellooooooooooo");
             list.getItems().clear();
             List<Course> Courses_from_server = event.getMessage().getCourses_list_from_server();
-            System.out.println(Courses_from_server.size());
+
 /*            course_column.setCellValueFactory(new PropertyValueFactory<>("id"));
             course_column.setCellValueFactory(new PropertyValueFactory<>("name"));*/
 
             for (int i = 0; i < Courses_from_server.size(); i++) {
                 // Set the data to the table
                 list.getItems().add(Courses_from_server.get(i).getName());
-                System.out.println(Courses_from_server.get(i).getName());
             }
             list.refresh();
         }

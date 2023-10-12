@@ -4,6 +4,7 @@ import il.cshaifasweng.OCSFMediatorExample.entities.entities.*;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
@@ -24,11 +25,13 @@ public class App {
         Configuration configuration = new Configuration();
 
         // Add ALL of your entities here. You can also try adding a whole package.
+        configuration.addAnnotatedClass(Exams.class);
         configuration.addAnnotatedClass(Course.class);
         configuration.addAnnotatedClass(Grade.class);
         configuration.addAnnotatedClass(Lecturer.class);
         configuration.addAnnotatedClass(Student.class);
         configuration.addAnnotatedClass(Questions.class);
+
         configuration.addAnnotatedClass(CourseReg.class);
         configuration.addAnnotatedClass(Mediator.class);
 
@@ -39,38 +42,77 @@ public class App {
         return configuration.buildSessionFactory(serviceRegistry);
     }
 
+    private static void generateGrades() {
 
+        List<Student> students = getAll(Student.class);
+        List<Course> courses = getAll(Course.class);
+        for (int i = 0; i < students.size(); i++) {
+            for (int j = 0; j < students.size(); j++) {
+                Grade grade = new Grade(students.get(i), courses.get(j), 100);
+                session.save(grade);
+                session.flush();
+            }
+        }
+
+    }
+
+
+    private static final String[] sFIRST_NAMES = {
+            "Sophia", "Oliver", "Emma", "Liam", "Ava", "Noah",
+            "Isabella", "Olivia", "Elijah", "Charlotte", "William", // Add more names here if needed
+    };
+
+    private static final String[] sLAST_NAMES = {
+            "Smith", "Johnson", "Brown", "Jones", "Garcia", "Miller",
+            "Davis", "Rodriguez", "Martinez", "Taylor", "Anderson", // Add more names here if needed
+    };
+
+    private static final String[] FIRST_NAMES = {
+            "Ethan", "Sophia", "Caleb", "Lily", "Lucas", "Ava",
+            "Benjamin", "Olivia", "Gabriel", "Emma", "Michael", // Add more names here if needed
+    };
+
+
+
+    private static void generateLecturers() throws Exception {
+        for (int i = 0; i < 10; i++) {
+            Lecturer lect = new Lecturer(generateRandomName(FIRST_NAMES), generateRandomName(LAST_NAMES));
+            session.save(lect);
+            session.flush();
+        }
+
+    }
 
     private static void generateCourses() throws Exception {
 
         Course course0 = new Course("Math");
         session.save(course0);
         session.flush();
-        Course course1 = new Course("English" );
+        Course course1 = new Course("English");
         session.save(course1);
         session.flush();
-        Course course2 = new Course("Arabic" );
+        Course course2 = new Course("Arabic");
         session.save(course2);
         session.flush();
-        Course course3 = new Course("Hebrew" );
+        Course course3 = new Course("Hebrew");
         session.save(course3);
         session.flush();
         Course course4 = new Course("Music");
         session.save(course4);
         session.flush();
-        Course course5 = new Course("Data Structure" );
+        Course course5 = new Course("Data Structure");
         session.save(course5);
         session.flush();
-        Course course6 = new Course("Algorithmes" );
+        Course course6 = new Course("Algorithmes");
         session.save(course6);
         session.flush();
-        Course course7 = new Course("Object Oriented Programming" );
+        Course course7 = new Course("Object Oriented Programming");
         session.save(course7);
         session.flush();
-        Course course8 = new Course("Assemble" );
+        Course course8 = new Course("Assemble");
         session.save(course8);
         session.flush();
-        Course course9 = new Course("Sport" );
+        Course course9 = new Course("Sport");
         session.save(course9);
         session.flush();
     }
@@ -78,7 +120,20 @@ public class App {
 // ...
 
 
+    private static int generateRandomID() {
+        Random random = new Random();
+        return 100000000 + random.nextInt(900000000); // Generates a random 9-digit ID
+    }
 
+
+    private static void generateStudents() throws Exception {
+        for (int i = 0; i < 10; i++) {
+            int id = generateRandomID();
+            Student std0 = new Student(id, generateRandomName(sFIRST_NAMES), generateRandomName(sLAST_NAMES));
+            session.save(std0);
+            session.flush();
+        }
+    }
 
 
     private static <T> List<T> getAll(Class<T> object) {
@@ -103,9 +158,14 @@ public class App {
         return data;
     }
 
+    public static void generateQuestion(Questions questions) {
     public static void generateQuestion(Questions questions){
         session.save(questions);
         session.flush();
+    }
+
+    public static void generateQuestions() {
+        Questions ques = new Questions("test", "1", "2", "3", "4", "2");
     }
     public static void generateQuestions(){
         Questions ques = new Questions();
@@ -150,9 +210,91 @@ public class App {
 
 
     }
+
+
+    public static void updateExamStat(int examId, boolean newStat) throws Exception {
+
+        List<Exams> exams = getAllExams();
+        try {
+
+
+            // Find the corresponding Exam entity
+            Exams exam = null;
+            for (Exams e : exams) {
+                if (e.getId() == examId) {
+                    exam = e;
+                    break;
+                }
+            }
+
+            if (exam == null) {
+                throw new Exception("No exam found with the specified ID.");
+            }
+
+            // Update the stat
+            exam.setStat(newStat);
+
+            // Save the updated exam object
+            session.update(exam);
+            session.getTransaction().commit(); // Save everything..commit();
+        } catch (Exception e) {
+            session.getTransaction().rollback();
+        } finally {
+            session.close();
+        }
+    }
+
+
+    public static void updateExam(Exams updatedExam) throws Exception {
+
+        Transaction tx = null;
+        try (Session session = sessionFactory.openSession()) {
+            tx = session.beginTransaction();
+
+            List<Exams> exams = getAllExams();
+
+            Exams exam = null;
+            for (Exams e : exams) {
+                if (e.getId() == updatedExam.getId()) {
+                    exam = e;
+                    break;
+                }
+            }
+
+            if (exam == null) {
+                throw new Exception("No exam found with the specified ID.");
+            }
+
+            // Update exam properties
+            exam.setId(updatedExam.getId());
+            exam.setQues_number(updatedExam.getQues_number());
+            exam.setCourse_name(updatedExam.getCourse_name());
+            exam.setStat(updatedExam.getStat());
+
+            // Clear the existing list of questions
+            //exam.getQuestions().clear();
+
+            // Add the updated list of questions
+/*            List<Questions> updatedQuestions = updatedExam.getQuestions();
+            for (Questions question : updatedQuestions) {
+                exam.add_Ques(question);
+            }*/
+
+            // Update the exam
+            session.update(exam);
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+            throw e; // Rethrow the exception for higher-level error handling
+        }
+    }
+
+
     public static List<Grade> getGradesByStudentId(int studentId) throws Exception{
 
-        // System.out.println("getGradesByStudentId Begin");
 
         boolean found=false;
 
@@ -175,28 +317,20 @@ public class App {
         }
         return null;
 
-        // System.out.println("getGradesByStudentId End");
 
     }
-
-
-
     public static void  changeGrade(int studentId, int courseId, int newGrade) throws Exception {
 
-        //  System.out.println("changeGrade");
 
 
         List<Grade> student_grades = getGradesByStudentId(studentId);
         try {
 
-            //  System.out.println("start");
             // Find the corresponding Grade entity
             Grade grade = null;
             for (Grade g : student_grades) {
-                //  System.out.println(g.getCourseid());
                 if (g.getCourseid() == courseId) {
                     grade = g;
-                    //   System.out.println("it is valid grade.");
                     break;
                 }
             }
@@ -205,26 +339,43 @@ public class App {
                 throw new Exception("No grade found for the specified student and course.");
             }
 
-            //System.out.println("it is valid grade.");
 
             // Update the grade
             grade.setGrade(String.valueOf(newGrade));
             session.update(grade);
 
             session.getTransaction().commit(); // Save everything..commit();
-            //  System.out.println("Grade updated successfully.");
         } catch (Exception e) {
             session.getTransaction().rollback();
-            //  System.out.println("Error updating grade: " + e.getMessage());
         } finally {
             session.close();
         }
     }
 
+    public static List<Exams> getAllExams() throws Exception {
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Exams> query = builder.createQuery(Exams.class);
+        query.from(Exams.class);
+        List<Exams> exams = session.createQuery(query).getResultList();
+        return exams;
+    }
+    public static void generateExam(Exams exam){
+
+        session.save(exam);
+        session.flush();
+    }
+    public static void generateExams(){
+        Exams exam = new Exams(1);
+        session.save(exam);
+        session.flush();
+    }
+
+
 
 
 
     public static void main(String[] args) {
+
         try {
             try {
                 session = sessionFactory.openSession();
@@ -232,6 +383,7 @@ public class App {
             }catch (HibernateException e){
                 e.printStackTrace();
             }
+            generateQuestions();
             generateCourses();
             //generateLecturers();
             //generateStudents();
@@ -239,6 +391,11 @@ public class App {
             generateQuestions();
             //generateregcourse();
             //List<Student> students = getAll(Student.class);
+            generateLecturers();
+            generateStudents();
+            generateGrades();
+            generateExams();
+            List<Student> students = getAll(Student.class);
             List<Course> courses = getAll(Course.class);
             List<Lecturer> lecturers = getAll(Lecturer.class);
          /*   for(int i=0;i<lecturers.size();i++){
@@ -269,6 +426,5 @@ public class App {
             session.close();
         }
 
-        // System.out.println("App main end");
     }
 }
