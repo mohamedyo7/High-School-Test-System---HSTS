@@ -1,5 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.server;
 
+import il.cshaifasweng.OCSFMediatorExample.client.TeacherPage;
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.*;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -260,8 +261,26 @@ public class App {
         session.save(exam);
         session.flush();
     }
+    public static List<Course> getAllCourses() {
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Course> query = builder.createQuery(Course.class);
+        query.from(Course.class);
+        List<Course> COURSES = session.createQuery(query).getResultList();
+        return COURSES;
+    }
+public static void generate(){
+        Lecturer lec = new Lecturer(7,"Rai","Massalha","7");
+        session.save(lec);
+        session.flush();
+        List<Course> c = getAllCourses();
+        for(int i=0;i<7;i++){
+            CourseReg r =new CourseReg(lec,c.get(i).getName(),"Teacher");
+            session.save(r);
+            session.flush();
+        }
 
 
+}
 
 
 
@@ -277,7 +296,7 @@ public class App {
             generateQuestions();
             generateCourses();
             generateExams();
-
+            generate();
 
             session.getTransaction().commit(); // Save everything.
 

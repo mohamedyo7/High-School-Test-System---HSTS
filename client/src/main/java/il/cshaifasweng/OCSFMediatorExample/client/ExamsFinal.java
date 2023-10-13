@@ -11,16 +11,20 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-
+import javafx.animation.PauseTransition;
+import javafx.util.Duration;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-
+import javafx.scene.control.TextField;
 public class ExamsFinal {
+    private double time;
+    private PauseTransition delay;
     @FXML
     private TableColumn<Exams, String> examsTablemini;
-
+    @FXML
+    private TextField timeT;
     @FXML
     private TableColumn<Exams, String> numberTable;
     @FXML
@@ -41,8 +45,28 @@ public class ExamsFinal {
         SimpleChatClient.setRoot("ExamsPage");
     }
 
+
+    @FXML
+    void insetTime(ActionEvent event) {
+        time=Double.parseDouble(timeT.getText());
+
+    }
     @FXML
     void startB(ActionEvent event) throws IOException {
+        // Create the PauseTransition with a 30-minute (1,800,000 ms) delay
+        delay = new PauseTransition(Duration.millis(1000*60*60*time));
+
+        // Set the action to be performed after the 30-minute delay
+        delay.setOnFinished(e -> {
+            // Perform your desired action here after the 30-minute delay
+            Message msg = new Message("exam is over");
+            System.out.println("over");
+            msg.setExam(examsTable.getSelectionModel().getSelectedItem());
+            sendMessage(msg);
+        });
+
+        // Start the delay
+        delay.play();
         SimpleChatClient.setRoot("examInside");
         Message msg = new Message("start exam");
         //examsTable.getSelectionModel().getSelectedItem().setStat(1);

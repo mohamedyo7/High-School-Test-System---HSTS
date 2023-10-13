@@ -4,17 +4,26 @@ import il.cshaifasweng.OCSFMediatorExample.entities.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.Lecturer;
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.Mediator;
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.Student;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.util.Duration;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import javafx.scene.text.Text;
+
 import java.io.IOException;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class LoginController {
+
     public String getStd_ID() {
         return Std_ID;
     }
@@ -26,7 +35,8 @@ public class LoginController {
     private String Std_ID;
     int c;
     String pass;
-
+    @FXML
+    private Text time_txf;
     @FXML
     private ChoiceBox<String> Choose_login;
     @FXML
@@ -203,9 +213,19 @@ public class LoginController {
     @FXML
     void initialize() {
         EventBus.getDefault().register(this);
+
 c=0;
 pass="[p]";
-         //sendMessage("give me the students");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+        Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
+            LocalTime currentTime = LocalTime.now();
+            time_txf.setText(currentTime.format(dtf));
+        }),
+                new KeyFrame(Duration.seconds(1))
+        );
+        clock.setCycleCount(Animation.INDEFINITE);
+        clock.play();;
+        //sendMessage("give me the students");
         Choose_login.getItems().add("Student");
         Choose_login.getItems().add("Teacher");
         Choose_login.getItems().add("Mediator");

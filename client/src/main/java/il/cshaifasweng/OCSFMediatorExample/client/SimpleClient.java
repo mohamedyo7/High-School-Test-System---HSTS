@@ -9,7 +9,7 @@ public class SimpleClient extends AbstractClient {
 
 	private static SimpleClient client = null;
 	public static int ID;
-
+	public  static int clientx;
 	private SimpleClient(String host, int port) {
 		super(host, port);
 	}
@@ -50,6 +50,9 @@ public class SimpleClient extends AbstractClient {
 		}else if (message.getMessage().equals("i changed the grade")) {
 			EventBus.getDefault().post(new MessageEvent(message));
 
+		}
+		else if(message.getMessage().equals("exam is over")) {
+			EventBus.getDefault().post(new MessageEvent(message));
 		}
 		else if(message.getMessage().equals("i added the course")) {
 			EventBus.getDefault().post(new MessageEvent(message));

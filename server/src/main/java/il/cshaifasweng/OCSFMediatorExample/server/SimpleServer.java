@@ -412,6 +412,11 @@ public class SimpleServer extends AbstractServer {
 					updateExamStat(message.getExam().getId(),true);
 					message.setMessage("i will start exam");
 					client.sendToClient(message);
+				} else if(request.equals("exam is over")){
+
+					updateExamStat(message.getId(),false);
+					message.setMessage("exam is over");
+					client.sendToClient(message);
 
 				}else if(request.equals("end exam")){
 

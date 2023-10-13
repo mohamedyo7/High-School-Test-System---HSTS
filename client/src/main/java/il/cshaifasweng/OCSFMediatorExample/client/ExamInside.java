@@ -155,13 +155,14 @@ public class ExamInside {
             i=0;
             for (Questions que : ques) {
                 if (que.getQues_id().equals(id)) {
-                    System.out.println("id is"+ que.getQuestion()+ " " + id);
+                    System.out.println("id is"+ que.getQuestion()+ " " + que.getAns1()+" " + que.getAns2());
                     fques.add(que);
                 }
 
             }
             if(!fques.isEmpty()){
                 question.setText(fques.get(i).getQuestion());
+                System.out.println("ques is "+fques.get(i).getQuestion());
                 ans1.setText(fques.get(i).getAns1());
                 ans2.setText(fques.get(i).getAns2());
                 ans3.setText(fques.get(i).getAns3());
