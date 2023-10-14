@@ -9,6 +9,7 @@ public class SimpleClient extends AbstractClient {
 
 	private static SimpleClient client = null;
 	public static int ID;
+	public static String Type;
 
 	private SimpleClient(String host, int port) {
 		super(host, port);
@@ -25,6 +26,7 @@ public class SimpleClient extends AbstractClient {
 		}
 	 else if (message.getMessage().equals("i will give you the students2")) {
 			ID= message.getId();
+			Type=message.getLogin_name();
 		EventBus.getDefault().post(new MessageEvent(message));
 	}
 		else if (message.getMessage().equals("i will check id exist")) {

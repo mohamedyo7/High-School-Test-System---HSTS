@@ -93,6 +93,12 @@ public class SimpleServer extends AbstractServer {
 		session.save(lect);
 		session.flush();
 	}
+	private static void generateExamsScan(ExamsScan lec) throws Exception {
+
+		ExamsScan lect = new ExamsScan(lec);
+		session.save(lect);
+		session.flush();
+	}
 	public static void generateregcourse(int id,String name) throws Exception {
 		int c = 0;
 		List<Student> students = getAllStudents();
@@ -253,6 +259,7 @@ public class SimpleServer extends AbstractServer {
 					message.setCourses_list_from_server(getAllCourses());
 					message.setStudents_list_from_server(getAllStudents());
 					message.setCourses_list_from_server_reg(getAllregCourses());
+					message.setExams_list_from_server(getAllExams());
 					client.sendToClient(message);
 					//sendToAllClients(message);
 				}
@@ -409,6 +416,7 @@ public class SimpleServer extends AbstractServer {
 
 				} else if(request.equals("start exam")){
 
+					//if(SimpleClient.Type.equals("Teacher"))
 					updateExamStat(message.getExam().getId(),true);
 					message.setMessage("i will start exam");
 					client.sendToClient(message);

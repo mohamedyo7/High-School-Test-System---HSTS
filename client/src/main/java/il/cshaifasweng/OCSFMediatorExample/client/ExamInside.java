@@ -84,7 +84,7 @@ public class ExamInside {
                 Message msg = new Message("end exam");
                 msg.setExam(value);
                 sendMessage(msg);
-                SimpleChatClient.setRoot("ExamsPage");
+                SimpleChatClient.setRoot("StudentController");
                 break;
             }
         }

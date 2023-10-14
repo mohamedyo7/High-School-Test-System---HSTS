@@ -16,7 +16,7 @@
       </TableView>
       <ListView fx:id="coursesList" layoutX="286.0" layoutY="73.0" prefHeight="200.0" prefWidth="200.0" />
       <Button layoutX="524.0" layoutY="14.0" mnemonicParsing="false" onAction="#BackB" text="Back" />
-      <Button layoutX="87.0" layoutY="296.0" mnemonicParsing="false" onAction="#startB" prefHeight="25.0" prefWidth="74.0" text="Start Exam" />
+      <Button fx:id="start_b" layoutX="87.0" layoutY="296.0" mnemonicParsing="false" onAction="#startB" prefHeight="25.0" prefWidth="74.0" text="Start Exam" />
       <Button layoutX="345.0" layoutY="296.0" mnemonicParsing="false" onAction="#showExams" text="Show Exams" />
       <ListView fx:id="examsList" layoutX="24.0" layoutY="331.0" prefHeight="200.0" prefWidth="200.0" />
    </children>

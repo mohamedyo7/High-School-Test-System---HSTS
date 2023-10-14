@@ -1,10 +1,11 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.Message;
-import il.cshaifasweng.OCSFMediatorExample.entities.entities.Course;
+import il.cshaifasweng.OCSFMediatorExample.entities.entities.CourseReg;
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.Exams;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -36,17 +37,25 @@ public class ExamsFinal {
     private TableView<Exams> examsTable;
     @FXML
     private ListView<String> examsList;
+
+    @FXML
+    private Button start_b;
     @FXML
     void BackB(ActionEvent event) throws IOException {
+        if(SimpleClient.Type.equals("Teacher"))
         SimpleChatClient.setRoot("ExamsPage");
+        else if(SimpleClient.Type.equals("Student"))
+            SimpleChatClient.setRoot("StudentController");
     }
 
     @FXML
     void startB(ActionEvent event) throws IOException {
+        if(SimpleClient.Type.equals("Student"))
         SimpleChatClient.setRoot("examInside");
         Message msg = new Message("start exam");
         //examsTable.getSelectionModel().getSelectedItem().setStat(1);
         msg.setExam(examsTable.getSelectionModel().getSelectedItem());
+        msg.setCourseName(String.valueOf(examsTable.getSelectionModel().getSelectedItem()));
         sendMessage(msg);
 
 
@@ -61,12 +70,40 @@ public class ExamsFinal {
 @Subscribe
     public void setDataFromServerTF(MessageEvent event) {
         if (event.getMessage().getMessage().equals("i will give you the courses")) {
-            coursesList.getItems().clear();
-            List<Course> Courses_from_server = event.getMessage().getCourses_list_from_server();
 
-            for (Course course : Courses_from_server) {
-                // Set the data to the table
-                coursesList.getItems().add(course.getName());
+            coursesList.getItems().clear();
+            if(SimpleClient.Type.equals("Teacher")) {
+
+                List<CourseReg> Courses_from_server_reg = event.getMessage().getCourses_list_from_server_reg();
+
+                for (int i = 0; i < Courses_from_server_reg.size(); i++) {
+                    // Set the data to the table
+                    if (Courses_from_server_reg.get(i).getLecturer() != null)
+                        if (Courses_from_server_reg.get(i).getLecturer().getId() == SimpleClient.ID) {
+
+                            coursesList.getItems().add(Courses_from_server_reg.get(i).getName());
+                        }
+
+                }
+            }
+            else if(SimpleClient.Type.equals("Student")){
+                List<CourseReg> Courses_from_server_reg = event.getMessage().getCourses_list_from_server_reg();
+                List<Exams>Exams_from_server=event.getMessage().getExams_list_from_server();
+
+                for (int i = 0; i < Courses_from_server_reg.size(); i++) {
+                    // Set the data to the table
+                    if (Courses_from_server_reg.get(i).getLecturer() != null)
+                        if (Courses_from_server_reg.get(i).getLecturer().getId() == SimpleClient.ID) {
+                            for(int j=0;j<Exams_from_server.size();j++){
+                                if(Courses_from_server_reg.get(i).getName().equals(Exams_from_server.get(j).getCourse_name()))
+                                    if(Exams_from_server.get(j).getStat())
+                                        coursesList.getItems().add(Courses_from_server_reg.get(i).getName());
+                            }
+
+
+                        }
+
+                }
             }
             coursesList.refresh();
         } else if (event.getMessage().getMessage().equals("i will give you the exams")) {
@@ -78,6 +115,7 @@ public class ExamsFinal {
             numberTable.setCellValueFactory(new PropertyValueFactory<>("ques_number"));
 
             for(int i=1;i<exams.size();i++){
+                if(coursesList.getSelectionModel().getSelectedItem()!=null)
                 if(coursesList.getSelectionModel().getSelectedItem().equals(exams.get(i).getCourse_name())){
                         examsTable.getItems().add(exams.get(i));
                 }
