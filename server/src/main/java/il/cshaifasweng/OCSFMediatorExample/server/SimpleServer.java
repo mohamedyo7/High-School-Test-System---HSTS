@@ -17,6 +17,8 @@ import static il.cshaifasweng.OCSFMediatorExample.server.App.*;
 public class SimpleServer extends AbstractServer {
 	private static ArrayList<SubscribedClient> SubscribersList = new ArrayList<>();
 
+	public static int client_id=0;
+
 	//private static Session session;
 
 	public SimpleServer(int port) {
@@ -242,6 +244,7 @@ public class SimpleServer extends AbstractServer {
 				else if (request.equals("check id exist")) {
 					message.setMessage("i will check id exist");
 
+
 					message.setStudents_list_from_server(getAllStudents());
 					message.setLecturers_list_from_server(getAllLecturers());
 					client.sendToClient(message);
@@ -292,6 +295,14 @@ public class SimpleServer extends AbstractServer {
 
 
 				 else if (request.equals("change the student grade")) {
+					 List<Course>courses=getAllCourses();
+
+					 /*for(int i=0;i<courses.size();i++){
+						 if(SimpleClient.cname!=null)
+						 if(courses.get(i).getName().equals(SimpleClient.cname))
+							 message.setCourse_id(courses.get(i).getId());
+					 }*/
+					System.out.println("hat nshof"+message.getCourse_id());
 					changeGrade(message.getStudentId(), message.getCourse_id(), message.getGrade_to_change());
 					message.setMessage("i changed the grade");
 					client.sendToClient(message);

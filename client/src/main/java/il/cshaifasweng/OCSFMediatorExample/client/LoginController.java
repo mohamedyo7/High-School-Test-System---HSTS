@@ -44,7 +44,7 @@ public class LoginController {
 
     @FXML
     void backB(ActionEvent event) throws IOException {
-        SimpleChatClient.setRoot("First Page");
+        SimpleChatClient.setRoot("FirstPage");
     }
     @FXML
     void Login_But(ActionEvent event) throws IOException {

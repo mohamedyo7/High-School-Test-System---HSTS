@@ -48,14 +48,13 @@ public class FirstPage {
 
         //EventBus.getDefault().register(this);
 
-        try {
-            int j=1;
-            Message message = new Message(j++,"add client");
+  /*      try {
+            Message message = new Message(0,"add client");
             SimpleClient.getClient().sendToServer(message);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-        }
+        }*/
 
         // sendMessage("give me the students");
         // Choose_login.setVisible(true);

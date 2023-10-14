@@ -21,6 +21,16 @@ public class ExamsScan  implements Serializable {
 
     private String type;
 
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
+
+    private String answer;
+
     // Pay attention to this one: name is a reserved keyword in MySQL.
     @Column(name = "Exam_Name")
     private String name;
@@ -57,13 +67,14 @@ public class ExamsScan  implements Serializable {
     private String Student_ID;
 
 
-    public ExamsScan(String student_id,String exam_name, String exam_id,String type)
+    public ExamsScan(String student_id,String exam_name, String exam_id,String type,String ans)
     {
 
         setStudent_ID(student_id);
         setName(exam_name);
         setExam_ID(exam_id);
         setType(type);
+        setAnswer(ans);
 
 
 
@@ -74,6 +85,7 @@ public class ExamsScan  implements Serializable {
         this.Exam_ID=getExam_ID();
         this.name=exam.name;
         this.type=exam.getType();
+        this.answer=exam.answer;
     }
 
     public int getId() {

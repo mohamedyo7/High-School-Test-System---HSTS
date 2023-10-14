@@ -1,9 +1,8 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
 
+import il.cshaifasweng.OCSFMediatorExample.client.ocsf.AbstractClient;
 import il.cshaifasweng.OCSFMediatorExample.entities.Message;
 import org.greenrobot.eventbus.EventBus;
-
-import il.cshaifasweng.OCSFMediatorExample.client.ocsf.AbstractClient;
 
 public class SimpleClient extends AbstractClient {
 
@@ -21,6 +20,8 @@ public class SimpleClient extends AbstractClient {
 		Message message = (Message) msg;
 
 		if (message.getMessage().equals("client added successfully")) {
+			System.out.println("client2"+SimpleChatClient.client_id);
+
 			//do nothing!!
 		} else if (message.getMessage().equals("i will give you the students")) {
 			EventBus.getDefault().post(new MessageEvent(message));

@@ -78,7 +78,7 @@ SimpleChatClient.setRoot("FirstPage");
         if (event.getMessage().getMessage().equals("i will give you the teacher data")) {
 
             if (Techer_ID.getItems().isEmpty()) {
-                Techer_ID.getItems().add(String.valueOf(event.getMessage().getId()));
+                Techer_ID.getItems().add(String.valueOf(SimpleClient.ID));
 
 
             }
@@ -90,6 +90,7 @@ SimpleChatClient.setRoot("FirstPage");
     void initialize() {
         int msgId=0;
         EventBus.getDefault().register(this);
+        sendMessage("give me teacher data");
 
 
         try {

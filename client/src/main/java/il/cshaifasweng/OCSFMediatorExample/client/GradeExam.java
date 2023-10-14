@@ -16,12 +16,13 @@ public class GradeExam {
     @FXML
     void okB(ActionEvent event) throws IOException {
         Message msg = new Message("change the student grade");
-        msg.setGrade(gradeis);
-        msg.setGrade_to_change((int)gradeis);
-        msg.setId(SimpleClient.ID);
-        msg.setCourseName(SimpleClient.cname);
-        sendMessage(msg);
+        msg.setGrade(Double.parseDouble(grade.getText()));
+        msg.setGrade_to_change((int) msg.getGrade());
+        msg.setStudentId(SimpleClient.ID);
+        msg.setCourse_id(Integer.parseInt(ExamsFinal.courseid));
         SimpleChatClient.setRoot("StudentController");
+        sendMessage(msg);
+
     }
     @FXML
     private ResourceBundle resources;

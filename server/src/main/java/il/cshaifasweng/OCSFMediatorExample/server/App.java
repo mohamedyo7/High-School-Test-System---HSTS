@@ -1,6 +1,5 @@
 package il.cshaifasweng.OCSFMediatorExample.server;
 
-import il.cshaifasweng.OCSFMediatorExample.client.TeacherPage;
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.*;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -294,7 +293,7 @@ public static void generate(){
             }catch (HibernateException e){
                 e.printStackTrace();
             }
-            generateQuestions();
+            //generateQuestions();
             generateCourses();
             generateExams();
             generate();

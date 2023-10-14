@@ -21,6 +21,8 @@ public class SimpleChatClient extends Application {
     private static Scene scene;
     private SimpleClient client;
 
+    public static int client_id=0;
+
     @Override
     public void start(Stage stage) throws IOException {
         EventBus.getDefault().register(this);
@@ -68,6 +70,7 @@ public class SimpleChatClient extends Application {
 
 
     public static void main(String[] args) {
+
 
         launch();
 

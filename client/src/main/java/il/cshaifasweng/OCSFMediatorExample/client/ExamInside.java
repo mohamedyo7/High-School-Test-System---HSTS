@@ -160,7 +160,7 @@ public class ExamInside {
                 }
 
             }
-            if(!fques.isEmpty()){
+            if(!(fques.isEmpty())){
                 question.setText(fques.get(i).getQuestion());
                 System.out.println("ques is "+fques.get(i).getQuestion());
                 ans1.setText(fques.get(i).getAns1());
