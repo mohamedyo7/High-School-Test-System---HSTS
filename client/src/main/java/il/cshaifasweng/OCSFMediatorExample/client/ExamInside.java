@@ -146,7 +146,7 @@ public class ExamInside {
 
 
     @Subscribe
-    public void setDataFromServerTF(MessageEvent event) {
+    public void setDataFromServerTF(MessageEvent event) throws IOException {
         if (event.getMessage().getMessage().equals("i will show questions2")){
             ques = event.getMessage().getQuestions_list_from_server();
             exams = event.getMessage().getExams_list_from_server();
@@ -181,7 +181,23 @@ public class ExamInside {
             sendMessage("show questions2");
 
         }
-
+        else if (event.getMessage().getMessage().equals("exam is over")){
+            if(exam_id==event.getMessage().getExam().getId()){
+                fques.clear();
+                i = 0;
+                cAns = "";
+                quenum = 0;
+                Message msg = new Message("end exam");
+                msg.setId(exam_id);
+                sendMessage(msg);
+                System.out.println("mark is " + mark);
+                msg.setMessage("the grade is");
+                msg.setGrade(mark);
+                mark = 0.0;
+                SimpleChatClient.setRoot("gradeExam");
+                sendMessage(msg);
+            }
+        }
         //start from here exam.question have problem
 
 
