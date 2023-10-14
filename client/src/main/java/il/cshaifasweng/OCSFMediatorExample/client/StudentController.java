@@ -128,9 +128,10 @@ public class StudentController {
 
 
         else if (event.getMessage().getMessage().equals("i will give you the student data")) {
+            System.out.println("hi");
             int s=0;
             if (STD_ID.getItems().isEmpty()) {
-                STD_ID.getItems().add(String.valueOf(event.getMessage().getStudentId()));
+                STD_ID.getItems().add(String.valueOf(SimpleClient.ID));
 
 
             }
@@ -140,7 +141,7 @@ public class StudentController {
                 for (int i = 0; i < Courses_from_server_reg.size(); i++) {
                     // Set the data to the table
                     if(Courses_from_server_reg.get(i).getStudent()!=null)
-                    if(Courses_from_server_reg.get(i).getStudent().getStudent_id()==event.getMessage().getId()){
+                    if(Courses_from_server_reg.get(i).getStudent().getStudent_id()==SimpleClient.ID){
 
 
                         Student_Courses_Table.getItems().add(Courses_from_server_reg.get(i).getName());
@@ -167,6 +168,7 @@ public class StudentController {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        sendMessage("give me student data");
         //sendMessage("Show The Courses");
 
     }

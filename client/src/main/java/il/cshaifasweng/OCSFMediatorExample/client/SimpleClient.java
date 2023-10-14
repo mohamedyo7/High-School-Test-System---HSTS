@@ -10,6 +10,7 @@ public class SimpleClient extends AbstractClient {
 	private static SimpleClient client = null;
 	public static int ID;
 	public static String Type;
+	public static String cname;
 
 	private SimpleClient(String host, int port) {
 		super(host, port);
@@ -43,6 +44,7 @@ public class SimpleClient extends AbstractClient {
 		}
 		else if (message.getMessage().equals("i will give you the courses")) {
 			EventBus.getDefault().post(new MessageEvent(message));
+
 		}
 		else if (message.getMessage().equals("i will give you the courses2")) {
 			EventBus.getDefault().post(new MessageEvent(message));
@@ -86,6 +88,7 @@ public class SimpleClient extends AbstractClient {
 
 		else if(message.getMessage().equals("I Will Show The Courses")) {
 			EventBus.getDefault().post(new MessageEvent(message));
+
 		}
 		else if(message.getMessage().equals("i will show stats")) {
 			EventBus.getDefault().post(new MessageEvent(message));
@@ -97,6 +100,7 @@ public class SimpleClient extends AbstractClient {
 	} else if (message.getMessage().equals("i will give you the exams")) {
 		EventBus.getDefault().post(new MessageEvent(message));
 	} else if (message.getMessage().equals("i will start exam")) {
+		 cname=message.getCourseName();
 		EventBus.getDefault().post(new MessageEvent(message));
 	}else if (message.getMessage().equals("i added the exam")) {
 		EventBus.getDefault().post(new MessageEvent(message));

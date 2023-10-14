@@ -338,7 +338,7 @@ public class SimpleServer extends AbstractServer {
 
 					message.setMessage("i will give you the student data");
 					List<CourseReg> s=getAllregCourses();
-				message.setCourses_list_from_server_reg(s);
+					message.setCourses_list_from_server_reg(s);
 
 					client.sendToClient(message);
 					//sendToAllClients(message);
@@ -418,6 +418,7 @@ public class SimpleServer extends AbstractServer {
 
 					//if(SimpleClient.Type.equals("Teacher"))
 					updateExamStat(message.getExam().getId(),true);
+					message.setCourseName(message.getExam().getCourse_name());
 					message.setMessage("i will start exam");
 					client.sendToClient(message);
 				} else if(request.equals("exam is over")){

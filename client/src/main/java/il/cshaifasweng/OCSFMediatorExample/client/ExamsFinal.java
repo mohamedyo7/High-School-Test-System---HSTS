@@ -54,24 +54,23 @@ public class ExamsFinal {
     void BackB(ActionEvent event) throws IOException {
         if(SimpleClient.Type.equals("Teacher"))
         SimpleChatClient.setRoot("ExamsPage");
-        else if(SimpleClient.Type.equals("Student"))
-            SimpleChatClient.setRoot("StudentController");
+        else if(SimpleClient.Type.equals("Student")){
+            Message msg = new Message("give me student data");
+            sendMessage(msg);
+            SimpleChatClient.setRoot("StudentController");}
     }
 
     @FXML
     void startB(ActionEvent event) throws IOException {
         delay = new PauseTransition(Duration.millis(1000*60*60*time));
 
-        // Set the action to be performed after the 30-minute delay
         delay.setOnFinished(e -> {
-            // Perform your desired action here after the 30-minute delay
             Message msg = new Message("exam is over");
             System.out.println("over");
             msg.setExam(examsTable.getSelectionModel().getSelectedItem());
             sendMessage(msg);
         });
 
-        // Start the delay
         delay.play();
         if(SimpleClient.Type.equals("Student"))
         SimpleChatClient.setRoot("examInside");
@@ -115,8 +114,8 @@ public class ExamsFinal {
 
                 for (int i = 0; i < Courses_from_server_reg.size(); i++) {
                     // Set the data to the table
-                    if (Courses_from_server_reg.get(i).getLecturer() != null)
-                        if (Courses_from_server_reg.get(i).getLecturer().getId() == SimpleClient.ID) {
+                    if (Courses_from_server_reg.get(i).getStudent() != null)
+                        if (Courses_from_server_reg.get(i).getStudent().getId() == SimpleClient.ID) {
                             for(int j=0;j<Exams_from_server.size();j++){
                                 if(Courses_from_server_reg.get(i).getName().equals(Exams_from_server.get(j).getCourse_name()))
                                     if(Exams_from_server.get(j).getStat())

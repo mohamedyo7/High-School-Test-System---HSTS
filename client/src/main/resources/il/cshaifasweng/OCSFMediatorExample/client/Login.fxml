@@ -15,4 +15,5 @@
    <TextField fx:id="Password_text" layoutX="250.0" layoutY="180.0" />
    <Label layoutX="121.0" layoutY="192.0" text="Write Your Password" />
    <Text fx:id="time_txf" layoutX="35.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="53.13671875" />
+   <Button layoutX="525.0" layoutY="19.0" mnemonicParsing="false" onAction="#backB" text="Back" />
 </AnchorPane>

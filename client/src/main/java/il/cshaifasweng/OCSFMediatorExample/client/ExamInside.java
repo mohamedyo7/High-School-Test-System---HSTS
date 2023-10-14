@@ -22,7 +22,7 @@ public class ExamInside {
     int exam_id;
     String cAns;
     int quenum;
-
+    String courseid;
     List<Questions> ques=new ArrayList<>();
     List<Questions> fques=new ArrayList<>();
 

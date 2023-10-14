@@ -12,13 +12,16 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class GradeExam {
-
+    double gradeis;
     @FXML
     void okB(ActionEvent event) throws IOException {
-        SimpleChatClient.setRoot("TeacherPage");
-        Message msg = new Message("give me teacher data");
+        Message msg = new Message("change the student grade");
+        msg.setGrade(gradeis);
+        msg.setGrade_to_change((int)gradeis);
         msg.setId(SimpleClient.ID);
+        msg.setCourseName(SimpleClient.cname);
         sendMessage(msg);
+        SimpleChatClient.setRoot("StudentController");
     }
     @FXML
     private ResourceBundle resources;
@@ -31,8 +34,8 @@ public class GradeExam {
     @Subscribe
     public void setDataFromServerTF(MessageEvent event) {
         grade.setText("hi");
-        Double d = event.getMessage().getGrade();
-        String str = String.valueOf(d);
+        gradeis = event.getMessage().getGrade();
+        String str = String.valueOf(gradeis);
         grade.setText(str);
     }
     void sendMessage(Message message) {

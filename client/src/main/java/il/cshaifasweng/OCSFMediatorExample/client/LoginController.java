@@ -43,6 +43,10 @@ public class LoginController {
     private TextField Password_text;
 
     @FXML
+    void backB(ActionEvent event) throws IOException {
+        SimpleChatClient.setRoot("First Page");
+    }
+    @FXML
     void Login_But(ActionEvent event) throws IOException {
         pass=Password_text.getText();
         if (Choose_login.getSelectionModel().isEmpty() || ID_text.getText().isEmpty() || Password_text.getText().isEmpty()) {
@@ -138,14 +142,14 @@ public class LoginController {
 
                 } else {
                     SimpleChatClient.setRoot("StudentController");
-                    Message msg = new Message("give me student data");
+/*                    Message msg = new Message("give me student data");
                     // Message msg = new Message("give me the students");
                     msg.setStudentId(Integer.parseInt(ID_text.getText()));
                     msg.setId(Integer.parseInt(ID_text.getText()));
+
+                    sendMessage(msg);*/
                     c = 0;
                     pass = "[p]";
-                    sendMessage(msg);
-
 
                 }
             }
