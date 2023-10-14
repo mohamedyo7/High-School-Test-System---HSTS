@@ -50,7 +50,8 @@ public class StudentController {
     }
 
     @FXML
-    void Start_Exam(ActionEvent event) {
+    void Start_Exam(ActionEvent event) throws IOException {
+        SimpleChatClient.setRoot("ExamsFinal");
 
     }
     @FXML

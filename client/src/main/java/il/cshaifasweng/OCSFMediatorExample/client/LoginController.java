@@ -59,6 +59,7 @@ public class LoginController {
                Message msg = new Message("give me the students2");
                 msg.setStudentId(s);
                 msg.setId(s);
+                msg.setLogin_name("Student");
                 sendMessage(msg);
 
 
@@ -67,6 +68,7 @@ public class LoginController {
                 //Message msg = new Message("give me teacher data");
                 Message msg = new Message("give me the students2");
                 msg.setId(s);
+                msg.setLogin_name("Teacher");
                 sendMessage(msg);
 
             }
@@ -75,6 +77,7 @@ public class LoginController {
                 //Message msg = new Message("give me teacher data");
                 Message msg = new Message("give me the students2");
                 msg.setId(s);
+                msg.setLogin_name("Mediator");
                 sendMessage(msg);
 
             }

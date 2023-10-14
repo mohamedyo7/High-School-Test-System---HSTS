@@ -32,6 +32,7 @@ public class App {
         configuration.addAnnotatedClass(Lecturer.class);
         configuration.addAnnotatedClass(Student.class);
         configuration.addAnnotatedClass(Questions.class);
+        configuration.addAnnotatedClass(ExamsScan.class);
 
         configuration.addAnnotatedClass(CourseReg.class);
         configuration.addAnnotatedClass(Mediator.class);
