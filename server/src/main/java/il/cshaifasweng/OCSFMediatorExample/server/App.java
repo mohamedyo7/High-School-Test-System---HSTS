@@ -114,7 +114,7 @@ public class App {
     }
 
 
-    public static void updateExamStat(int examId, boolean newStat) throws Exception {
+    public static void updateExamStat(int examId, boolean newStat,double time) throws Exception {
 
         List<Exams> exams = getAllExams();
         try {
@@ -135,10 +135,47 @@ public class App {
 
             // Update the stat
             exam.setStat(newStat);
-
+            exam.setTime(time);
             // Save the updated exam object
             session.update(exam);
             session.getTransaction().commit(); // Save everything..commit();
+        } catch (Exception e) {
+            session.getTransaction().rollback();
+        } finally {
+            session.close();
+        }
+    }
+
+    public static void updatethetime(int examId, double newStat) throws Exception {
+        System.out.println("1");
+        System.out.println("1");
+        List<Exams> exams = getAllExams();
+        System.out.println("1.00");
+        try {
+            System.out.println("1.0");
+
+            // Find the corresponding Exam entity
+            Exams exam = null;
+            System.out.println("1.1");
+            for (Exams e : exams) {
+                if (e.getId() == examId) {
+                    exam = e;
+                    break;
+                }
+                System.out.println("1.2");
+            }
+            System.out.println("2");
+            if (exam == null) {
+                throw new Exception("No exam found with the specified ID.");
+            }
+            System.out.println("3");
+            // Update the stat
+            exam.setTime(newStat);
+            System.out.println("4");
+            // Save the updated exam object
+            session.update(exam);
+            session.getTransaction().commit(); // Save everything..commit();
+            System.out.println("5");
         } catch (Exception e) {
             session.getTransaction().rollback();
         } finally {
@@ -293,7 +330,7 @@ public static void generate(){
             }catch (HibernateException e){
                 e.printStackTrace();
             }
-            //generateQuestions();
+            generateQuestions();
             generateCourses();
             generateExams();
             generate();

@@ -4,12 +4,11 @@ import il.cshaifasweng.OCSFMediatorExample.entities.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.CourseReg;
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.Exams;
-import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.util.Duration;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
@@ -22,7 +21,7 @@ public class ExamsFinal {
 
     public static String courseid;
     private double time;
-    private PauseTransition delay;
+
     @FXML
     private TextField timeT;
     @FXML
@@ -40,7 +39,7 @@ public class ExamsFinal {
     private ListView<String> coursesList;
     @FXML
     void insetTime(ActionEvent event) {
-        time=Double.parseDouble(timeT.getText());
+
 
     }
     @FXML
@@ -62,27 +61,23 @@ public class ExamsFinal {
 
     @FXML
     void startB(ActionEvent event) throws IOException {
-        delay = new PauseTransition(Duration.millis(1000*60*60*time));
-
-        delay.setOnFinished(e -> {
-            Message msg = new Message("exam is over");
-            System.out.println("over");
-            msg.setExam(examsTable.getSelectionModel().getSelectedItem());
-            sendMessage(msg);
-        });
-
-        delay.play();
-        if(SimpleClient.Type.equals("Student"))
-        SimpleChatClient.setRoot("examInside");
         Message msg = new Message("start exam");
-        //examsTable.getSelectionModel().getSelectedItem().setStat(1);
-        msg.setExam(examsTable.getSelectionModel().getSelectedItem());
-        msg.setCourseName(String.valueOf(examsTable.getSelectionModel().getSelectedItem()));
+        if(SimpleClient.Type.equals("Student")){
+            SimpleChatClient.setRoot("examInside");
+            msg.setLogin_name("student");
+        }
+        else{
+            time=Double.parseDouble(timeT.getText());
+            msg.setLogin_name("teacher");
+            msg.setTime(time);
+            System.out.println("timeeeeeeee" + time);
+        }
 
-
-        sendMessage(msg);
-
-
+            //examsTable.getSelectionModel().getSelectedItem().setStat(1);
+            msg.setExam(examsTable.getSelectionModel().getSelectedItem());
+            msg.setCourseName(String.valueOf(examsTable.getSelectionModel().getSelectedItem()));
+            msg.setCourse_id(Integer.parseInt(courseid));
+            sendMessage(msg);
     }
     @FXML
     void showExams(ActionEvent event) {

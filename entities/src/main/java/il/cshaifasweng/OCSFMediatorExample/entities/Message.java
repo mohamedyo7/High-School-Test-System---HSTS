@@ -13,7 +13,15 @@ public class Message implements Serializable {
     int id;
     double grade;
 
+    double time;
 
+    public void setTime(double time) {
+        this.time = time;
+    }
+
+    public double getTime() {
+        return time;
+    }
 
     List<Object> object;
     LocalDateTime timeStamp;

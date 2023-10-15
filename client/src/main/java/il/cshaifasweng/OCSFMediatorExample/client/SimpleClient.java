@@ -55,8 +55,10 @@ public class SimpleClient extends AbstractClient {
 		}else if (message.getMessage().equals("i changed the grade")) {
 			EventBus.getDefault().post(new MessageEvent(message));
 
-		}
-		else if(message.getMessage().equals("i added the course")) {
+		}else if (message.getMessage().equals("exam is over done")) {
+			EventBus.getDefault().post(new MessageEvent(message));
+
+		}else if(message.getMessage().equals("i added the course")) {
 			EventBus.getDefault().post(new MessageEvent(message));
 		}
 		else if(message.getMessage().equals("i will show questions")) {

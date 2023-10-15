@@ -5,6 +5,7 @@ import il.cshaifasweng.OCSFMediatorExample.entities.entities.*;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.AbstractServer;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.ConnectionToClient;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.SubscribedClient;
+import javafx.animation.PauseTransition;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -16,7 +17,7 @@ import static il.cshaifasweng.OCSFMediatorExample.server.App.*;
 
 public class SimpleServer extends AbstractServer {
 	private static ArrayList<SubscribedClient> SubscribersList = new ArrayList<>();
-
+	private PauseTransition delay;
 	public static int client_id=0;
 
 	//private static Session session;
@@ -217,61 +218,61 @@ public class SimpleServer extends AbstractServer {
 			try {
 
 				if (request.isBlank()) {
+
 					message.setMessage("Error! we got an empty message");
 					client.sendToClient(message);
+
 				} else if (request.equals("add client")) {
+
 					SubscribedClient connection = new SubscribedClient(client);
 					SubscribersList.add(connection);
 					message.setMessage("client added successfully");
 					client.sendToClient(message);
-				} else if (request.equals("give me the students")) {
-					message.setMessage("i will give you the students");
 
+				} else if (request.equals("give me the students")) {
+
+					message.setMessage("i will give you the students");
 					message.setStudents_list_from_server(getAllStudents());
 					//message.setLecturers_list_from_server(getAllLecturers());
 					client.sendToClient(message);
-					//sendToAllClients(message);
-				}
-				else if (request.equals("give me the students2")) {
-					message.setMessage("i will give you the students2");
 
+				} else if (request.equals("give me the students2")) {
+
+					message.setMessage("i will give you the students2");
 					message.setStudents_list_from_server(getAllStudents());
 					message.setLecturers_list_from_server(getAllLecturers());
 					message.setMediators_list_from_server(getAllMediator());
 					client.sendToClient(message);
-					//sendToAllClients(message);
+
 				}
 				else if (request.equals("check id exist")) {
+
 					message.setMessage("i will check id exist");
-
-
 					message.setStudents_list_from_server(getAllStudents());
 					message.setLecturers_list_from_server(getAllLecturers());
 					client.sendToClient(message);
-					//sendToAllClients(message);
-				}
-				else if (request.equals("give me the student grades")) {
-					message.setMessage("i will give you the student grades");
 
+				}else if (request.equals("give me the student grades")) {
+
+					message.setMessage("i will give you the student grades");
 					message.setGrades_list_from_server(getAllgrades());
 					client.sendToClient(message);
 					//sendToAllClients(message);
 
 				} else if (request.equals("give me the courses")) {
+
 					message.setMessage("i will give you the courses");
 					message.setCourses_list_from_server(getAllCourses());
 					message.setStudents_list_from_server(getAllStudents());
 					message.setCourses_list_from_server_reg(getAllregCourses());
 					message.setExams_list_from_server(getAllExams());
 					client.sendToClient(message);
-					//sendToAllClients(message);
-				}
 
-					else if (request.equals("register the course")) {
+				}else if (request.equals("register the course")) {
+
 						message.setMessage("course has been registered");
 					if(message.getLogin_name().equals("Student")) {
 						List<Student> s = getAllStudents();
-
 						generateregcourse(message.getId(), message.getCourseName());
 						List<Course> cor = getAllCourses();
 						Course course = new Course();
@@ -281,96 +282,84 @@ public class SimpleServer extends AbstractServer {
 						}
 						for (int i = 0; i < s.size(); i++) {
 							if (s.get(i).getStudent_id() == message.getId())
-								generateGrades(s.get(i), course, "null", message.getCourseName());
-						}
-					}
-					if(message.getLogin_name().equals("Teacher"))
+								generateGrades(s.get(i), course, "null", message.getCourseName());}
+					}if(message.getLogin_name().equals("Teacher"))
 						generateregcourse2(message.getId(), message.getCourseName());
-
-					message.setStudents_list_from_server(getAllStudents());
-					message.setCourses_list_from_server_reg(getAllregCourses());
+						message.setStudents_list_from_server(getAllStudents());
+						message.setCourses_list_from_server_reg(getAllregCourses());
 						client.sendToClient(message);
-					}
 
+				}else if (request.equals("change the student grade")) {
 
-
-				 else if (request.equals("change the student grade")) {
 					 List<Course>courses=getAllCourses();
-
-					 /*for(int i=0;i<courses.size();i++){
-						 if(SimpleClient.cname!=null)
-						 if(courses.get(i).getName().equals(SimpleClient.cname))
-							 message.setCourse_id(courses.get(i).getId());
-					 }*/
-					System.out.println("hat nshof"+message.getCourse_id());
 					changeGrade(message.getStudentId(), message.getCourse_id(), message.getGrade_to_change());
 					message.setMessage("i changed the grade");
 					client.sendToClient(message);
-					//sendToAllClients(message);
 
 				}else if(request.equals("add questions to course")){
+
 				message.setMessage("i added question to course");
 				client.sendToClient(message);
-			}
-				else if(request.equals("create question")) {
+
+				}else if(request.equals("create question")) {
+
 					message.setMessage("i created question");
 					Questions question = message.getQuestion();
 					generateQuestion(question);
 					client.sendToClient(message);
+
 				}else if(request.equals("show questions")){
+
 					message.setMessage("i will show questions");
 					List<Questions> ques = getAllQuestions();
-
 					message.setQuestions_list_from_server(ques);
 					client.sendToClient(message);
-				}
-				else if(request.equals("Save The Student Details")) {
+
+				}else if(request.equals("Save The Student Details")) {
+
 					message.setMessage("I Saved The Student Details");
 					generateStudents(message.getStudent());
 					message.setCourses_list_from_server(getAllCourses());
 					client.sendToClient(message);
-					//sendToAllClients(message);
-				}
-				else if(request.equals("Save The Teacher Details")) {
+
+				} else if(request.equals("Save The Teacher Details")) {
+
 					message.setMessage("I Saved The Teacher Details");
 					generateLecturers(message.getLec());
 					message.setCourses_list_from_server(getAllCourses());
 					client.sendToClient(message);
-					//sendToAllClients(message);
+
 				}
 				else if(request.equals("Save The Mediator Details")) {
+
 					message.setMessage("I Saved The Mediator Details");
 					generateMediator(message.getMediator());
 					message.setCourses_list_from_server(getAllCourses());
 					client.sendToClient(message);
-					//sendToAllClients(message);
-				}
-				else if(request.equals("give me student data")){
+
+				}else if(request.equals("give me student data")){
 
 					message.setMessage("i will give you the student data");
 					List<CourseReg> s=getAllregCourses();
 					message.setCourses_list_from_server_reg(s);
-
 					client.sendToClient(message);
-					//sendToAllClients(message);
+
 				}
 				else if(request.equals("give me teacher data")){
 
 					message.setMessage("i will give you the teacher data");
 					List<CourseReg> s=getAllregCourses();
 					message.setCourses_list_from_server_reg(s);
-
 					client.sendToClient(message);
-					//sendToAllClients(message);
+
 				}
 				else if(request.equals("give me mediator data")){
 
 					message.setMessage("i will give you the mediator data");
 					List<CourseReg> s=getAllregCourses();
 					message.setCourses_list_from_server_reg(s);
-
 					client.sendToClient(message);
-					//sendToAllClients(message);
+
 				}
 				else if(request.equals("give me teacher stats")){
 
@@ -379,11 +368,9 @@ public class SimpleServer extends AbstractServer {
 					List<Lecturer> lec=getAllLecturers();
 					message.setLecturers_list_from_server(lec);
 					message.setCourses_list_from_server_reg(s);
-
 					client.sendToClient(message);
-					//sendToAllClients(message);
-				}
-				else if(request.equals("show stats")){
+
+				}else if(request.equals("show stats")){
 
 					message.setMessage("i will show stats");
 					List<CourseReg> s=getAllregCourses();
@@ -392,15 +379,11 @@ public class SimpleServer extends AbstractServer {
 					message.setGrades_list_from_server(grades);
 					message.setLecturers_list_from_server(lec);
 					message.setCourses_list_from_server_reg(s);
-
 					client.sendToClient(message);
-					//sendToAllClients(message);
-				}
-				else if (request.equals("update exam")) {
+
+				}else if (request.equals("update exam")) {
 
 					Exams exams = message.getExam();
-					//exams.setQues_number(exams.getQuestions().size());
-					//System.out.println(exams.getQuestions().size());
 					updateExam(exams);
 					message.setMessage("i updated the exam");
 					client.sendToClient(message);
@@ -427,23 +410,29 @@ public class SimpleServer extends AbstractServer {
 
 				} else if(request.equals("start exam")){
 
-					//if(SimpleClient.Type.equals("Teacher"))
-					updateExamStat(message.getExam().getId(),true);
+					if(message.getLogin_name().equals("teacher")){
+						System.out.println("aa");
+						updateExamStat(message.getExam().getId(),true,message.getTime());
+						System.out.println("ab"+message.getTime());
+						///updatethetime(message.getExam().getId(),message.getTime());
+						System.out.println("bbbb");
+
+					}
 					message.setCourseName(message.getExam().getCourse_name());
 					message.setMessage("i will start exam");
 					client.sendToClient(message);
-				} else if(request.equals("exam is over")){
 
-					updateExamStat(message.getId(),false);
-					message.setMessage("exam is over");
+				}else if(request.equals("exam is over")){
+
+					//updateExamStat(message.getId(),false,0.0001);
+					message.setMessage("exam is over done");
 					client.sendToClient(message);
-					sendToAllClients(message);
+
 				}else if(request.equals("end exam")){
+					changeGrade(message.getStudentId(), message.getCourse_id(), message.getGrade_to_change());
+					updateExamStat(message.getId(),false,message.getTime());
 
-					updateExamStat(message.getId(),false);
-
-				}
-				else if(request.equals("show questions2")){
+				}else if(request.equals("show questions2")){
 
 					message.setMessage("i will show questions2");
 					List<Questions> ques = getAllQuestions();
@@ -459,7 +448,7 @@ public class SimpleServer extends AbstractServer {
 
 				}
 				else {
-					//sendToAllClients(message);
+					sendToAllClients(message);
 				}
 
 
