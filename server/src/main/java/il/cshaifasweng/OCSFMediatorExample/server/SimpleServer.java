@@ -76,6 +76,13 @@ public class SimpleServer extends AbstractServer {
 		List<Grade> ques = session.createQuery(query).getResultList();
 		return ques;
 	}
+	public static List<ExamsScan> getAllexamsscans() {
+		CriteriaBuilder builder = session.getCriteriaBuilder();
+		CriteriaQuery<ExamsScan> query = builder.createQuery(ExamsScan.class);
+		query.from(ExamsScan.class);
+		List<ExamsScan> ques = session.createQuery(query).getResultList();
+		return ques;
+	}
 	private static void generateStudents(Student s) throws Exception {
 
 			Student std0 = new Student(s);
@@ -96,10 +103,9 @@ public class SimpleServer extends AbstractServer {
 		session.flush();
 	}
 	private static void generateExamsScan(ExamsScan lec) throws Exception {
-
-		ExamsScan lect = new ExamsScan(lec);
-		session.save(lect);
+		session.save(lec);
 		session.flush();
+		System.out.println("op");
 	}
 	public static void generateregcourse(int id,String name) throws Exception {
 		int c = 0;
@@ -263,6 +269,7 @@ public class SimpleServer extends AbstractServer {
 					message.setStudents_list_from_server(getAllStudents());
 					message.setCourses_list_from_server_reg(getAllregCourses());
 					message.setExams_list_from_server(getAllExams());
+					message.setExamsScans_list_from_server(getAllexamsscans());
 					client.sendToClient(message);
 					//sendToAllClients(message);
 				}
@@ -295,20 +302,21 @@ public class SimpleServer extends AbstractServer {
 
 
 				 else if (request.equals("change the student grade")) {
-					 List<Course>courses=getAllCourses();
-
-					 /*for(int i=0;i<courses.size();i++){
-						 if(SimpleClient.cname!=null)
-						 if(courses.get(i).getName().equals(SimpleClient.cname))
-							 message.setCourse_id(courses.get(i).getId());
-					 }*/
-					System.out.println("hat nshof"+message.getCourse_id());
 					changeGrade(message.getStudentId(), message.getCourse_id(), message.getGrade_to_change());
 					message.setMessage("i changed the grade");
 					client.sendToClient(message);
 					//sendToAllClients(message);
 
-				}else if(request.equals("add questions to course")){
+				}
+				else if (request.equals("change the student state")) {
+					//changeState(message.getStudentId(), message.getCourse_id(), message.getGrade_to_change());
+					message.setMessage("i changed the grade");
+					client.sendToClient(message);
+					//sendToAllClients(message);
+
+				}
+
+				 else if(request.equals("add questions to course")){
 				message.setMessage("i added question to course");
 				client.sendToClient(message);
 			}
@@ -350,6 +358,46 @@ public class SimpleServer extends AbstractServer {
 					message.setMessage("i will give you the student data");
 					List<CourseReg> s=getAllregCourses();
 					message.setCourses_list_from_server_reg(s);
+
+					client.sendToClient(message);
+					//sendToAllClients(message);
+				}
+				else if(request.equals("give me exams scans")){
+
+					message.setMessage("i will give you exams scans");
+					List<CourseReg> s=getAllregCourses();
+					message.setCourses_list_from_server_reg(s);
+					List<Questions>questions=getAllQuestions();
+					List<ExamsScan>examsScans=getAllexamsscans();
+					List<Exams>exams=getAllExams();
+					message.setQuestions_list_from_server(questions);
+					message.setExamsScans_list_from_server(examsScans);
+					message.setExams_list_from_server(exams);
+
+					client.sendToClient(message);
+					//sendToAllClients(message);
+				}
+				else if(request.equals("give me exam questions")){
+
+					message.setMessage("i will give you exams questions");
+					List<Questions>questions=getAllQuestions();
+					List<ExamsScan>examsScans=getAllexamsscans();
+					message.setQuestions_list_from_server(questions);
+					message.setExamsScans_list_from_server(examsScans);
+					client.sendToClient(message);
+					//sendToAllClients(message);
+				}
+				else if(request.equals("Show Answers")){
+
+					message.setMessage("i will Show Answers");
+					List<CourseReg> s=getAllregCourses();
+					message.setCourses_list_from_server_reg(s);
+					List<Questions>questions=getAllQuestions();
+					List<ExamsScan>examsScans=getAllexamsscans();
+					List<Exams>exams=getAllExams();
+					message.setQuestions_list_from_server(questions);
+					message.setExamsScans_list_from_server(examsScans);
+					message.setExams_list_from_server(exams);
 
 					client.sendToClient(message);
 					//sendToAllClients(message);
@@ -410,6 +458,7 @@ public class SimpleServer extends AbstractServer {
 
 					message.setMessage("i will give you the exams");
 					List<Exams> exams= getAllExams();
+					message.setExamsScans_list_from_server(getAllexamsscans());
 					message.setExams_list_from_server(exams);
 					client.sendToClient(message);
 
@@ -427,12 +476,34 @@ public class SimpleServer extends AbstractServer {
 
 				} else if(request.equals("start exam")){
 
-					//if(SimpleClient.Type.equals("Teacher"))
-					updateExamStat(message.getExam().getId(),true);
+
+					/*if(message.getLogin_name().equals("Student")){
+						ExamsScan exam=new ExamsScan(message.getStudentId(),message.getExam().getCourse_name(),message.getExam().getId(),"Student","null");
+						System.out.println("ID_1"+message.getExam().getId());
+						generateExamsScan(exam);
+					}*/
+					if(message.getLogin_name().equals("Teacher")) {
+
+						updateExamStat(message.getExam().getId(), true);
+					}
 					message.setCourseName(message.getExam().getCourse_name());
 					message.setMessage("i will start exam");
+					message.setId(message.getExam().getId());
 					client.sendToClient(message);
-				} else if(request.equals("exam is over")){
+				}
+				else if(request.equals("save data")){
+					message.setMessage("i will save data");
+					System.out.println("kl");
+					ExamsScan exam=new ExamsScan(message.getStudentId(),message.getCourseName(),message.getId(), message.getType(), message.getAns(),"True");
+					System.out.println("ID_1"+message.getId());
+					generateExamsScan(exam);
+					System.out.println("ID_2"+message.getId());
+					client.sendToClient(message);
+
+				}
+
+
+				else if(request.equals("exam is over")){
 
 					updateExamStat(message.getId(),false);
 					message.setMessage("exam is over");

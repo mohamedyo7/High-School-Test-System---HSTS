@@ -13,6 +13,16 @@ public class Message implements Serializable {
     int id;
     double grade;
 
+    public String getAns() {
+        return ans;
+    }
+
+    public void setAns(String ans) {
+        this.ans = ans;
+    }
+
+    String ans;
+
 
 
     List<Object> object;
@@ -40,6 +50,16 @@ public class Message implements Serializable {
     int course_id;
     private Questions question ;
     private Lecturer lec;
+
+    public String getType() {
+        return Type;
+    }
+
+    public void setType(String type) {
+        Type = type;
+    }
+
+    private String Type;
 
     public Lecturer getLec() {
         return lec;
@@ -102,6 +122,15 @@ public class Message implements Serializable {
     private List<Grade> grades_list_from_server;
     private List<Course> courses_list_from_server;
     private List<CourseReg> courses_list_from_server_reg;
+    private List<ExamsScan>examsScans_list_from_server;
+
+    public List<ExamsScan> getExamsScans_list_from_server() {
+        return examsScans_list_from_server;
+    }
+
+    public void setExamsScans_list_from_server(List<ExamsScan> examsScans_list_from_server) {
+        this.examsScans_list_from_server = examsScans_list_from_server;
+    }
 
     public List<Mediator> getMediators_list_from_server() {
         return mediators_list_from_server;

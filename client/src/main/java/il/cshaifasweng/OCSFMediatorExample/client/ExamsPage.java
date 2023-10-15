@@ -59,6 +59,7 @@ public class ExamsPage {
         Message msg = new Message("update exam");
         exam.setQues_number(qnum);
         msg.setExam(exam);
+        msg.setId(Integer.parseInt(exam_id.getText()));
         sendMessage(msg);
         SimpleChatClient.setRoot("examsFinal");
     }

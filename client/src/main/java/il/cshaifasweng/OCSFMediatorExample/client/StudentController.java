@@ -24,7 +24,13 @@ public class StudentController {
     private ListView<String> Student_Courses_Table;
 
     @FXML
-    void Show_Scan(ActionEvent event) {
+    void Show_Scan(ActionEvent event) throws IOException {
+        String Name= Student_Courses_Table.getSelectionModel().getSelectedItem();
+        Message msg=new Message("give me exams scans");
+        SimpleChatClient.setRoot("ScanPage");
+        msg.setCourseName(Name);
+        msg.setId(SimpleClient.ID);
+        sendMessage(msg);
 
     }
     @FXML

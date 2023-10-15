@@ -11,6 +11,9 @@ public class ExamsScan  implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id=1000;
 
+
+
+
     public String getType() {
         return type;
     }
@@ -20,6 +23,16 @@ public class ExamsScan  implements Serializable {
     }
 
     private String type;
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    private String state;
 
     public String getAnswer() {
         return answer;
@@ -35,11 +48,11 @@ public class ExamsScan  implements Serializable {
     @Column(name = "Exam_Name")
     private String name;
 
-    public String getExam_ID() {
+    public int getExam_ID() {
         return Exam_ID;
     }
 
-    public void setExam_ID(String exam_ID) {
+    public void setExam_ID(int exam_ID) {
         Exam_ID = exam_ID;
     }
 
@@ -52,22 +65,22 @@ public class ExamsScan  implements Serializable {
     }
 
     @Column(name = "Exam_ID")
-    private String Exam_ID;
+    private int Exam_ID;
 
 
-    public String getStudent_ID() {
+    public int getStudent_ID() {
         return Student_ID;
     }
 
-    public void setStudent_ID(String student_ID) {
+    public void setStudent_ID(int student_ID) {
         Student_ID = student_ID;
     }
 
     @Column(name = "student_ID")
-    private String Student_ID;
+    private int Student_ID;
 
 
-    public ExamsScan(String student_id,String exam_name, String exam_id,String type,String ans)
+    public ExamsScan(int student_id,String exam_name, int exam_id,String type,String ans,String state)
     {
 
         setStudent_ID(student_id);
@@ -75,17 +88,19 @@ public class ExamsScan  implements Serializable {
         setExam_ID(exam_id);
         setType(type);
         setAnswer(ans);
+        setState(state);
 
 
 
     }
     public ExamsScan(ExamsScan exam){
 
-        this.Student_ID=exam.Student_ID;
-        this.Exam_ID=getExam_ID();
+        this.Student_ID=exam.getStudent_ID();
+        this.Exam_ID=exam.getExam_ID();
         this.name=exam.name;
         this.type=exam.getType();
         this.answer=exam.answer;
+        this.state=exam.state;
     }
 
     public int getId() {

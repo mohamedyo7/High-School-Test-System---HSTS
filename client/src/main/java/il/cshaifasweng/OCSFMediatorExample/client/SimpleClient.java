@@ -37,7 +37,25 @@ public class SimpleClient extends AbstractClient {
 
 			EventBus.getDefault().post(new MessageEvent(message));
 		}
+		else if (message.getMessage().equals("i will give you exams questions")) {
+
+
+
+			EventBus.getDefault().post(new MessageEvent(message));
+		}
+		else if (message.getMessage().equals("i will give Show Answers")) {
+
+
+
+			EventBus.getDefault().post(new MessageEvent(message));
+		}
 		else if (message.getMessage().equals("i will give you the student grades")) {
+			EventBus.getDefault().post(new MessageEvent(message));
+		}
+		else if (message.getMessage().equals("i will save data")) {
+			EventBus.getDefault().post(new MessageEvent(message));
+		}
+		else if (message.getMessage().equals("i will give you exams scans")) {
 			EventBus.getDefault().post(new MessageEvent(message));
 		}
 		else if (message.getMessage().equals("i created question")) {

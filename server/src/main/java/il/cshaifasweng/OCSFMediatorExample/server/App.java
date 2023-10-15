@@ -293,7 +293,7 @@ public static void generate(){
             }catch (HibernateException e){
                 e.printStackTrace();
             }
-            //generateQuestions();
+            generateQuestions();
             generateCourses();
             generateExams();
             generate();

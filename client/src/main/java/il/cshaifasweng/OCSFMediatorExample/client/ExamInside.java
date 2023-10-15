@@ -20,6 +20,8 @@ public class ExamInside {
     int i=1;
     double mark;
     int exam_id;
+    String exam_name;
+    String std_ans;
     String cAns;
     int quenum;
     String courseid;
@@ -94,29 +96,47 @@ public class ExamInside {
     void nextb(ActionEvent event) throws IOException {
 
         if(ans1.isSelected()){
+            std_ans=ans1.getText();
             if(ans1.getText().equals(cAns)){
                 mark+= ((double) 100 /quenum);
             }
             ans1.setSelected(false);
         }
         if(ans2.isSelected()){
+            std_ans=ans2.getText();
             if(ans2.getText().equals(cAns)){
                 mark+= ((double) 100 /quenum);
             }
             ans2.setSelected(false);
         }
         if(ans3.isSelected()){
+            std_ans=ans3.getText();
             if(ans3.getText().equals(cAns)){
                 mark+= ((double) 100 /quenum);
             }
             ans3.setSelected(false);
         }
         if(ans4.isSelected()){
+            std_ans=ans4.getText();
             if(ans4.getText().equals(cAns)){
                 mark+= ((double) 100 /quenum);
             }
             ans4.setSelected(false);
         }
+        System.out.println("mark is 1 ");
+        Message msg1=new Message("save data");
+        System.out.println("mark is 2 ");
+        msg1.setId(exam_id);
+        System.out.println(exam_id+"mark is 3 ");
+        msg1.setCourseName(exam_name);
+        System.out.println(exam_name+"mark is 4 ");
+        msg1.setAns(std_ans);
+        System.out.println(std_ans+"mark is 5 ");
+        msg1.setStudentId(SimpleClient.ID);
+        System.out.println(SimpleClient.ID+"mark is 6 ");
+        msg1.setType(question.getText());
+        sendMessage(msg1);
+        System.out.println("mark is 7 ");
         if(i<fques.size()){
             question.setText(fques.get(i).getQuestion());
             ans1.setText(fques.get(i).getAns1());
@@ -126,6 +146,8 @@ public class ExamInside {
             cAns=fques.get(i).getCorrect_ans();
             i++;
         }
+
+
         else {
 
             fques.clear();
@@ -142,6 +164,7 @@ public class ExamInside {
             SimpleChatClient.setRoot("gradeExam");
             sendMessage(msg);
         }
+
     }
 
 
@@ -160,16 +183,25 @@ public class ExamInside {
                 }
 
             }
+
             if(!(fques.isEmpty())){
                 question.setText(fques.get(i).getQuestion());
                 System.out.println("ques is "+fques.get(i).getQuestion());
-                ans1.setText(fques.get(i).getAns1());
-                ans2.setText(fques.get(i).getAns2());
-                ans3.setText(fques.get(i).getAns3());
-                ans4.setText(fques.get(i).getAns4());
-                cAns=fques.get(i).getCorrect_ans();
-                i++;
-                quenum=fques.size();
+                if(!fques.get(i).getQues_id().equals("empty")) {
+                    //if(ans1.getText().isEmpty())
+                    ans1.setText(fques.get(i).getAns1());
+                    // if(ans2.getText().isEmpty())
+                    ans2.setText(fques.get(i).getAns2());
+                    // if(ans3.getText().isEmpty())
+                    ans3.setText(fques.get(i).getAns3());
+                    // if(ans4.getText().isEmpty())
+                    ans4.setText(fques.get(i).getAns4());
+                    // if(cAns.isEmpty())
+                    cAns = fques.get(i).getCorrect_ans();
+                }
+                    i++;
+                    quenum = fques.size();
+
             }
             else {
                 System.out.println("its null");
@@ -177,8 +209,13 @@ public class ExamInside {
 
         } else if (event.getMessage().getMessage().equals("i will start exam")) {
             exam_id=event.getMessage().getExam().getId();
+            exam_name=event.getMessage().getExam().getCourse_name();
             System.out.println("hi"+exam_id);
             sendMessage("show questions2");
+
+        }
+        else if (event.getMessage().getMessage().equals("i will save data")) {
+            System.out.println("beje?");
 
         }
         else if (event.getMessage().getMessage().equals("exam is over")){
