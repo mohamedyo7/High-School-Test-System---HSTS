@@ -88,11 +88,6 @@ SimpleChatClient.setRoot("FirstPage");
 
     @FXML
     void initialize() {
-        int msgId=0;
-        EventBus.getDefault().register(this);
-        sendMessage("give me teacher data");
-
-
         try {
             Message message = new Message(1,"add client");
             SimpleClient.getClient().sendToServer(message);
@@ -100,6 +95,15 @@ SimpleChatClient.setRoot("FirstPage");
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        int msgId=0;
+        EventBus.getDefault().register(this);
+        Message msg=new Message("test it baby");
+        msg.setToid(7);
+        sendMessage(msg);
+        sendMessage("give me teacher data");
+
+
+
     }
 
 }

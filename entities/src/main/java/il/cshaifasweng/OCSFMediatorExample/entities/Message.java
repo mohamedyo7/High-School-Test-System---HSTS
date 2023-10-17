@@ -12,8 +12,19 @@ public class Message implements Serializable {
 
     int id;
     double grade;
+    int toid;
+
 
     double time;
+    double eTime=0;
+
+    public double geteTime() {
+        return eTime;
+    }
+
+    public void seteTime(double eTime) {
+        this.eTime = eTime;
+    }
 
     public void setTime(double time) {
         this.time = time;
@@ -21,6 +32,13 @@ public class Message implements Serializable {
 
     public double getTime() {
         return time;
+    }
+    public void setToid(int toid) {
+        this.toid = toid;
+    }
+
+    public int getToid() {
+        return toid;
     }
 
     List<Object> object;

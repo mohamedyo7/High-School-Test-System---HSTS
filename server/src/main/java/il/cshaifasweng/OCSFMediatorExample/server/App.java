@@ -206,6 +206,7 @@ public class App {
 
             // Update exam properties
             exam.setId(updatedExam.getId());
+            exam.setCode(updatedExam.getCode());
             exam.setQues_number(updatedExam.getQues_number());
             exam.setCourse_name(updatedExam.getCourse_name());
             exam.setStat(updatedExam.getStat());

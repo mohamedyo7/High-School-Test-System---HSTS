@@ -23,12 +23,24 @@
       <Button fx:id="start_b" layoutX="87.0" layoutY="296.0" mnemonicParsing="false" onAction="#startB" prefHeight="25.0" prefWidth="74.0" text="Start Exam" />
       <Button layoutX="345.0" layoutY="296.0" mnemonicParsing="false" onAction="#showExams" text="Show Exams" />
       <Label layoutX="182.0" layoutY="396.0" />
-      <Text fill="RED" layoutX="61.0" layoutY="378.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please inset exam time in Hours">
+      <Text fill="RED" layoutX="61.0" layoutY="378.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter exam time in Minutes">
          <font>
             <Font size="14.0" />
          </font>
       </Text>
       <TextField fx:id="timeT" layoutX="61.0" layoutY="392.0" />
-      <Button layoutX="229.0" layoutY="392.0" mnemonicParsing="false" onAction="#insetTime" text="Insert" />
+      <Button layoutX="230.0" layoutY="520.0" mnemonicParsing="false" onAction="#insetTime" text="Send" />
+      <TextField fx:id="eCode" layoutX="61.0" layoutY="459.0" />
+      <Text fill="RED" layoutX="62.0" layoutY="444.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter exam code">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <TextField fx:id="extraTime" layoutX="61.0" layoutY="520.0" />
+      <Text fill="RED" layoutX="62.0" layoutY="509.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ask for extra time">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

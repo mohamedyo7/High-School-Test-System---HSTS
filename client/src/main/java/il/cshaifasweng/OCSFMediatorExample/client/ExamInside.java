@@ -22,9 +22,12 @@ import javafx.util.Duration;
 public class ExamInside {
     int i=1;
     double time;
+    double eTime;
     private PauseTransition delay;
     double mark;
     int exam_id;
+    private boolean conditionMet = false;
+    private double remainingTime = 0;
     String cAns;
     int quenum;
     String courseid;
@@ -178,25 +181,38 @@ public class ExamInside {
         } else if (event.getMessage().getMessage().equals("i will start exam")) {
             fques.clear();
             i = 0;
+            eTime=0;
             cAns = "";
             quenum = 0;
             mark = 0.0;
             exam_id=event.getMessage().getExam().getId();
+            System.out.println("hi2 " +event.getMessage().getExam().getCode() );
             System.out.println("hi"+exam_id);
             time = event.getMessage().getExam().getTime();
             System.out.println("time"+ time);
+            msg.setStudentId(SimpleClient.ID);
+            msg.setId(exam_id);
             delay = new PauseTransition(Duration.millis(1000 * 60 * 60 * time));
             delay.setOnFinished(e -> {
-                System.out.println("over");
-                msg.setMessage("exam is over");
-                System.out.println("heeeeeeeeeeeeeeeeee " + exam_id);
-                msg.setId(exam_id);
-                sendMessage(msg);
+                if (conditionMet) {
+                    double newDelayMillis = calculateNewDelay();
+                    remainingTime += newDelayMillis;
+                    updateDelay(remainingTime);
+                    System.out.println("etime 1 "+ eTime);
+                }
+                    System.out.println("etime 2 "+ eTime);
+                    System.out.println("over");
+                    msg.setMessage("exam is over");
+                    System.out.println("heeeeeeeeeeeeeeeeee " + exam_id);
+                    msg.setId(exam_id);
+                    sendMessage(msg);
+
             });
             delay.play();
             sendMessage("show questions2");
 
         }
+
         else if (event.getMessage().getMessage().equals("exam is over done")){
             //changeGrade(message.getStudentId(), message.getCourse_id(), message.getGrade_to_change());
             System.out.println("exam is over done " + event.getMessage().getId());
@@ -205,7 +221,6 @@ public class ExamInside {
                 msg.setMessage("end exam");
                 msg.setStudentId(SimpleClient.ID);
                 msg.setGrade_to_change((int)mark);
-                //msg.setCourse_id(courseid);
                 msg.setId(exam_id);
                 sendMessage(msg);
                 System.out.println("mark is " + mark);
@@ -215,10 +230,26 @@ public class ExamInside {
                 sendMessage(msg);
             }
 
+
         }
-        //start from here exam.question have problem
+        else if (event.getMessage().getMessage().equals("extra time")){
+            eTime=msg.geteTime();
+        }
 
-
+    }
+    private double calculateNewDelay() {
+        // Calculate the new delay based on your condition
+        return eTime; // Example: 5 seconds
+    }
+    public void updateDelay(double newDelayMillis) {
+        if (delay != null) {
+            delay.stop();
+            delay.setDuration(Duration.millis(newDelayMillis));
+            delay.play();
+        }
+    }
+    public void setConditionMet(boolean conditionMet) {
+        this.conditionMet = conditionMet;
     }
     void sendMessage(Message message) {
 
@@ -255,6 +286,7 @@ public class ExamInside {
         assert ans3 != null : "fx:id=\"ans3\" was not injected: check your FXML file 'examInside.fxml'.";
         assert ans4 != null : "fx:id=\"ans4\" was not injected: check your FXML file 'examInside.fxml'.";
         assert question != null : "fx:id=\"question\" was not injected: check your FXML file 'examInside.fxml'.";
+        
 
     }
 

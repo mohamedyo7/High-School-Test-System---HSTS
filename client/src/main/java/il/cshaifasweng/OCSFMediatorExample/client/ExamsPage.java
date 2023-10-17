@@ -29,7 +29,8 @@ public class ExamsPage {
     private TableColumn<Questions, String> tablecol;
     @FXML
     private TableView<Questions> tableviewq;
-
+    @FXML
+    private TextField eCode;
     @FXML
     private URL location;
 
@@ -48,16 +49,10 @@ public class ExamsPage {
 
     @FXML
     void DoneB(ActionEvent event) throws IOException {
-        //should create exam before this lvl
-        //Message msg = new Message("add exam");
-        //exam.setCourse_name(coursesList.getSelectionModel().getSelectedItem());
-        //msg.setExam(exam);
-        //for (int i=0;i<exam.getQuestions().size();i++){
-        //}
 
-        //sendMessage(msg);
         Message msg = new Message("update exam");
         exam.setQues_number(qnum);
+        exam.setCode(eCode.getText());
         msg.setExam(exam);
         sendMessage(msg);
         SimpleChatClient.setRoot("examsFinal");

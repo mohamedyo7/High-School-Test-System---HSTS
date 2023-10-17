@@ -17,6 +17,15 @@ public class Exams implements Serializable {
     private int ques_number;
     private boolean stat ;
     private double time;
+    private String code;
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getCode() {
+        return code;
+    }
 
     public double getTime() {
         return time;

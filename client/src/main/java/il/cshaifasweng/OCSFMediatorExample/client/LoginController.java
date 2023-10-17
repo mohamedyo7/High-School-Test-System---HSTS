@@ -169,12 +169,9 @@ public class LoginController {
 
                 } else {
                     SimpleChatClient.setRoot("TeacherPage");
-                    Message msg = new Message("give me teacher data");
                     // Message msg = new Message("give me the students");
-                    msg.setId(Integer.parseInt(ID_text.getText()));
                     c = 0;
                     pass = "[p]";
-                    sendMessage(msg);
 
 
                 }
@@ -195,14 +192,9 @@ public class LoginController {
 
                 } else {
                     SimpleChatClient.setRoot("MediatorPage");
-                    Message msg = new Message("give me mediator data");
                     // Message msg = new Message("give me the students");
-                    msg.setLogin_name("Mediator");
-                    msg.setId(Integer.parseInt(ID_text.getText()));
                     c = 0;
                     pass = "[p]";
-                    sendMessage(msg);
-
 
                 }
             }

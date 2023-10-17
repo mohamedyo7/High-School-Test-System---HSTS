@@ -61,7 +61,6 @@ public class CourseReg  implements Serializable {
         setStudent(student);
         setCourse(course);
         this.type=type;
-
     }
     public CourseReg(Lecturer lec, String course,String type)
     {
@@ -69,7 +68,6 @@ public class CourseReg  implements Serializable {
         setLecturer(lec);
         setCourse(course);
         this.type=type;
-
     }
 /*    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "lecturer_id_Reg")

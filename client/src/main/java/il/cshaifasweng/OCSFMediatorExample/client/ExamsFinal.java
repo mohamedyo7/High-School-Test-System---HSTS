@@ -18,8 +18,12 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class ExamsFinal {
-
+    Message msg = new Message("");
     public static String courseid;
+    @FXML
+    private TextField extraTime;
+    @FXML
+    private TextField eCode;
     private double time;
 
     @FXML
@@ -39,8 +43,10 @@ public class ExamsFinal {
     private ListView<String> coursesList;
     @FXML
     void insetTime(ActionEvent event) {
-
-
+        time = Double.parseDouble(timeT.getText());
+        msg.seteTime(time);
+        msg.setMessage("extraTime");
+        sendMessage(msg);
     }
     @FXML
     private TableView<Exams> examsTable;
@@ -61,10 +67,11 @@ public class ExamsFinal {
 
     @FXML
     void startB(ActionEvent event) throws IOException {
-        Message msg = new Message("start exam");
+
+        msg.setMessage("start exam");
         if(SimpleClient.Type.equals("Student")){
-            SimpleChatClient.setRoot("examInside");
-            msg.setLogin_name("student");
+            //SimpleChatClient.setRoot("examInside");
+            //msg.setLogin_name("student");
         }
         else{
             time=Double.parseDouble(timeT.getText());
