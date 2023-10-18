@@ -75,6 +75,7 @@ public class MediatorPage {
     void initialize() {
         int msgId = 0;
         EventBus.getDefault().register(this);
+        sendMessage("give me mediator data");
     }
 
 }

@@ -10,6 +10,7 @@ public class SimpleClient extends AbstractClient {
 	public static int ID;
 	public static String Type;
 	public static String cname;
+	private int client_id;
 
 	private SimpleClient(String host, int port) {
 		super(host, port);
@@ -30,8 +31,27 @@ public class SimpleClient extends AbstractClient {
 			ID= message.getId();
 			Type=message.getLogin_name();
 		EventBus.getDefault().post(new MessageEvent(message));
+
 	}
 		else if (message.getMessage().equals("i will check id exist")) {
+
+
+
+			EventBus.getDefault().post(new MessageEvent(message));
+		}
+		else if (message.getMessage().equals("i will give you students id")) {
+
+
+
+			EventBus.getDefault().post(new MessageEvent(message));
+		}
+		else if (message.getMessage().equals("i will give you students id2")) {
+
+
+
+			EventBus.getDefault().post(new MessageEvent(message));
+		}
+		else if (message.getMessage().equals("i will add note")) {
 
 
 
@@ -149,6 +169,7 @@ public class SimpleClient extends AbstractClient {
 		if (client == null) {
 
 			client = new SimpleClient("localhost", 3000);
+
 		}
 		return client;
 	}

@@ -48,7 +48,7 @@ public class FirstPage {
 
         //EventBus.getDefault().register(this);
 
-  /*      try {
+       /* try {
             Message message = new Message(0,"add client");
             SimpleClient.getClient().sendToServer(message);
         } catch (IOException e) {

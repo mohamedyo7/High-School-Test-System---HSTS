@@ -80,6 +80,7 @@ public class SimpleServer extends AbstractServer {
 		CriteriaBuilder builder = session.getCriteriaBuilder();
 		CriteriaQuery<ExamsScan> query = builder.createQuery(ExamsScan.class);
 		query.from(ExamsScan.class);
+
 		List<ExamsScan> ques = session.createQuery(query).getResultList();
 		return ques;
 	}
@@ -103,6 +104,15 @@ public class SimpleServer extends AbstractServer {
 		session.flush();
 	}
 	private static void generateExamsScan(ExamsScan lec) throws Exception {
+		List<ExamsScan>exams=getAllexamsscans();
+		for(int i=0;i<exams.size();i++){
+			if (exams.get(i).getStudent_ID()==lec.getStudent_ID()&&exams.get(i).getName().equals(lec.getName())&&exams.get(i).getExam_ID()==lec.getExam_ID()&&exams.get(i).getType().equals(lec.getType())) {
+				session.remove(exams.get(i));
+
+			}
+
+			}
+
 		session.save(lec);
 		session.flush();
 		System.out.println("op");
@@ -209,6 +219,52 @@ public class SimpleServer extends AbstractServer {
 
 
 	}
+	public static void updateExamscanStat(String course_name,String student_id,String examId,String ques_name,String ques_note) throws Exception {
+		System.out.println("glb generate0");
+		List<ExamsScan> exams = getAllexamsscans();
+		System.out.println("glb generate00");
+	/*	if(exams.size()==0) {
+			System.out.println("glb generate1");
+			exit();
+		}*/
+
+		try {
+			System.out.println("glb generate2");
+
+			// Find the corresponding Exam entity
+			ExamsScan exam=null;
+			System.out.println("glb generate3");
+
+			for (int i=0;i<exams.size();i++) {
+				if (exams.get(i).getStudent_ID() == Integer.parseInt(student_id) && exams.get(i).getName().equals(course_name) && exams.get(i).getExam_ID() == Integer.parseInt(examId) && exams.get(i).getType().equals(ques_name)) {
+					System.out.println("glb generate4");
+					exam = exams.get(i);
+
+				}
+			}
+
+
+				if (exam == null) {
+					throw new Exception("No exam found with the specified ID.");
+				}
+
+				// Update the stat
+				System.out.println("glb generate5");
+				exam.setState(ques_note);
+				System.out.println("glb generate6");
+
+				// Save the updated exam object
+				session.update(exam);
+				System.out.println("glb generate7");
+				session.getTransaction().commit(); // Save everything..commit();
+				System.out.println("glb generate8");
+
+		} catch (Exception e) {
+			session.getTransaction().rollback();
+		} finally {
+			session.close();
+		}
+	}
 
 
 	
@@ -227,6 +283,8 @@ public class SimpleServer extends AbstractServer {
 					client.sendToClient(message);
 				} else if (request.equals("add client")) {
 					SubscribedClient connection = new SubscribedClient(client);
+
+
 					SubscribersList.add(connection);
 					message.setMessage("client added successfully");
 					client.sendToClient(message);
@@ -253,6 +311,7 @@ public class SimpleServer extends AbstractServer {
 
 					message.setStudents_list_from_server(getAllStudents());
 					message.setLecturers_list_from_server(getAllLecturers());
+					message.setMediators_list_from_server(getAllMediator());
 					client.sendToClient(message);
 					//sendToAllClients(message);
 				}
@@ -377,6 +436,49 @@ public class SimpleServer extends AbstractServer {
 					client.sendToClient(message);
 					//sendToAllClients(message);
 				}
+				else if(request.equals("add note")){
+
+					message.setMessage("i will add note");
+					updateExamscanStat(message.getCourseName(), String.valueOf(message.getStudentId()),message.getExam_id(),message.getQues_name(),message.getQues_note());
+					System.out.println("note 3");
+					//List<ExamsScan>examsScans=getAllexamsscans();
+					System.out.println("note 4");
+					//message.setExamsScans_list_from_server(examsScans);
+					System.out.println("note 8");
+
+					client.sendToClient(message);
+					//sendToAllClients(message);
+				}
+				else if(request.equals("give me students id")){
+
+					message.setMessage("i will give you students id");
+					List<CourseReg> s=getAllregCourses();
+					message.setCourses_list_from_server_reg(s);
+					List<Questions>questions=getAllQuestions();
+					List<ExamsScan>examsScans=getAllexamsscans();
+					List<Exams>exams=getAllExams();
+					message.setQuestions_list_from_server(questions);
+					message.setExamsScans_list_from_server(examsScans);
+					message.setExams_list_from_server(exams);
+
+					client.sendToClient(message);
+					//sendToAllClients(message);
+				}
+				else if(request.equals("give me students id2")){
+
+					message.setMessage("i will give you students id2");
+					List<CourseReg> s=getAllregCourses();
+					message.setCourses_list_from_server_reg(s);
+					List<Questions>questions=getAllQuestions();
+					List<ExamsScan>examsScans=getAllexamsscans();
+					List<Exams>exams=getAllExams();
+					message.setQuestions_list_from_server(questions);
+					message.setExamsScans_list_from_server(examsScans);
+					message.setExams_list_from_server(exams);
+
+					client.sendToClient(message);
+					//sendToAllClients(message);
+				}
 				else if(request.equals("give me exam questions")){
 
 					message.setMessage("i will give you exams questions");
@@ -485,6 +587,9 @@ public class SimpleServer extends AbstractServer {
 					if(message.getLogin_name().equals("Teacher")) {
 
 						updateExamStat(message.getExam().getId(), true);
+
+						//updateExamscanStat(message.getExam().getId(), true);
+
 					}
 					message.setCourseName(message.getExam().getCourse_name());
 					message.setMessage("i will start exam");
@@ -494,7 +599,7 @@ public class SimpleServer extends AbstractServer {
 				else if(request.equals("save data")){
 					message.setMessage("i will save data");
 					System.out.println("kl");
-					ExamsScan exam=new ExamsScan(message.getStudentId(),message.getCourseName(),message.getId(), message.getType(), message.getAns(),"True");
+					ExamsScan exam=new ExamsScan(message.getStudentId(),message.getCourseName(),message.getId(), message.getType(), message.getAns(),"False");
 					System.out.println("ID_1"+message.getId());
 					generateExamsScan(exam);
 					System.out.println("ID_2"+message.getId());

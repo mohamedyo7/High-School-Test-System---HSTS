@@ -30,6 +30,35 @@ public class Message implements Serializable {
     String message;
     String data;
     String test;
+    String exam_id;
+
+    public String getQues_note() {
+        return ques_note;
+    }
+
+    public void setQues_note(String ques_note) {
+        this.ques_note = ques_note;
+    }
+
+    String ques_note;
+
+    public String getExam_id() {
+        return exam_id;
+    }
+
+    public void setExam_id(String exam_id) {
+        this.exam_id = exam_id;
+    }
+
+    public String getQues_name() {
+        return ques_name;
+    }
+
+    public void setQues_name(String ques_name) {
+        this.ques_name = ques_name;
+    }
+
+    String ques_name;
     int studentId;
     Exams exam;
     public double getGrade() {

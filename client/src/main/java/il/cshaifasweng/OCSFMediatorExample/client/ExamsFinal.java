@@ -103,6 +103,7 @@ public class ExamsFinal {
 @Subscribe
     public void setDataFromServerTF(MessageEvent event) {
         if (event.getMessage().getMessage().equals("i will give you the courses")) {
+            int c=0;
 
             coursesList.getItems().clear();
             if(SimpleClient.Type.equals("Teacher")) {
@@ -114,8 +115,9 @@ public class ExamsFinal {
                     // Set the data to the table
                     if (Courses_from_server_reg.get(i).getLecturer() != null)
                         if (Courses_from_server_reg.get(i).getLecturer().getId() == SimpleClient.ID) {
+                                coursesList.getItems().add(Courses_from_server_reg.get(i).getName());
 
-                            coursesList.getItems().add(Courses_from_server_reg.get(i).getName());
+
                             for(int j=0;j<courses.size();j++){
                                 if(Courses_from_server_reg.get(i).getName().equals(courses.get(j).getName()))
                                     courseid= String.valueOf(courses.get(j).getId());
@@ -138,6 +140,16 @@ public class ExamsFinal {
                             for(int j=0;j<Exams_from_server.size();j++){
                                 if(Courses_from_server_reg.get(i).getName().equals(Exams_from_server.get(j).getCourse_name()))
                                     if(Exams_from_server.get(j).getStat()) {
+                                        for(int x=0;x<coursesList.getItems().size();x++){
+                                            System.out.println(coursesList.getItems().get(x)+"course");
+                                            System.out.println(Courses_from_server_reg.get(i).getName()+"coursereg");
+                                            if(coursesList.getItems().get(x).equals(Courses_from_server_reg.get(i).getName())) {
+                                                c = 1;
+                                                break;
+                                            }
+
+                                        }
+                                        if(c==0)
                                         coursesList.getItems().add(Courses_from_server_reg.get(i).getName());
 
                                         for(int x=0;x<courses.size();x++){
@@ -175,8 +187,13 @@ public class ExamsFinal {
                         for (int j = 0; j < examsTable.getItems().size(); j++) {
 
                             if (examsTable.getItems().get(j).getId() == examsScanList.get(i).getExam_ID() && examsTable.getItems().get(j).getCourse_name().equals(examsScanList.get(i).getName())) {
-                                if (examsScanList.get(i).getState().equals("True"))
-                                    examsTable.getItems().remove(j);
+                                for(int x=0;x<exams.size();x++){
+                                    if(exams.get(x).getId()==examsTable.getItems().get(j).getId()&&exams.get(x).getCourse_name().equals(examsTable.getItems().get(j).getCourse_name())) {
+                                        if (!exams.get(x).getStat())
+                                            examsTable.getItems().remove(j);
+                                    }
+                                }
+
                             }
                         }
                     }

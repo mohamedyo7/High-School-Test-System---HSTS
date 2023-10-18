@@ -117,6 +117,7 @@ public class App {
     public static void updateExamStat(int examId, boolean newStat) throws Exception {
 
         List<Exams> exams = getAllExams();
+
         try {
 
 
@@ -128,6 +129,8 @@ public class App {
                     break;
                 }
             }
+
+
 
             if (exam == null) {
                 throw new Exception("No exam found with the specified ID.");
@@ -145,6 +148,7 @@ public class App {
             session.close();
         }
     }
+
 
 
     public static void updateExam(Exams updatedExam) throws Exception {

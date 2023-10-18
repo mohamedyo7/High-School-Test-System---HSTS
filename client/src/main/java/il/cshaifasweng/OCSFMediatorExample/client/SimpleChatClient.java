@@ -27,6 +27,7 @@ public class SimpleChatClient extends Application {
     public void start(Stage stage) throws IOException {
         EventBus.getDefault().register(this);
         client = SimpleClient.getClient();
+        client.setClient_id("asd");
         client.openConnection();
         scene = new Scene(loadFXML("FirstPage"), 700, 742);
         stage.setScene(scene);

@@ -50,6 +50,17 @@ public class TeacherPage {
 SimpleChatClient.setRoot("FirstPage");
     }
     @FXML
+    void Edit_grades(ActionEvent event) throws IOException {
+        SimpleChatClient.setRoot("EditGrade");
+       // Message msg=new Message("give me students id");
+       // msg.setId(SimpleClient.ID);
+       // msg.setType(SimpleClient.Type);
+        //sendMessage(msg);
+
+
+    }
+
+    @FXML
     private ListView<String> Techer_ID;
 
 
@@ -93,13 +104,7 @@ SimpleChatClient.setRoot("FirstPage");
         sendMessage("give me teacher data");
 
 
-        try {
-            Message message = new Message(1,"add client");
-            SimpleClient.getClient().sendToServer(message);
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+
     }
 
 }

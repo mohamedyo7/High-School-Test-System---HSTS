@@ -141,6 +141,13 @@ public class LoginController {
                     sendMessage("");
 
                 } else {
+                    try {
+                        Message message = new Message(Integer.parseInt(ID_text.getText()),"add client");
+                        SimpleClient.getClient().sendToServer(message);
+                    } catch (IOException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
                     SimpleChatClient.setRoot("StudentController");
 /*                    Message msg = new Message("give me student data");
                     // Message msg = new Message("give me the students");
@@ -168,13 +175,20 @@ public class LoginController {
                     sendMessage("");
 
                 } else {
+                    try {
+                        Message message = new Message(Integer.parseInt(ID_text.getText()),"add client");
+                        SimpleClient.getClient().sendToServer(message);
+                    } catch (IOException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
                     SimpleChatClient.setRoot("TeacherPage");
-                    Message msg = new Message("give me teacher data");
+                    //Message msg = new Message("give me teacher data");
                     // Message msg = new Message("give me the students");
-                    msg.setId(Integer.parseInt(ID_text.getText()));
+                   // msg.setId(Integer.parseInt(ID_text.getText()));
                     c = 0;
                     pass = "[p]";
-                    sendMessage(msg);
+                   // sendMessage(msg);
 
 
                 }
@@ -194,14 +208,21 @@ public class LoginController {
                     sendMessage("");
 
                 } else {
+                    try {
+                        Message message = new Message(Integer.parseInt(ID_text.getText()),"add client");
+                        SimpleClient.getClient().sendToServer(message);
+                    } catch (IOException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
                     SimpleChatClient.setRoot("MediatorPage");
-                    Message msg = new Message("give me mediator data");
+                    //Message msg = new Message("give me mediator data");
                     // Message msg = new Message("give me the students");
-                    msg.setLogin_name("Mediator");
-                    msg.setId(Integer.parseInt(ID_text.getText()));
+                    //msg.setLogin_name("Mediator");
+                   // msg.setId(Integer.parseInt(ID_text.getText()));
                     c = 0;
                     pass = "[p]";
-                    sendMessage(msg);
+                    //sendMessage(msg);
 
 
                 }
