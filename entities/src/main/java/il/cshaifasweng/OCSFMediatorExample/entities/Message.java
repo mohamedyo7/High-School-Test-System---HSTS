@@ -12,6 +12,24 @@ public class Message implements Serializable {
 
     int id;
     double grade;
+    int toid;
+
+    boolean show=false;
+    double time;
+    double eTime=0;
+    boolean is_finished;
+
+    public void setIs_finished(boolean is_finished) {
+        this.is_finished = is_finished;
+    }
+
+    public boolean isIs_finished() {
+        return is_finished;
+    }
+
+    public double geteTime() {
+        return eTime;
+    }
 
     public String getAns() {
         return ans;
@@ -23,7 +41,24 @@ public class Message implements Serializable {
 
     String ans;
 
+    public void seteTime(double eTime) {
+        this.eTime = eTime;
+    }
 
+    public void setTime(double time) {
+        this.time = time;
+    }
+
+    public double getTime() {
+        return time;
+    }
+    public void setToid(int toid) {
+        this.toid = toid;
+    }
+
+    public int getToid() {
+        return toid;
+    }
 
     List<Object> object;
     LocalDateTime timeStamp;
@@ -190,7 +225,13 @@ public class Message implements Serializable {
         this.courses_list_from_server_reg = courses_list_from_server_reg;
     }
 
+    public void setShow(boolean show) {
+        this.show = show;
+    }
 
+    public boolean isShow() {
+        return show;
+    }
 
 
     private String courseName;

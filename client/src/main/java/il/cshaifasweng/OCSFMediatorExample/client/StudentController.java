@@ -57,7 +57,7 @@ public class StudentController {
 
     @FXML
     void Start_Exam(ActionEvent event) throws IOException {
-        SimpleChatClient.setRoot("ExamsFinal");
+        SimpleChatClient.setRoot("examsFinalstu");
 
     }
     @FXML
@@ -174,6 +174,10 @@ public class StudentController {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+
+        Message msg=new Message("test it baby");
+        msg.setToid(7);
+        sendMessage(msg);
         sendMessage("give me student data");
         //sendMessage("Show The Courses");
 

@@ -55,18 +55,20 @@ public class SimpleChatClient extends Application {
 
     @Subscribe
     public void onMessageEvent(MessageEvent message) {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
-        Platform.runLater(() -> {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION,
-                    String.format("Message:\nId: %d\nData: %s\nTimestamp: %s\n",
-                            message.getMessage().getId(),
-                            message.getMessage().getMessage(),
-                            message.getMessage().getTimeStamp().format(dtf))
-            );
-            alert.setTitle("new message");
-            alert.setHeaderText("New Message:");
-            alert.show();
-        });
+        if(SimpleClient.show) {
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+            Platform.runLater(() -> {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION,
+                        String.format("Message:\nId: %d\nData: %s\nTimestamp: %s\n",
+                                message.getMessage().getId(),
+                                message.getMessage().getMessage(),
+                                message.getMessage().getTimeStamp().format(dtf))
+                );
+                alert.setTitle("new message");
+                alert.setHeaderText("New Message:");
+                alert.show();
+            });
+        }
     }
 
 

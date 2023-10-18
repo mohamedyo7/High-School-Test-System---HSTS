@@ -17,10 +17,10 @@
       <Button layoutX="255.0" layoutY="563.0" mnemonicParsing="false" onAction="#deleteQuesB" text="Delete question" />
       <Button layoutX="40.0" layoutY="563.0" mnemonicParsing="false" onAction="#addToExamB" prefHeight="25.0" prefWidth="102.0" text="Add to exam" />
       <Button layoutX="465.0" layoutY="563.0" mnemonicParsing="false" onAction="#DoneB" prefHeight="25.0" prefWidth="102.0" text="Done" />
-      <Text layoutX="270.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Exam id" wrappingWidth="41.279296875" />
-      <TextField fx:id="exam_id" layoutX="322.0" layoutY="99.0" prefHeight="25.0" prefWidth="73.0" />
-      <Button layoutX="404.0" layoutY="99.0" mnemonicParsing="false" onAction="#insert_id" text="Insert id" />
-      <Text fill="RED" layoutX="268.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please insert exam id before adding questions" wrappingWidth="272.279296875">
+      <Text layoutX="268.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Exam id" wrappingWidth="41.279296875" />
+      <TextField fx:id="exam_id" layoutX="322.0" layoutY="137.0" prefHeight="25.0" prefWidth="73.0" />
+      <Button layoutX="404.0" layoutY="137.0" mnemonicParsing="false" onAction="#insert_id" text="Insert id" />
+      <Text fill="RED" layoutX="268.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please insert exam id before adding questions" wrappingWidth="272.279296875">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
@@ -30,5 +30,11 @@
           <TableColumn fx:id="tablecol" prefWidth="565.0" text="Questions" />
         </columns>
       </TableView>
+      <TextField fx:id="eCode" layoutX="322.0" layoutY="74.0" prefHeight="25.0" prefWidth="73.0" />
+      <Text fill="RED" layoutX="268.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please insert exam Code" wrappingWidth="272.279296875">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

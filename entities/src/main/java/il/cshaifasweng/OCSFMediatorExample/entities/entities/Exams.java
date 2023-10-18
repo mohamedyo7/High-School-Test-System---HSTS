@@ -16,13 +16,31 @@ public class Exams implements Serializable {
     @Column(name = "ques_number")
     private int ques_number;
     private boolean stat ;
+    private double time;
+    private String code;
 
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public double getTime() {
+        return time;
+    }
+
+    public void setTime(double time) {
+        this.time = time;
+    }
 
     private String name;
 
     public Exams(int id) {
         this.id = id;
         this.stat=false;
+        this.time=0.00001;
     }
 
 
@@ -37,6 +55,7 @@ public class Exams implements Serializable {
     public Exams() {
         this.stat=false;
         this.id=1;
+        this.time=0.00001;
     }
 
     public void setQues_number(int ques_number) {

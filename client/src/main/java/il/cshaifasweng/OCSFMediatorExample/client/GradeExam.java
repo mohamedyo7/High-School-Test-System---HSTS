@@ -19,7 +19,7 @@ public class GradeExam {
         msg.setGrade(Double.parseDouble(grade.getText()));
         msg.setGrade_to_change((int) msg.getGrade());
         msg.setStudentId(SimpleClient.ID);
-        msg.setCourse_id(Integer.parseInt(ExamsFinal.courseid));
+        msg.setCourse_id(Integer.parseInt(examsFinalstu.courseid));
         SimpleChatClient.setRoot("StudentController");
         sendMessage(msg);
 

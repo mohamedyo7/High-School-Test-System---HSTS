@@ -3,31 +3,39 @@ package il.cshaifasweng.OCSFMediatorExample.client;
 import il.cshaifasweng.OCSFMediatorExample.entities.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.Exams;
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.Questions;
+import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-
+import javafx.animation.PauseTransition;
+import javafx.util.Duration;
 public class ExamInside {
     int i=1;
+    double time;
+    double eTime;
+    private PauseTransition delay;
+    private PauseTransition delay2;
     double mark;
     int exam_id;
     String exam_name;
     String std_ans;
+    private boolean conditionMet;
+    private double remainingTime = 0;
     String cAns;
     int quenum;
     String courseid;
     List<Questions> ques=new ArrayList<>();
     List<Questions> fques=new ArrayList<>();
-
+    Message msg = new Message("");
     List<Exams> exams=new ArrayList<>();
     String id="0";
     @FXML
@@ -80,10 +88,8 @@ public class ExamInside {
     void doneB(ActionEvent event) throws IOException {
         for (Exams value : exams) {
             if (value.getStat()) {
-                fques.clear();
-                i = 0;
                 id = String.valueOf(value.getId());
-                Message msg = new Message("end exam");
+                msg.setMessage("end exam");
                 msg.setExam(value);
                 sendMessage(msg);
                 SimpleChatClient.setRoot("StudentController");
@@ -149,20 +155,15 @@ public class ExamInside {
 
 
         else {
-
-            fques.clear();
-            i = 0;
-            cAns = "";
-            quenum = 0;
-            Message msg = new Message("end exam");
-            msg.setId(exam_id);
+            conditionMet=true;
+            msg.setMessage("exam is over");
+            //msg.setId(exam_id);
             sendMessage(msg);
-            System.out.println("mark is " + mark);
-            msg.setMessage("the grade is");
-            msg.setGrade(mark);
-            mark = 0.0;
-            SimpleChatClient.setRoot("gradeExam");
-            sendMessage(msg);
+            //System.out.println("mark is " + mark);
+            //msg.setMessage("the grade is");
+            //msg.setGrade(mark);
+            //SimpleChatClient.setRoot("gradeExam");
+            //sendMessage(msg);
         }
 
     }
@@ -170,7 +171,10 @@ public class ExamInside {
 
     @Subscribe
     public void setDataFromServerTF(MessageEvent event) throws IOException {
+
         if (event.getMessage().getMessage().equals("i will show questions2")){
+
+
             ques = event.getMessage().getQuestions_list_from_server();
             exams = event.getMessage().getExams_list_from_server();
             fques.clear();
@@ -208,9 +212,41 @@ public class ExamInside {
             }
 
         } else if (event.getMessage().getMessage().equals("i will start exam")) {
+            fques.clear();
+            i = 1;
+            eTime=0;
+            cAns = "";
+            quenum = 0;
+            mark = 0.0;
             exam_id=event.getMessage().getExam().getId();
+            System.out.println("hi2 " +event.getMessage().getExam().getCode() );
             exam_name=event.getMessage().getExam().getCourse_name();
             System.out.println("hi"+exam_id);
+            time = event.getMessage().getExam().getTime();
+            System.out.println("time"+ time);
+            msg.setStudentId(SimpleClient.ID);
+            msg.setId(exam_id);
+
+            delay = new PauseTransition(Duration.millis(1000 * 60 * time));
+            conditionMet = false;
+            delay.setOnFinished(e -> {
+                System.out.println(conditionMet);
+                if (conditionMet) {
+                }else {
+                    delay2 = new PauseTransition(Duration.millis(1000 * 60 * eTime));
+                    delay2.setOnFinished(d -> {
+                        System.out.println("etime");
+                        System.out.println(eTime);
+                        System.out.println("11");
+                        msg.setMessage("exam is over");
+                        msg.setId(exam_id);
+                        sendMessage(msg);
+                        System.out.println("2222");
+                    });
+                    delay2.play();
+                    }
+            });
+            delay.play();
             sendMessage("show questions2");
 
         }
@@ -218,26 +254,46 @@ public class ExamInside {
             System.out.println("beje?");
 
         }
-        else if (event.getMessage().getMessage().equals("exam is over")){
-            if(exam_id==event.getMessage().getExam().getId()){
-                fques.clear();
-                i = 0;
-                cAns = "";
-                quenum = 0;
-                Message msg = new Message("end exam");
+
+        else if (event.getMessage().getMessage().equals("exam is over done")){
+            //changeGrade(message.getStudentId(), message.getCourse_id(), message.getGrade_to_change());
+            System.out.println("3");
+            System.out.println(exam_id);
+            System.out.println(event.getMessage().getId());
+            if(exam_id==event.getMessage().getId()){
+                msg.setIs_finished(conditionMet);
+                msg.setMessage("end exam");
+                msg.setStudentId(SimpleClient.ID);
+                msg.setGrade_to_change((int)mark);
                 msg.setId(exam_id);
                 sendMessage(msg);
-                System.out.println("mark is " + mark);
                 msg.setMessage("the grade is");
                 msg.setGrade(mark);
-                mark = 0.0;
                 SimpleChatClient.setRoot("gradeExam");
                 sendMessage(msg);
             }
+            System.out.println("4");
+
         }
-        //start from here exam.question have problem
+        else if (event.getMessage().getMessage().equals("extra time")){
+            eTime=event.getMessage().geteTime();
+            System.out.println("etime" + eTime);
+        }
 
-
+    }
+    private double calculateNewDelay() {
+        // Calculate the new delay based on your condition
+        return eTime; // Example: 5 seconds
+    }
+    public void updateDelay(double newDelayMillis) {
+        if (delay != null) {
+            delay.stop();
+            delay.setDuration(Duration.millis(newDelayMillis));
+            delay.play();
+        }
+    }
+    public void setConditionMet(boolean conditionMet) {
+        this.conditionMet = conditionMet;
     }
     void sendMessage(Message message) {
 
@@ -261,17 +317,18 @@ public class ExamInside {
     @FXML
     void initialize() {
         EventBus.getDefault().register(this);
+        conditionMet = true;
         fques.clear();
-        i=0;
+        i=1;
         mark=0.0;
         cAns="";
         quenum=0;
-
         assert ans1 != null : "fx:id=\"ans1\" was not injected: check your FXML file 'examInside.fxml'.";
         assert ans2 != null : "fx:id=\"ans2\" was not injected: check your FXML file 'examInside.fxml'.";
         assert ans3 != null : "fx:id=\"ans3\" was not injected: check your FXML file 'examInside.fxml'.";
         assert ans4 != null : "fx:id=\"ans4\" was not injected: check your FXML file 'examInside.fxml'.";
         assert question != null : "fx:id=\"question\" was not injected: check your FXML file 'examInside.fxml'.";
+
 
     }
 
