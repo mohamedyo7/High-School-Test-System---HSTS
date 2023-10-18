@@ -48,8 +48,10 @@ public class ExamsFinal {
         time = Double.parseDouble(extraTime.getText());
         System.out.println(extraTime.getText());
         msg.seteTime(time);
-        msg.setExam(examsTable.getSelectionModel().getSelectedItem());
-        msg.setMessage("extraTime");
+        Exams exam = examsTable.getSelectionModel().getSelectedItem();
+        exam.setRequest(true);
+        msg.setExam(exam);
+        msg.setMessage("extraTimeRequest");
         sendMessage(msg);
     }
     @FXML

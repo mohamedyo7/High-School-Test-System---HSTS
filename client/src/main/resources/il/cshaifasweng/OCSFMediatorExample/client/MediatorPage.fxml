@@ -7,10 +7,11 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.MediatorPage">
    <children>
-      <Button layoutX="88.0" layoutY="213.0" mnemonicParsing="false" onAction="#Courses_Stats" text="Courses Stats" />
+      <Button layoutX="56.0" layoutY="209.0" mnemonicParsing="false" onAction="#Courses_Stats" text="Courses Stats" />
       <Button layoutX="52.0" layoutY="141.0" mnemonicParsing="false" onAction="#STD_Grades_but" text="Show Students and Grades" />
       <Label layoutX="147.0" layoutY="53.0" />
       <ListView fx:id="mediator_curr" layoutX="250.0" layoutY="26.0" prefHeight="55.0" prefWidth="101.0" />
       <Button layoutX="26.0" layoutY="348.0" mnemonicParsing="false" onAction="#Log_out" text="LogOut" />
+      <Button layoutX="56.0" layoutY="277.0" mnemonicParsing="false" onAction="#extraTimeRequests" text="Button" />
    </children>
 </AnchorPane>

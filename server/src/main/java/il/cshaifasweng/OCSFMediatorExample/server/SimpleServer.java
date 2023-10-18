@@ -1,5 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.server;
 
+import il.cshaifasweng.OCSFMediatorExample.client.ExtraTimeRequests;
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import il.cshaifasweng.OCSFMediatorExample.entities.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.*;
@@ -467,6 +468,7 @@ public class SimpleServer extends AbstractServer {
 
 						client.sendToClient(message);
 						//sendToAllClients(message);
+
 					} else if (request.equals("give me students id2")) {
 
 						message.setMessage("i will give you students id2");
@@ -610,6 +612,8 @@ public class SimpleServer extends AbstractServer {
 					} else if (request.equals("the grade is")) {
 						message.setMessage("the grade is");
 						client.sendToClient(message);
+				} else if (request.equals("extraTimeRequest")) {
+						updateExam(message.getExam());
 					} else if (request.equals("extraTime")) {
 						message.setMessage("extra time");
 						System.out.println("etime is " + message.geteTime());
@@ -619,6 +623,13 @@ public class SimpleServer extends AbstractServer {
 						sendToAllClients2(message);
 					} else if (request.equals("wrong code or id")) {
 						client.sendToClient(message);
+					} else if (request.equals("show mediator requests")) {
+						 message.setMessage("i will show mediator requests");
+						 List<CourseReg> courseRegs= getAllregCourses();
+						 List<Exams> exams = getAllExams();
+						 message.setExams_list_from_server(exams);
+						 message.setCourses_list_from_server_reg(courseRegs);
+						 client.sendToClient(message);
 					} else {
 						sendToAllClients(message);
 					}

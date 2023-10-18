@@ -11,6 +11,7 @@ public class SimpleClient extends AbstractClient {
 	public static boolean show=false;
 	public static String Type;
 	public static String cname;
+	public static String name;
 	private int client_id;
 
 	private SimpleClient(String host, int port) {
@@ -41,49 +42,25 @@ public class SimpleClient extends AbstractClient {
 		EventBus.getDefault().post(new MessageEvent(message));
 		} else if (message.getMessage().equals("i will give you the student grades 2")) {
 		EventBus.getDefault().post(new MessageEvent(message));
-
-	}
-
-		else if (message.getMessage().equals("i will give you students id")) {
-
-
-
+		} else if (message.getMessage().equals("i will give you students id")) {
 			EventBus.getDefault().post(new MessageEvent(message));
-		}
-		else if (message.getMessage().equals("i will give you students id2")) {
-
-
-
+		} else if (message.getMessage().equals("i will give you students id2")) {
 			EventBus.getDefault().post(new MessageEvent(message));
-		}
-		else if (message.getMessage().equals("i will add note")) {
-
-
-
+		} else if (message.getMessage().equals("i will add note")) {
 			EventBus.getDefault().post(new MessageEvent(message));
-		}
-		else if (message.getMessage().equals("i will give you exams questions")) {
-
-
-
+		} else if (message.getMessage().equals("i will give you exams questions")) {
 			EventBus.getDefault().post(new MessageEvent(message));
-		}
-		else if (message.getMessage().equals("i will Show Answers")) {
+		} else if (message.getMessage().equals("i will Show Answers")) {
 			EventBus.getDefault().post(new MessageEvent(message));
-		}
-		else if (message.getMessage().equals("i will save data")) {
+		} else if (message.getMessage().equals("i will save data")) {
 			EventBus.getDefault().post(new MessageEvent(message));
-		}
-		else if (message.getMessage().equals("i will give you exams scans")) {
+		} else if (message.getMessage().equals("i will give you exams scans")) {
 			EventBus.getDefault().post(new MessageEvent(message));
-		}
-			else if (message.getMessage().equals("i changed the grade")) {
+		} else if (message.getMessage().equals("i changed the grade")) {
 		EventBus.getDefault().post(new MessageEvent(message));
-
 		}else if (message.getMessage().equals("exam is over done")) {
 		EventBus.getDefault().post(new MessageEvent(message));
-		}else if (message.getMessage().equals("extra time")) {
-			EventBus.getDefault().post(new MessageEvent(message));
+		}else if (message.getMessage().equals("extra time")) {EventBus.getDefault().post(new MessageEvent(message));
 		}else if(message.getMessage().equals("i added the course")) {
 		EventBus.getDefault().post(new MessageEvent(message));
 		} else if(message.getMessage().equals("i will show questions")) {
@@ -152,7 +129,10 @@ public class SimpleClient extends AbstractClient {
 		}
 		else if(message.getMessage().equals("wrong code or id")) {
 			EventBus.getDefault().post(new MessageEvent(message));
-		} else {
+		}
+		else if(message.getMessage().equals("i will show mediator requests")) {
+			EventBus.getDefault().post(new MessageEvent(message));
+		}else {
 		//EventBus.getDefault().post(new MessageEvent(message));
 		}
 

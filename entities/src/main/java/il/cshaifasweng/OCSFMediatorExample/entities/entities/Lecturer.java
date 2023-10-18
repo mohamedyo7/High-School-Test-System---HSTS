@@ -17,7 +17,6 @@ public class Lecturer implements Serializable {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_prim;
 
 

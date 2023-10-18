@@ -165,6 +165,7 @@ public class LoginController {
 
                 for (int i = 0; i < lecturers_from_server.size(); i++) {
                     if (lecturers_from_server.get(i).getId() == Integer.parseInt(ID_text.getText()) && lecturers_from_server.get(i).getPassword().equals(pass)) {
+                        SimpleClient.name=lecturers_from_server.get(i).getFirstName();
                         c = 1;
                         break;
 

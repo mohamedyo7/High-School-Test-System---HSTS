@@ -214,6 +214,9 @@ public class App {
             exam.setQues_number(updatedExam.getQues_number());
             exam.setCourse_name(updatedExam.getCourse_name());
             exam.setStat(updatedExam.getStat());
+            exam.setRequest(updatedExam.isRequest());
+            exam.setTeacherID(updatedExam.getTeacherID());
+            exam.setTeacherName(updatedExam.getTeacherName());
 
             session.update(exam);
             tx.commit();

@@ -18,6 +18,15 @@ public class Message implements Serializable {
     double time;
     double eTime=0;
     boolean is_finished;
+    boolean eTimeRequest;
+
+    public boolean iseTimeRequest() {
+        return eTimeRequest;
+    }
+
+    public void seteTimeRequest(boolean eTimeRequest) {
+        this.eTimeRequest = eTimeRequest;
+    }
 
     public void setIs_finished(boolean is_finished) {
         this.is_finished = is_finished;
