@@ -9,6 +9,8 @@ import java.util.List;
 @Entity
 @Table(name = "coursesReg")
 public class CourseReg  implements Serializable {
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id=1000;
@@ -69,37 +71,6 @@ public class CourseReg  implements Serializable {
         setCourse(course);
         this.type=type;
     }
-/*    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "lecturer_id_Reg")
-    private Lecturer lecturer;*/
-
-/*
-    @ManyToOne
-    @JoinColumn(name = "ques_id")
-    private Questions questions;
-*/
-
-
-    //////////////
-  /*  @OneToMany(mappedBy = "courseReg")
-    private List<Grade> grades = new ArrayList<>();*/
-
-
-/*
-    public List<Questions> getQuestion() {
-        return Question;
-    }
-
-    public void setQuestion(List<Questions> question) {
-        Question = question;
-    }
-    public void addQuestion(Questions question) {
-        Question.add(question) ;
-    }
-*/
-
-    //@OneToMany(mappedBy = "Questions")
-    //private List<Questions> Question=new ArrayList<>();
     public int getId() {
         return id;
     }
@@ -115,28 +86,12 @@ public class CourseReg  implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-
-   /* public Lecturer getLecturer() {
-        return lecturer;
-    }*/
-
-/*    public void setLecturer(Lecturer lecturer) {
-        this.lecturer = lecturer;
-        lecturer.getCoursesReg().add(this); // IMPORTANT!
-    }*/
     public CourseReg() {
     }
 
     public CourseReg(String name) {
         this.name = name;
     }
-
- /*   public CourseReg(String name, Lecturer lecturer) {
-        this.name = name;
-        setLecturer(lecturer); // IMPORTANT: Why are we doing this?
-        //this.students = new ArrayList<Student>();
-    }*/
-
 
     public String getCourse() {
         return name;
@@ -145,4 +100,6 @@ public class CourseReg  implements Serializable {
     public void setCourse(String course) {
         this.name = course;
     }
+
+
 }

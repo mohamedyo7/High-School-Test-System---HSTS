@@ -2,6 +2,7 @@ package il.cshaifasweng.OCSFMediatorExample.client;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.ExamsScan;
+import il.cshaifasweng.OCSFMediatorExample.entities.entities.Grade;
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.Questions;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -24,6 +25,14 @@ public class ScanPage {
     private TextArea Your_ans;
     @FXML
     private Label wrong_ans;
+    @FXML
+    private TextArea Student_grade_Area;
+
+    @FXML
+    private Label student_grade;
+
+public static String course_ID;
+
 
     @FXML
     void Back_but(ActionEvent event) throws IOException {
@@ -38,9 +47,40 @@ public class ScanPage {
 
     @FXML
     private TextArea Std_notes;
+    @FXML
+    private Button change_grade_but;
+    @FXML
+    void change_grade(ActionEvent event) throws IOException {
+        Message msg = new Message("change the student grade");
+        msg.setGrade(Double.parseDouble(grade_text.getText()));
+        msg.setGrade_to_change((int) msg.getGrade());
+        msg.setCourse_id(Integer.parseInt(course_ID));
+        msg.setStudentId(EditGrade.student_id_toaddnote);
+        sendMessage(msg);
+        SimpleChatClient.setRoot("ScanPage");
+        Message msg2=new Message("give me exams scans");
+        msg2.setId(msg.getStudentId());
+        msg2.setCourseName(EditGrade.course_name);
+        sendMessage(msg2);
+
+
+
+
+        //SimpleChatClient.setRoot("ScanPage");
+       // sendMessage(msg1);
+
+
+    }
 
     @FXML
     void Done_send_grade(ActionEvent event) {
+        Message msg=new Message("finish editing");
+        msg.setCourseName(EditGrade.course_name);
+        msg.setStudentId(EditGrade.student_id_toaddnote);
+        msg.setExam_id(exam_list.getSelectionModel().getSelectedItem());
+        msg.setQues_name(Questions_exam_list.getSelectionModel().getSelectedItem());
+        msg.setQues_note(Ques_notes.getText());
+        sendMessage(msg);
 
 
     }
@@ -57,6 +97,7 @@ public class ScanPage {
         sendMessage(msg);
 
 
+
     }
 
 
@@ -65,11 +106,14 @@ public class ScanPage {
 
 
     }
+
     @FXML
     private Button done_but;
 
     @FXML
     private ListView<String> exam_list;
+    @FXML
+    private TextField grade_text;
     @FXML
     void Show_Ques(ActionEvent event) {
         Message msg=new Message("give me exam questions");
@@ -101,28 +145,59 @@ public class ScanPage {
     @Subscribe
     public void setDataFromServerTF(MessageEvent event) {
         if (event.getMessage().getMessage().equals("i will give you exams scans")) {
-            int c=0;
-            exam_list.getItems().clear();
-            List<ExamsScan> examsScanList=event.getMessage().getExamsScans_list_from_server();
+            int c = 0;
+            System.out.println("hat nshof"+event.getMessage().getId());
+            System.out.println("hat nshof1"+event.getMessage().getCourseName());
+            System.out.println("hat nshof2"+c);
 
-            List<Questions>questionsList=event.getMessage().getQuestions_list_from_server();
-            for(int i=0;i<examsScanList.size();i++) {
+            exam_list.getItems().clear();
+
+
+            List<ExamsScan> examsScanList = event.getMessage().getExamsScans_list_from_server();
+            List<Grade> grades = event.getMessage().getGrades_list_from_server();
+
+            List<Questions> questionsList = event.getMessage().getQuestions_list_from_server();
+            for (int i = 0; i < examsScanList.size(); i++) {
 
                 if (examsScanList.get(i).getStudent_ID() == event.getMessage().getId() && examsScanList.get(i).getName().equals(event.getMessage().getCourseName())) {
-                    for(int j=0;j<exam_list.getItems().size();j++) {
-                        if(!(exam_list.getItems().isEmpty()))
-                        if(exam_list.getItems().get(j).equals(String.valueOf(examsScanList.get(i).getExam_ID())))
-                            c=1;
+                    for (int j = 0; j < exam_list.getItems().size(); j++) {
+                        if (!(exam_list.getItems().isEmpty()))
+                            if (exam_list.getItems().get(j).equals(String.valueOf(examsScanList.get(i).getExam_ID())))
+                                c = 1;
                     }
-                    if(c==0)
-                    exam_list.getItems().add(String.valueOf(examsScanList.get(i).getExam_ID()));
+                    if (c == 0)
+                        exam_list.getItems().add(String.valueOf(examsScanList.get(i).getExam_ID()));
+                }
+            }
+            for (int i = 0; i < grades.size(); i++) {
+                if (grades.get(i).getStudent_id() == event.getMessage().getId() && grades.get(i).getCourse_name().equals(event.getMessage().getCourseName())) {
+                    Student_grade_Area.setText(grades.get(i).getGrade());
+                    course_ID= String.valueOf(grades.get(i).getCourseid());
+                }
+
+
+            }
+            System.out.println("Sd"+SimpleClient.Type);
+            if (SimpleClient.Type.equals("Student")) {
+                for (int i = 0; i < examsScanList.size(); i++) {
+
+                    if (examsScanList.get(i).getStudent_ID() == event.getMessage().getId() && examsScanList.get(i).getName().equals(event.getMessage().getCourseName())) {
+                        for (int j = 0; j < exam_list.getItems().size(); j++) {
+                            if (!(exam_list.getItems().isEmpty()))
+                                if (exam_list.getItems().get(j).equals(String.valueOf(examsScanList.get(i).getExam_ID())) && examsScanList.get(i).getStudent_can_scan().equals("false"))
+                                    exam_list.getItems().remove(i);
+                        }
+                    }
                 }
             }
             exam_list.refresh();
 
 
+        }
 
-            }
+
+
+
         else  if (event.getMessage().getMessage().equals("i will give you exams questions")) {
 
 
@@ -181,6 +256,9 @@ public class ScanPage {
         else  if (event.getMessage().getMessage().equals("i will add note")) {
 
         }
+        else  if (event.getMessage().getMessage().equals("i finished editing")) {
+
+        }
 
         }
     @FXML
@@ -192,9 +270,15 @@ public class ScanPage {
             Ques_notes.setVisible(false);
             insert_note_but.setVisible(false);
             done_but.setVisible(false);
+            student_grade.setVisible(false);
+           Student_grade_Area.setVisible(false);
+           change_grade_but.setVisible(false);
+           grade_text.setVisible(false);
 
         }
+
         EventBus.getDefault().register(this);
+
     }
 
     public void Questions_exam_list_press(javafx.scene.input.MouseEvent mouseEvent) {

@@ -277,6 +277,47 @@ public class SimpleServer extends AbstractServer {
 			session.close();
 		}
 	}
+		public static void updateExamscanStat2(String course_name, String student_id, String examId, String ques_name, String ques_note) throws Exception {
+			System.out.println("glb generate0");
+			List<ExamsScan> exams = getAllexamsscans();
+			System.out.println("glb generate00");
+			try {
+				System.out.println("glb generate2");
+
+				// Find the corresponding Exam entity
+				ExamsScan exam = null;
+				System.out.println("glb generate3");
+
+				for (int i = 0; i < exams.size(); i++) {
+					if (exams.get(i).getStudent_ID() == Integer.parseInt(student_id) && exams.get(i).getName().equals(course_name) && exams.get(i).getExam_ID() == Integer.parseInt(examId) && exams.get(i).getType().equals(ques_name)) {
+						System.out.println("glb generate4");
+						exam = exams.get(i);
+
+					}
+				}
+
+
+				if (exam == null) {
+					throw new Exception("No exam found with the specified ID.");
+				}
+
+				// Update the stat
+				System.out.println("glb generate5");
+				exam.setStudent_can_scan("true");
+				System.out.println("glb generate6");
+
+				// Save the updated exam object
+				session.update(exam);
+				System.out.println("glb generate7");
+				session.getTransaction().commit(); // Save everything..commit();
+				System.out.println("glb generate8");
+
+			} catch (Exception e) {
+				session.getTransaction().rollback();
+			} finally {
+				session.close();
+			}
+	}
 
 
 	@Override
@@ -438,6 +479,8 @@ public class SimpleServer extends AbstractServer {
 						message.setQuestions_list_from_server(questions);
 						message.setExamsScans_list_from_server(examsScans);
 						message.setExams_list_from_server(exams);
+						message.setGrades_list_from_server(getAllgrades());
+						message.setCourses_list_from_server(getAllCourses());
 
 						client.sendToClient(message);
 						//sendToAllClients(message);
@@ -453,7 +496,15 @@ public class SimpleServer extends AbstractServer {
 
 						client.sendToClient(message);
 						//sendToAllClients(message);
-					} else if (request.equals("give me students id")) {
+					}
+				else if (request.equals("finish editing")) {
+
+					message.setMessage("i finished editing");
+					updateExamscanStat2(message.getCourseName(), String.valueOf(message.getStudentId()), message.getExam_id(), message.getQues_name(), message.getQues_note());
+					client.sendToClient(message);
+
+				}
+					 else if (request.equals("give me students id")) {
 
 						message.setMessage("i will give you students id");
 						List<CourseReg> s = getAllregCourses();
