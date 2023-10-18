@@ -43,12 +43,7 @@ public class SimpleClient extends AbstractClient {
 		EventBus.getDefault().post(new MessageEvent(message));
 
 	}
-		else if (message.getMessage().equals("i will check id exist")) {
 
-
-
-			EventBus.getDefault().post(new MessageEvent(message));
-		}
 		else if (message.getMessage().equals("i will give you students id")) {
 
 
@@ -73,13 +68,7 @@ public class SimpleClient extends AbstractClient {
 
 			EventBus.getDefault().post(new MessageEvent(message));
 		}
-		else if (message.getMessage().equals("i will give Show Answers")) {
-
-
-
-			EventBus.getDefault().post(new MessageEvent(message));
-		}
-		else if (message.getMessage().equals("i will give you the student grades")) {
+		else if (message.getMessage().equals("i will Show Answers")) {
 			EventBus.getDefault().post(new MessageEvent(message));
 		}
 		else if (message.getMessage().equals("i will save data")) {
@@ -88,19 +77,7 @@ public class SimpleClient extends AbstractClient {
 		else if (message.getMessage().equals("i will give you exams scans")) {
 			EventBus.getDefault().post(new MessageEvent(message));
 		}
-		else if (message.getMessage().equals("i created question")) {
-			EventBus.getDefault().post(new MessageEvent(message));
-		}
-		else if (message.getMessage().equals("i will give you the courses")) {
-			EventBus.getDefault().post(new MessageEvent(message));
-
-		}
-		else if (message.getMessage().equals("i will give you the courses2")) {
-			EventBus.getDefault().post(new MessageEvent(message));
-		}
-		else if (message.getMessage().equals("i will give you the student grades 2")) {
-			EventBus.getDefault().post(new MessageEvent(message));
-		}else if (message.getMessage().equals("i changed the grade")) {
+			else if (message.getMessage().equals("i changed the grade")) {
 		EventBus.getDefault().post(new MessageEvent(message));
 
 		}else if (message.getMessage().equals("exam is over done")) {

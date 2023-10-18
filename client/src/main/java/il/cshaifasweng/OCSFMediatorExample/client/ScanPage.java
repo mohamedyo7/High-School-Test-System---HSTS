@@ -142,10 +142,13 @@ public class ScanPage {
 
         }
         else  if (event.getMessage().getMessage().equals("i will Show Answers")) {
-            wrong_ans.setVisible(false);
 
+            wrong_ans.setVisible(false);
+            System.out.println("oop");
             //Corr_Ans.clear();
-            //Your_ans.clear();
+           // Your_ans.clear();
+
+
 
 
             List<Questions>questionsList=event.getMessage().getQuestions_list_from_server();
@@ -156,6 +159,7 @@ public class ScanPage {
                     Corr_Ans.setText(questionsList.get(i).getCorrect_ans());
                 }
             }
+            System.out.println("oop1");
             List<ExamsScan>examsScanList=event.getMessage().getExamsScans_list_from_server();
             for(int i=0;i<examsScanList.size();i++) {
 
@@ -165,10 +169,12 @@ public class ScanPage {
                         Std_notes.setText(examsScanList.get(i).getState());
                     }
             }
+            System.out.println("oop2");
 
 
             if(!Corr_Ans.getText().equals(Your_ans.getText()))
                 wrong_ans.setVisible(true);
+            System.out.println("oop3");
 
 
         }
@@ -192,6 +198,7 @@ public class ScanPage {
     }
 
     public void Questions_exam_list_press(javafx.scene.input.MouseEvent mouseEvent) {
+        System.out.println("oop6");
         Message msg=new Message("Show Answers");
         String s=exam_list.getSelectionModel().getSelectedItem();
         msg.setId(Integer.parseInt(s));

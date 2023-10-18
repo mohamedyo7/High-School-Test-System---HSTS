@@ -7,7 +7,6 @@ import il.cshaifasweng.OCSFMediatorExample.server.ocsf.AbstractServer;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.ConnectionToClient;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.SubscribedClient;
 import javafx.animation.PauseTransition;
-import javassist.Loader;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -20,7 +19,7 @@ import static il.cshaifasweng.OCSFMediatorExample.server.App.*;
 public class SimpleServer extends AbstractServer {
 	private static ArrayList<SubscribedClient> SubscribersList = new ArrayList<>();
 	private PauseTransition delay;
-	public static int client_id=0;
+	public static int client_id = 0;
 
 	//private static Session session;
 
@@ -28,6 +27,7 @@ public class SimpleServer extends AbstractServer {
 		super(port);
 
 	}
+
 	public static List<Student> getAllStudents() throws Exception {
 		CriteriaBuilder builder = session.getCriteriaBuilder();
 		CriteriaQuery<Student> query = builder.createQuery(Student.class);
@@ -51,6 +51,7 @@ public class SimpleServer extends AbstractServer {
 		List<Lecturer> Letcurers = session.createQuery(query).getResultList();
 		return Letcurers;
 	}
+
 	public static List<Questions> getAllQuestions() {
 		CriteriaBuilder builder = session.getCriteriaBuilder();
 		CriteriaQuery<Questions> query = builder.createQuery(Questions.class);
@@ -58,6 +59,7 @@ public class SimpleServer extends AbstractServer {
 		List<Questions> ques = session.createQuery(query).getResultList();
 		return ques;
 	}
+
 	public static List<CourseReg> getAllregCourses() {
 		CriteriaBuilder builder = session.getCriteriaBuilder();
 		CriteriaQuery<CourseReg> query = builder.createQuery(CourseReg.class);
@@ -65,6 +67,7 @@ public class SimpleServer extends AbstractServer {
 		List<CourseReg> ques = session.createQuery(query).getResultList();
 		return ques;
 	}
+
 	public static List<Mediator> getAllMediator() {
 		CriteriaBuilder builder = session.getCriteriaBuilder();
 		CriteriaQuery<Mediator> query = builder.createQuery(Mediator.class);
@@ -72,6 +75,7 @@ public class SimpleServer extends AbstractServer {
 		List<Mediator> ques = session.createQuery(query).getResultList();
 		return ques;
 	}
+
 	public static List<Grade> getAllgrades() {
 		CriteriaBuilder builder = session.getCriteriaBuilder();
 		CriteriaQuery<Grade> query = builder.createQuery(Grade.class);
@@ -79,6 +83,7 @@ public class SimpleServer extends AbstractServer {
 		List<Grade> ques = session.createQuery(query).getResultList();
 		return ques;
 	}
+
 	public static List<ExamsScan> getAllexamsscans() {
 		CriteriaBuilder builder = session.getCriteriaBuilder();
 		CriteriaQuery<ExamsScan> query = builder.createQuery(ExamsScan.class);
@@ -87,79 +92,83 @@ public class SimpleServer extends AbstractServer {
 		List<ExamsScan> ques = session.createQuery(query).getResultList();
 		return ques;
 	}
+
 	private static void generateStudents(Student s) throws Exception {
 
-			Student std0 = new Student(s);
-			session.save(std0);
-			session.flush();
-		}
+		Student std0 = new Student(s);
+		session.save(std0);
+		session.flush();
+	}
 
 	private static void generateLecturers(Lecturer lec) throws Exception {
 
-			Lecturer lect = new Lecturer(lec);
-			session.save(lect);
-			session.flush();
-		}
+		Lecturer lect = new Lecturer(lec);
+		session.save(lect);
+		session.flush();
+	}
+
 	private static void generateMediator(Mediator lec) throws Exception {
 
 		Mediator lect = new Mediator(lec);
 		session.save(lect);
 		session.flush();
 	}
+
 	private static void generateExamsScan(ExamsScan lec) throws Exception {
-		List<ExamsScan>exams=getAllexamsscans();
-		for(int i=0;i<exams.size();i++){
-			if (exams.get(i).getStudent_ID()==lec.getStudent_ID()&&exams.get(i).getName().equals(lec.getName())&&exams.get(i).getExam_ID()==lec.getExam_ID()&&exams.get(i).getType().equals(lec.getType())) {
+		List<ExamsScan> exams = getAllexamsscans();
+		for (int i = 0; i < exams.size(); i++) {
+			if (exams.get(i).getStudent_ID() == lec.getStudent_ID() && exams.get(i).getName().equals(lec.getName()) && exams.get(i).getExam_ID() == lec.getExam_ID() && exams.get(i).getType().equals(lec.getType())) {
 				session.remove(exams.get(i));
 
 			}
 
-			}
+		}
 
 		session.save(lec);
 		session.flush();
 		System.out.println("op");
 	}
-	public static void generateregcourse(int id,String name) throws Exception {
+
+	public static void generateregcourse(int id, String name) throws Exception {
 		int c = 0;
 		List<Student> students = getAllStudents();
 		List<CourseReg> courses = getAllregCourses();
 		for (int j = 0; j < courses.size(); j++) {
-			if(!courses.isEmpty())
-			if (courses.get(j).getType().equals("Student")) {
-				if (courses.get(j).getStudent().getStudent_id() == id) {
-					if (courses.get(j).getName().equals(name)) {
-						c = 1;
-						break;
+			if (!courses.isEmpty())
+				if (courses.get(j).getType().equals("Student")) {
+					if (courses.get(j).getStudent().getStudent_id() == id) {
+						if (courses.get(j).getName().equals(name)) {
+							c = 1;
+							break;
+						}
 					}
 				}
-			}
 		}
-		if (c==0) {
+		if (c == 0) {
 			for (int i = 0; i < students.size(); i++) {
 
-					if (students.get(i).getStudent_id() == id) {
+				if (students.get(i).getStudent_id() == id) {
 
 
-						CourseReg cor = new CourseReg(students.get(i), name, "Student");
-						session.save(cor);
-						session.flush();
-						break;
+					CourseReg cor = new CourseReg(students.get(i), name, "Student");
+					session.save(cor);
+					session.flush();
+					break;
 
-					}
 				}
-
+			}
 
 
 		}
 	}
-	public static void generateregcourse2(int id,String name) throws Exception {
+
+	public static void generateregcourse2(int id, String name) throws Exception {
 		int c = 0;
 		List<Lecturer> lecturers = getAllLecturers();
 		List<CourseReg> courses = getAllregCourses();
 
 		for (int j = 0; j < courses.size(); j++) {
-			if(!courses.isEmpty()) {
+			if (!courses.isEmpty()) {
 				if (courses.get(j).getType().equals("Teacher")) {
 					if (courses.get(j).getLecturer().getId() == id) {
 						if (courses.get(j).getName().equals(name)) {
@@ -170,25 +179,26 @@ public class SimpleServer extends AbstractServer {
 				}
 			}
 		}
-		if (c==0) {
+		if (c == 0) {
 			for (int i = 0; i < lecturers.size(); i++) {
-					if (lecturers.get(i).getId() == id) {
+				if (lecturers.get(i).getId() == id) {
 
 
-						//System.out.println(courses.get(i).getName() + "nf7s");
-						CourseReg cor = new CourseReg(lecturers.get(i), name, "Teacher");
-						session.save(cor);
-						session.flush();
-						break;
-
-					}
+					//System.out.println(courses.get(i).getName() + "nf7s");
+					CourseReg cor = new CourseReg(lecturers.get(i), name, "Teacher");
+					session.save(cor);
+					session.flush();
+					break;
 
 				}
+
 			}
+		}
 
 
 	}
-	private static void generateGrades(Student s,Course c,String g,String name) throws Exception {
+
+	private static void generateGrades(Student s, Course c, String g, String name) throws Exception {
 		int c1 = 0;
 		List<Student> students = getAllStudents();
 		List<Grade> grades = getAllgrades();
@@ -201,12 +211,12 @@ public class SimpleServer extends AbstractServer {
 				}
 			}
 		}
-		if (c1==0) {
+		if (c1 == 0) {
 			for (int i = 0; i < students.size(); i++) {
 				if (students.get(i).getStudent_id() == s.getStudent_id()) {
 
 
-					Grade grade = new Grade(s,c,g,name);
+					Grade grade = new Grade(s, c, g, name);
 					session.save(grade);
 					session.flush();
 					break;
@@ -219,10 +229,9 @@ public class SimpleServer extends AbstractServer {
 		}
 
 
-
-
 	}
-	public static void updateExamscanStat(String course_name,String student_id,String examId,String ques_name,String ques_note) throws Exception {
+
+	public static void updateExamscanStat(String course_name, String student_id, String examId, String ques_name, String ques_note) throws Exception {
 		System.out.println("glb generate0");
 		List<ExamsScan> exams = getAllexamsscans();
 		System.out.println("glb generate00");
@@ -235,10 +244,10 @@ public class SimpleServer extends AbstractServer {
 			System.out.println("glb generate2");
 
 			// Find the corresponding Exam entity
-			ExamsScan exam=null;
+			ExamsScan exam = null;
 			System.out.println("glb generate3");
 
-			for (int i=0;i<exams.size();i++) {
+			for (int i = 0; i < exams.size(); i++) {
 				if (exams.get(i).getStudent_ID() == Integer.parseInt(student_id) && exams.get(i).getName().equals(course_name) && exams.get(i).getExam_ID() == Integer.parseInt(examId) && exams.get(i).getType().equals(ques_name)) {
 					System.out.println("glb generate4");
 					exam = exams.get(i);
@@ -247,20 +256,20 @@ public class SimpleServer extends AbstractServer {
 			}
 
 
-				if (exam == null) {
-					throw new Exception("No exam found with the specified ID.");
-				}
+			if (exam == null) {
+				throw new Exception("No exam found with the specified ID.");
+			}
 
-				// Update the stat
-				System.out.println("glb generate5");
-				exam.setState(ques_note);
-				System.out.println("glb generate6");
+			// Update the stat
+			System.out.println("glb generate5");
+			exam.setState(ques_note);
+			System.out.println("glb generate6");
 
-				// Save the updated exam object
-				session.update(exam);
-				System.out.println("glb generate7");
-				session.getTransaction().commit(); // Save everything..commit();
-				System.out.println("glb generate8");
+			// Save the updated exam object
+			session.update(exam);
+			System.out.println("glb generate7");
+			session.getTransaction().commit(); // Save everything..commit();
+			System.out.println("glb generate8");
 
 		} catch (Exception e) {
 			session.getTransaction().rollback();
@@ -270,13 +279,13 @@ public class SimpleServer extends AbstractServer {
 	}
 
 
-	
 	@Override
 	protected void handleMessageFromClient(Object msg, ConnectionToClient client) {
+		Message message;
 		try {
 			session = sessionFactory.openSession();
 			session.beginTransaction();
-			Message message = (Message) msg;
+			message = (Message) msg;
 			String request = message.getMessage();
 
 			try {
@@ -358,332 +367,296 @@ public class SimpleServer extends AbstractServer {
 					message.setCourses_list_from_server_reg(getAllregCourses());
 					client.sendToClient(message);
 
-				} else if (request.equals("change the student grade")) {
-
-					List<Course> courses = getAllCourses();
+				}
 
 				 else if (request.equals("change the student grade")) {
 					changeGrade(message.getStudentId(), message.getCourse_id(), message.getGrade_to_change());
 					message.setMessage("i changed the grade");
 					client.sendToClient(message);
 
-				} else if (request.equals("add questions to course")) {
-
-					message.setMessage("i added question to course");
-					client.sendToClient(message);
-
-				} else if (request.equals("create question")) {
-
-				}
-				else if (request.equals("change the student state")) {
-					//changeState(message.getStudentId(), message.getCourse_id(), message.getGrade_to_change());
-					message.setMessage("i changed the grade");
-					client.sendToClient(message);
-					//sendToAllClients(message);
-
 				}
 
-				 else if(request.equals("add questions to course")){
-				message.setMessage("i added question to course");
-				client.sendToClient(message);
-			}
-				else if(request.equals("create question")) {
-					message.setMessage("i created question");
-					Questions question = message.getQuestion();
-					generateQuestion(question);
-					client.sendToClient(message);
+					 else if (request.equals("change the student state")) {
+						//changeState(message.getStudentId(), message.getCourse_id(), message.getGrade_to_change());
+						message.setMessage("i changed the grade");
+						client.sendToClient(message);
+						//sendToAllClients(message);
 
-				} else if (request.equals("show questions")) {
+					} else if (request.equals("add questions to course")) {
+						message.setMessage("i added question to course");
+						client.sendToClient(message);
+					} else if (request.equals("create question")) {
+						message.setMessage("i created question");
+						Questions question = message.getQuestion();
+						generateQuestion(question);
+						client.sendToClient(message);
 
-					message.setMessage("i will show questions");
-					List<Questions> ques = getAllQuestions();
-					message.setQuestions_list_from_server(ques);
-					client.sendToClient(message);
+					} else if (request.equals("show questions")) {
 
-				} else if (request.equals("Save The Student Details")) {
+						message.setMessage("i will show questions");
+						List<Questions> ques = getAllQuestions();
+						message.setQuestions_list_from_server(ques);
+						client.sendToClient(message);
 
-					message.setMessage("I Saved The Student Details");
-					generateStudents(message.getStudent());
-					message.setCourses_list_from_server(getAllCourses());
-					client.sendToClient(message);
+					} else if (request.equals("Save The Student Details")) {
 
-				} else if (request.equals("Save The Teacher Details")) {
+						message.setMessage("I Saved The Student Details");
+						generateStudents(message.getStudent());
+						message.setCourses_list_from_server(getAllCourses());
+						client.sendToClient(message);
 
-					message.setMessage("I Saved The Teacher Details");
-					generateLecturers(message.getLec());
-					message.setCourses_list_from_server(getAllCourses());
-					client.sendToClient(message);
+					} else if (request.equals("Save The Teacher Details")) {
 
-				} else if (request.equals("Save The Mediator Details")) {
+						message.setMessage("I Saved The Teacher Details");
+						generateLecturers(message.getLec());
+						message.setCourses_list_from_server(getAllCourses());
+						client.sendToClient(message);
 
-					message.setMessage("I Saved The Mediator Details");
-					generateMediator(message.getMediator());
-					message.setCourses_list_from_server(getAllCourses());
-					client.sendToClient(message);
+					} else if (request.equals("Save The Mediator Details")) {
 
-				} else if (request.equals("give me student data")) {
+						message.setMessage("I Saved The Mediator Details");
+						generateMediator(message.getMediator());
+						message.setCourses_list_from_server(getAllCourses());
+						client.sendToClient(message);
 
-					message.setMessage("i will give you the student data");
-					List<CourseReg> s = getAllregCourses();
-					message.setCourses_list_from_server_reg(s);
+					} else if (request.equals("give me student data")) {
 
-					client.sendToClient(message);
-					//sendToAllClients(message);
-				}
-				else if(request.equals("give me exams scans")){
+						message.setMessage("i will give you the student data");
+						List<CourseReg> s = getAllregCourses();
+						message.setCourses_list_from_server_reg(s);
 
-					message.setMessage("i will give you exams scans");
-					List<CourseReg> s=getAllregCourses();
-					message.setCourses_list_from_server_reg(s);
-					List<Questions>questions=getAllQuestions();
-					List<ExamsScan>examsScans=getAllexamsscans();
-					List<Exams>exams=getAllExams();
-					message.setQuestions_list_from_server(questions);
-					message.setExamsScans_list_from_server(examsScans);
-					message.setExams_list_from_server(exams);
+						client.sendToClient(message);
+						//sendToAllClients(message);
+					} else if (request.equals("give me exams scans")) {
 
-					client.sendToClient(message);
-					//sendToAllClients(message);
-				}
-				else if(request.equals("add note")){
+						message.setMessage("i will give you exams scans");
+						List<CourseReg> s = getAllregCourses();
+						message.setCourses_list_from_server_reg(s);
+						List<Questions> questions = getAllQuestions();
+						List<ExamsScan> examsScans = getAllexamsscans();
+						List<Exams> exams = getAllExams();
+						message.setQuestions_list_from_server(questions);
+						message.setExamsScans_list_from_server(examsScans);
+						message.setExams_list_from_server(exams);
 
-					message.setMessage("i will add note");
-					updateExamscanStat(message.getCourseName(), String.valueOf(message.getStudentId()),message.getExam_id(),message.getQues_name(),message.getQues_note());
-					System.out.println("note 3");
-					//List<ExamsScan>examsScans=getAllexamsscans();
-					System.out.println("note 4");
-					//message.setExamsScans_list_from_server(examsScans);
-					System.out.println("note 8");
+						client.sendToClient(message);
+						//sendToAllClients(message);
+					} else if (request.equals("add note")) {
 
-					client.sendToClient(message);
-					//sendToAllClients(message);
-				}
-				else if(request.equals("give me students id")){
+						message.setMessage("i will add note");
+						updateExamscanStat(message.getCourseName(), String.valueOf(message.getStudentId()), message.getExam_id(), message.getQues_name(), message.getQues_note());
+						System.out.println("note 3");
+						//List<ExamsScan>examsScans=getAllexamsscans();
+						System.out.println("note 4");
+						//message.setExamsScans_list_from_server(examsScans);
+						System.out.println("note 8");
 
-					message.setMessage("i will give you students id");
-					List<CourseReg> s=getAllregCourses();
-					message.setCourses_list_from_server_reg(s);
-					List<Questions>questions=getAllQuestions();
-					List<ExamsScan>examsScans=getAllexamsscans();
-					List<Exams>exams=getAllExams();
-					message.setQuestions_list_from_server(questions);
-					message.setExamsScans_list_from_server(examsScans);
-					message.setExams_list_from_server(exams);
+						client.sendToClient(message);
+						//sendToAllClients(message);
+					} else if (request.equals("give me students id")) {
 
-					client.sendToClient(message);
-					//sendToAllClients(message);
-				}
-				else if(request.equals("give me students id2")){
+						message.setMessage("i will give you students id");
+						List<CourseReg> s = getAllregCourses();
+						message.setCourses_list_from_server_reg(s);
+						List<Questions> questions = getAllQuestions();
+						List<ExamsScan> examsScans = getAllexamsscans();
+						List<Exams> exams = getAllExams();
+						message.setQuestions_list_from_server(questions);
+						message.setExamsScans_list_from_server(examsScans);
+						message.setExams_list_from_server(exams);
 
-					message.setMessage("i will give you students id2");
-					List<CourseReg> s=getAllregCourses();
-					message.setCourses_list_from_server_reg(s);
-					List<Questions>questions=getAllQuestions();
-					List<ExamsScan>examsScans=getAllexamsscans();
-					List<Exams>exams=getAllExams();
-					message.setQuestions_list_from_server(questions);
-					message.setExamsScans_list_from_server(examsScans);
-					message.setExams_list_from_server(exams);
+						client.sendToClient(message);
+						//sendToAllClients(message);
+					} else if (request.equals("give me students id2")) {
 
-					client.sendToClient(message);
-					//sendToAllClients(message);
-				}
-				else if(request.equals("give me exam questions")){
+						message.setMessage("i will give you students id2");
+						List<CourseReg> s = getAllregCourses();
+						message.setCourses_list_from_server_reg(s);
+						List<Questions> questions = getAllQuestions();
+						List<ExamsScan> examsScans = getAllexamsscans();
+						List<Exams> exams = getAllExams();
+						message.setQuestions_list_from_server(questions);
+						message.setExamsScans_list_from_server(examsScans);
+						message.setExams_list_from_server(exams);
 
-					message.setMessage("i will give you exams questions");
-					List<Questions>questions=getAllQuestions();
-					List<ExamsScan>examsScans=getAllexamsscans();
-					message.setQuestions_list_from_server(questions);
-					message.setExamsScans_list_from_server(examsScans);
-					client.sendToClient(message);
-					//sendToAllClients(message);
-				}
-				else if(request.equals("Show Answers")){
+						client.sendToClient(message);
+						//sendToAllClients(message);
+					} else if (request.equals("give me exam questions")) {
 
-					message.setMessage("i will Show Answers");
-					List<CourseReg> s=getAllregCourses();
-					message.setCourses_list_from_server_reg(s);
-					List<Questions>questions=getAllQuestions();
-					List<ExamsScan>examsScans=getAllexamsscans();
-					List<Exams>exams=getAllExams();
-					message.setQuestions_list_from_server(questions);
-					message.setExamsScans_list_from_server(examsScans);
-					message.setExams_list_from_server(exams);
+						message.setMessage("i will give you exams questions");
+						List<Questions> questions = getAllQuestions();
+						List<ExamsScan> examsScans = getAllexamsscans();
+						message.setQuestions_list_from_server(questions);
+						message.setExamsScans_list_from_server(examsScans);
+						client.sendToClient(message);
+						//sendToAllClients(message);
+					} else if (request.equals("Show Answers")) {
+							System.out.println("server ");
+						message.setMessage("i will Show Answers");
+						List<Questions> questions = getAllQuestions();
+					System.out.println("server 1");
+						List<ExamsScan> examsScans = getAllexamsscans();
+					System.out.println("server 2");
+						message.setQuestions_list_from_server(questions);
+					System.out.println("server 3");
+						message.setExamsScans_list_from_server(examsScans);
+					System.out.println("server 4");
 
-					client.sendToClient(message);
+						client.sendToClient(message);
 
-				} else if (request.equals("give me teacher data")) {
+					} else if (request.equals("give me teacher data")) {
 
-					message.setMessage("i will give you the teacher data");
-					List<CourseReg> s = getAllregCourses();
-					message.setCourses_list_from_server_reg(s);
-					client.sendToClient(message);
+						message.setMessage("i will give you the teacher data");
+						List<CourseReg> s = getAllregCourses();
+						message.setCourses_list_from_server_reg(s);
+						client.sendToClient(message);
 
-				} else if (request.equals("give me mediator data")) {
+					} else if (request.equals("give me mediator data")) {
 
-					message.setMessage("i will give you the mediator data");
-					List<CourseReg> s = getAllregCourses();
-					message.setCourses_list_from_server_reg(s);
-					client.sendToClient(message);
+						message.setMessage("i will give you the mediator data");
+						List<CourseReg> s = getAllregCourses();
+						message.setCourses_list_from_server_reg(s);
+						client.sendToClient(message);
 
-				} else if (request.equals("give me teacher stats")) {
+					} else if (request.equals("give me teacher stats")) {
 
-					message.setMessage("i will give you the teacher stats");
-					List<CourseReg> s = getAllregCourses();
-					List<Lecturer> lec = getAllLecturers();
-					message.setLecturers_list_from_server(lec);
-					message.setCourses_list_from_server_reg(s);
-					client.sendToClient(message);
+						message.setMessage("i will give you the teacher stats");
+						List<CourseReg> s = getAllregCourses();
+						List<Lecturer> lec = getAllLecturers();
+						message.setLecturers_list_from_server(lec);
+						message.setCourses_list_from_server_reg(s);
+						client.sendToClient(message);
 
-				} else if (request.equals("show stats")) {
+					} else if (request.equals("show stats")) {
 
-					message.setMessage("i will show stats");
-					List<CourseReg> s = getAllregCourses();
-					List<Lecturer> lec = getAllLecturers();
-					List<Grade> grades = getAllgrades();
-					message.setGrades_list_from_server(grades);
-					message.setLecturers_list_from_server(lec);
-					message.setCourses_list_from_server_reg(s);
-					client.sendToClient(message);
+						message.setMessage("i will show stats");
+						List<CourseReg> s = getAllregCourses();
+						List<Lecturer> lec = getAllLecturers();
+						List<Grade> grades = getAllgrades();
+						message.setGrades_list_from_server(grades);
+						message.setLecturers_list_from_server(lec);
+						message.setCourses_list_from_server_reg(s);
+						client.sendToClient(message);
 
-				} else if (request.equals("update exam")) {
+					} else if (request.equals("update exam")) {
 
-					Exams exams = message.getExam();
-					updateExam(exams);
-					message.setMessage("i updated the exam");
-					client.sendToClient(message);
+						Exams exams = message.getExam();
+						updateExam(exams);
+						message.setMessage("i updated the exam");
+						client.sendToClient(message);
 
-				} else if (request.equals("show exams")) {
+					} else if (request.equals("show exams")) {
 
-					message.setMessage("i will give you the exams");
-					List<Exams> exams = getAllExams();
-					List<Exams> exams= getAllExams();
-					message.setExamsScans_list_from_server(getAllexamsscans());
-					message.setExams_list_from_server(exams);
-					client.sendToClient(message);
+						message.setMessage("i will give you the exams");
+						List<Exams> exams = getAllExams();
+						message.setExamsScans_list_from_server(getAllexamsscans());
+						message.setExams_list_from_server(exams);
+						client.sendToClient(message);
 
-				} else if (request.equals("add exam")) {
+					} else if (request.equals("add exam")) {
 
-					Exams exam = message.getExam();
-					generateExam(exam);
-					message.setMessage("i added the exam");
-					client.sendToClient(message);
+						Exams exam = message.getExam();
+						generateExam(exam);
+						message.setMessage("i added the exam");
+						client.sendToClient(message);
 
-				} else if (request.equals("add ques to exam")) {
+					} else if (request.equals("add ques to exam")) {
 
-					generateQuestion(message.getQuestion());
+						generateQuestion(message.getQuestion());
 
-				} else if (request.equals("start exam")) {
+					} else if (request.equals("start exam")) {
 
-			if(message.getLogin_name().equals("teacher")){
+						if (message.getLogin_name().equals("teacher")) {
 
-						System.out.println("aa");
-						updateExamStat(message.getExam().getId(),true,message.getTime());
-						System.out.println("ab"+message.getTime());
-						System.out.println("bbbb");}
+							System.out.println("aa");
+							updateExamStat(message.getExam().getId(), true, message.getTime());
+							System.out.println("ab" + message.getTime());
+							System.out.println("bbbb");
+						}
+						message.setCourseName(message.getExam().getCourse_name());
+						message.setMessage("i will start exam");
+						message.setId(message.getExam().getId());
+						client.sendToClient(message);
 
-					/*if(message.getLogin_name().equals("Student")){
-						ExamsScan exam=new ExamsScan(message.getStudentId(),message.getExam().getCourse_name(),message.getExam().getId(),"Student","null");
-						System.out.println("ID_1"+message.getExam().getId());
+					} else if (request.equals("save data")) {
+						message.setMessage("i will save data");
+						System.out.println("kl");
+						ExamsScan exam = new ExamsScan(message.getStudentId(), message.getCourseName(), message.getId(), message.getType(), message.getAns(), "False");
+						System.out.println("ID_1" + message.getId());
 						generateExamsScan(exam);
-					}*/
-					if(message.getLogin_name().equals("Teacher")) {
+						System.out.println("ID_2" + message.getId());
+						client.sendToClient(message);
 
-						updateExamStat(message.getExam().getId(), true);
+					} else if (request.equals("exam is over")) {
 
-						//updateExamscanStat(message.getExam().getId(), true);
+						message.setMessage("exam is over done");
+						client.sendToClient(message);
 
+					} else if (request.equals("end exam")) {
+						message.setMessage("exam is over done");
+						changeGrade(message.getStudentId(), message.getCourse_id(), message.getGrade_to_change());
+						updateExamStat(message.getId(), false, message.getTime());
+						client.sendToClient(message);
+
+					} else if (request.equals("show questions2")) {
+
+						message.setMessage("i will show questions2");
+						List<Questions> ques = getAllQuestions();
+						List<Exams> exams = getAllExams();
+						message.setExams_list_from_server(exams);
+						message.setQuestions_list_from_server(ques);
+						client.sendToClient(message);
+
+					} else if (request.equals("the grade is")) {
+						message.setMessage("the grade is");
+						client.sendToClient(message);
+					} else if (request.equals("extraTime")) {
+						message.setMessage("extra time");
+						System.out.println("etime is " + message.geteTime());
+						sendToAllClients(message);
+					} else if (request.equals("test it baby")) {
+						message.setMessage("test");
+						sendToAllClients2(message);
+					} else if (request.equals("wrong code or id")) {
+						client.sendToClient(message);
+					} else {
+						sendToAllClients(message);
 					}
-					message.setCourseName(message.getExam().getCourse_name());
-					message.setMessage("i will start exam");
-					message.setId(message.getExam().getId());
-					client.sendToClient(message);
 
-				}else if(request.equals("exam is over")){
+
+				} catch(IOException e1){
+					e1.printStackTrace();
 				}
-				else if(request.equals("save data")){
-					message.setMessage("i will save data");
-					System.out.println("kl");
-					ExamsScan exam=new ExamsScan(message.getStudentId(),message.getCourseName(),message.getId(), message.getType(), message.getAns(),"False");
-					System.out.println("ID_1"+message.getId());
-					generateExamsScan(exam);
-					System.out.println("ID_2"+message.getId());
-					client.sendToClient(message);
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			} finally {
+				assert session != null;
+				session.close();
+			}
 
+		}
+
+		public void sendToAllClients (Message message){
+			try {
+				for (SubscribedClient SubscribedClient : SubscribersList) {
+					SubscribedClient.getClient().sendToClient(message);
 				}
-
-
-				else if(request.equals("exam is over")){
-
-					message.setMessage("exam is over done");
-					client.sendToClient(message);
-
-				}else if(request.equals("end exam")){
-					message.setMessage("exam is over done");
-					changeGrade(message.getStudentId(), message.getCourse_id(), message.getGrade_to_change());
-					updateExamStat(message.getId(),false,message.getTime());
-					client.sendToClient(message);
-
-				}else if(request.equals("show questions2")){
-
-					message.setMessage("i will show questions2");
-					List<Questions> ques = getAllQuestions();
-					List<Exams> exams = getAllExams();
-					message.setExams_list_from_server(exams);
-					message.setQuestions_list_from_server(ques);
-					client.sendToClient(message);
-
-				}else if(request.equals("the grade is")){
-					message.setMessage("the grade is");
-					client.sendToClient(message);
-				} else if (request.equals("extraTime")) {
-					message.setMessage("extra time");
-					System.out.println("etime is " + message.geteTime());
-					sendToAllClients(message);
-				} else if (request.equals("test it baby")) {
-					message.setMessage("test");
-					sendToAllClients2(message);
-				}
-				else if (request.equals("wrong code or id")) {
-					client.sendToClient(message);
-				}
-				else {
-					sendToAllClients(message);
-				}
-
-
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		} finally {
-			assert session != null;
-			session.close();
 		}
 
-	}
 
-	public void sendToAllClients(Message message) {
-		try {
-			for (SubscribedClient SubscribedClient : SubscribersList) {
-				SubscribedClient.getClient().sendToClient(message);
+		public void sendToAllClients2 (Message message){
+			try {
+				for (SubscribedClient SubscribedClient : SubscribersList) {
+					if (message.getId() == SimpleClient.ID)
+						SubscribedClient.getClient().sendToClient(message);
+				}
+			} catch (IOException e1) {
+				e1.printStackTrace();
 			}
-		} catch (IOException e1) {
-			e1.printStackTrace();
 		}
+
+
 	}
-
-
-	public void sendToAllClients2(Message message) {
-		try {
-			for (SubscribedClient SubscribedClient : SubscribersList) {
-				if(message.getId()== SimpleClient.ID)
-					SubscribedClient.getClient().sendToClient(message);
-			}
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-	}
-
-}
