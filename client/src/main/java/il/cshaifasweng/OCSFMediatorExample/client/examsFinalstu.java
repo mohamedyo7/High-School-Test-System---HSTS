@@ -38,6 +38,8 @@ public class examsFinalstu {
     private URL location;
 
     @FXML
+    private TextField studenid;
+    @FXML
     private ListView<String> coursesList;
     @FXML
     private TableView<Exams> examsTable;
@@ -60,8 +62,7 @@ public class examsFinalstu {
     void startB(ActionEvent event) throws IOException {
         System.out.println("heeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
         System.out.println(examsTable.getSelectionModel().getSelectedItem().getId());
-        if(examsTable.getSelectionModel().getSelectedItem().getCode().equals(eCode.getText())){
-
+        if(examsTable.getSelectionModel().getSelectedItem().getCode().equals(eCode.getText())&&Integer.parseInt(studenid.getText())==SimpleClient.ID){
             System.out.println("yo yo");
             msg.setMessage("start exam");
             SimpleChatClient.setRoot("examInside");
@@ -74,7 +75,8 @@ public class examsFinalstu {
             sendMessage(msg);
 
             } else
-                System.out.println("error code");
+                System.out.println("Wrong code or id");
+                sendMessage("wrong code or id");
         }
 
     @FXML

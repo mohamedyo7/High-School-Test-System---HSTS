@@ -43,8 +43,10 @@ public class ExamsFinal {
     private ListView<String> coursesList;
     @FXML
     void insetTime(ActionEvent event) {
-        time = Double.parseDouble(timeT.getText());
+        time = Double.parseDouble(extraTime.getText());
+        System.out.println(extraTime.getText());
         msg.seteTime(time);
+        msg.setExam(examsTable.getSelectionModel().getSelectedItem());
         msg.setMessage("extraTime");
         sendMessage(msg);
     }
@@ -70,14 +72,11 @@ public class ExamsFinal {
 
         msg.setMessage("start exam");
         if(SimpleClient.Type.equals("Student")){
-            //SimpleChatClient.setRoot("examInside");
-            //msg.setLogin_name("student");
         }
         else{
             time=Double.parseDouble(timeT.getText());
             msg.setLogin_name("teacher");
             msg.setTime(time);
-            System.out.println("timeeeeeeee" + time);
         }
 
             //examsTable.getSelectionModel().getSelectedItem().setStat(1);

@@ -423,8 +423,10 @@ public class SimpleServer extends AbstractServer {
 					client.sendToClient(message);
 
 				}else if(request.equals("end exam")){
+					message.setMessage("exam is over done");
 					changeGrade(message.getStudentId(), message.getCourse_id(), message.getGrade_to_change());
 					updateExamStat(message.getId(),false,message.getTime());
+					client.sendToClient(message);
 
 				}else if(request.equals("show questions2")){
 
@@ -440,10 +442,14 @@ public class SimpleServer extends AbstractServer {
 					client.sendToClient(message);
 				} else if (request.equals("extraTime")) {
 					message.setMessage("extra time");
+					System.out.println("etime is " + message.geteTime());
 					sendToAllClients(message);
 				} else if (request.equals("test it baby")) {
 					message.setMessage("test");
 					sendToAllClients2(message);
+				}
+				else if (request.equals("wrong code or id")) {
+					client.sendToClient(message);
 				}
 				else {
 					sendToAllClients(message);

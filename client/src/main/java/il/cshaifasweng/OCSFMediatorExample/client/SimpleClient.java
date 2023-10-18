@@ -8,6 +8,7 @@ public class SimpleClient extends AbstractClient {
 
 	private static SimpleClient client = null;
 	public static int ID;
+	public static boolean show=false;
 	public static String Type;
 	public static String cname;
 
@@ -35,7 +36,6 @@ public class SimpleClient extends AbstractClient {
 		EventBus.getDefault().post(new MessageEvent(message));
 		} else if (message.getMessage().equals("i will give you the courses")) {
 		EventBus.getDefault().post(new MessageEvent(message));
-
 		} else if (message.getMessage().equals("i will give you the courses2")) {
 		EventBus.getDefault().post(new MessageEvent(message));
 		} else if (message.getMessage().equals("i will give you the student grades 2")) {
@@ -45,7 +45,8 @@ public class SimpleClient extends AbstractClient {
 
 		}else if (message.getMessage().equals("exam is over done")) {
 		EventBus.getDefault().post(new MessageEvent(message));
-
+		}else if (message.getMessage().equals("extra time")) {
+			EventBus.getDefault().post(new MessageEvent(message));
 		}else if(message.getMessage().equals("i added the course")) {
 		EventBus.getDefault().post(new MessageEvent(message));
 		} else if(message.getMessage().equals("i will show questions")) {
@@ -106,11 +107,14 @@ public class SimpleClient extends AbstractClient {
 		else if(message.getMessage().equals("the grade is")) {
 		EventBus.getDefault().post(new MessageEvent(message));}
 		else if(message.getMessage().equals("test") && message.getToid()==ID) {
-		System.out.println(ID);
-		System.out.println("Test1!!!");
-		System.out.println(message.getToid());
-		EventBus.getDefault().post(new MessageEvent(message));
+			System.out.println(ID);
 
+			System.out.println("Test1!!!");
+			System.out.println(message.getToid());
+			EventBus.getDefault().post(new MessageEvent(message));
+		}
+		else if(message.getMessage().equals("wrong code or id")) {
+			EventBus.getDefault().post(new MessageEvent(message));
 		} else {
 		//EventBus.getDefault().post(new MessageEvent(message));
 		}

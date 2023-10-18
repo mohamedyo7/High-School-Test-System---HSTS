@@ -29,5 +29,11 @@
             <Font size="14.0" />
          </font>
       </Text>
+      <TextField fx:id="studenid" layoutX="42.0" layoutY="437.0" />
+      <Text fill="RED" layoutX="42.0" layoutY="428.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter your id">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

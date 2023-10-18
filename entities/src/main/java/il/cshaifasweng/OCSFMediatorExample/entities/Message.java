@@ -14,9 +14,18 @@ public class Message implements Serializable {
     double grade;
     int toid;
 
-
+    boolean show=false;
     double time;
     double eTime=0;
+    boolean is_finished;
+
+    public void setIs_finished(boolean is_finished) {
+        this.is_finished = is_finished;
+    }
+
+    public boolean isIs_finished() {
+        return is_finished;
+    }
 
     public double geteTime() {
         return eTime;
@@ -158,7 +167,13 @@ public class Message implements Serializable {
         this.courses_list_from_server_reg = courses_list_from_server_reg;
     }
 
+    public void setShow(boolean show) {
+        this.show = show;
+    }
 
+    public boolean isShow() {
+        return show;
+    }
 
 
     private String courseName;
