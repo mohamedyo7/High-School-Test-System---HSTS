@@ -31,6 +31,16 @@ public class Student implements Serializable {
     private String lastName;
     private String Password;
 
+    public String getOnline_state() {
+        return online_state;
+    }
+
+    public void setOnline_state(String online_state) {
+        this.online_state = online_state;
+    }
+
+    private String online_state="test";
+
     @OneToMany(mappedBy = "student")
     private List<CourseReg> coursesReg = new ArrayList<>();
 

@@ -63,8 +63,8 @@ public class MediatorPage {
         if (event.getMessage().getMessage().equals("i will give you the mediator data")) {
             int s = 0;
             if (mediator_curr.getItems().isEmpty()) {
-                mediator_curr.getItems().add(String.valueOf(event.getMessage().getId()));
-                mediator_curr.getItems().add(event.getMessage().getLogin_name());
+                mediator_curr.getItems().add(String.valueOf(SimpleClient.ID));
+                mediator_curr.getItems().add(SimpleClient.Type);
 
             }
         }
@@ -75,6 +75,10 @@ public class MediatorPage {
     void initialize() {
         int msgId = 0;
         EventBus.getDefault().register(this);
+        Message msg=new Message("log in");
+        msg.setId(SimpleClient.ID);
+        msg.setType(SimpleClient.Type);
+        sendMessage(msg);
         sendMessage("give me mediator data");
     }
 

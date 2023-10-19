@@ -67,6 +67,16 @@ public class Message implements Serializable {
     String test;
     String exam_id;
 
+    public String getGrade_reason() {
+        return grade_reason;
+    }
+
+    public void setGrade_reason(String grade_reason) {
+        this.grade_reason = grade_reason;
+    }
+
+    String grade_reason;
+
     public String getQues_note() {
         return ques_note;
     }

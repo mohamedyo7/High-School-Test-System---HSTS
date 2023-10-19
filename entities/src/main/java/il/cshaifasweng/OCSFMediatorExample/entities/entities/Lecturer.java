@@ -23,6 +23,16 @@ public class Lecturer implements Serializable {
 
     private int id;
 
+    public String getOnline_state() {
+        return online_state;
+    }
+
+    public void setOnline_state(String online_state) {
+        this.online_state = online_state;
+    }
+
+    private String online_state="test";
+
     private String firstName;
 
     private String lastName;

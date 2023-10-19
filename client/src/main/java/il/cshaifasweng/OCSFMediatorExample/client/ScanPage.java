@@ -30,6 +30,7 @@ public class ScanPage {
 
     @FXML
     private Label student_grade;
+     String grade_reason=null;
 
 public static String course_ID;
 
@@ -50,6 +51,13 @@ public static String course_ID;
     @FXML
     private Button change_grade_but;
     @FXML
+    private TextField grade_reason_textfield;
+    @FXML
+    private Label student_grade_label;
+
+    @FXML
+    private Label reson_grade;
+    @FXML
     void change_grade(ActionEvent event) throws IOException {
         Message msg = new Message("change the student grade");
         msg.setGrade(Double.parseDouble(grade_text.getText()));
@@ -57,11 +65,7 @@ public static String course_ID;
         msg.setCourse_id(Integer.parseInt(course_ID));
         msg.setStudentId(EditGrade.student_id_toaddnote);
         sendMessage(msg);
-        SimpleChatClient.setRoot("ScanPage");
-        Message msg2=new Message("give me exams scans");
-        msg2.setId(msg.getStudentId());
-        msg2.setCourseName(EditGrade.course_name);
-        sendMessage(msg2);
+
 
 
 
@@ -73,14 +77,20 @@ public static String course_ID;
     }
 
     @FXML
-    void Done_send_grade(ActionEvent event) {
+    void Done_send_grade(ActionEvent event) throws IOException {
         Message msg=new Message("finish editing");
         msg.setCourseName(EditGrade.course_name);
         msg.setStudentId(EditGrade.student_id_toaddnote);
         msg.setExam_id(exam_list.getSelectionModel().getSelectedItem());
         msg.setQues_name(Questions_exam_list.getSelectionModel().getSelectedItem());
         msg.setQues_note(Ques_notes.getText());
+        msg.setGrade_reason(grade_reason_textfield.getText());
         sendMessage(msg);
+        SimpleChatClient.setRoot("ScanPage");
+        Message msg2=new Message("give me exams scans");
+        msg2.setId(msg.getStudentId());
+        msg2.setCourseName(EditGrade.course_name);
+        sendMessage(msg2);
 
 
     }
@@ -274,6 +284,9 @@ public static String course_ID;
            Student_grade_Area.setVisible(false);
            change_grade_but.setVisible(false);
            grade_text.setVisible(false);
+           reson_grade.setVisible(false);
+           student_grade_label.setVisible(false);
+           grade_reason_textfield.setVisible(false);
 
         }
 

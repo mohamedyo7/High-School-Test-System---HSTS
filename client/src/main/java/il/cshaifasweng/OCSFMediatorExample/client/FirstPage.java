@@ -46,6 +46,12 @@ public class FirstPage {
     void initialize() {
 
 
+        Message msg=new Message("update state");
+        msg.setId(SimpleClient.ID);
+        msg.setType(SimpleClient.Type);
+        sendMessage(msg);
+
+
         //EventBus.getDefault().register(this);
 
        /* try {

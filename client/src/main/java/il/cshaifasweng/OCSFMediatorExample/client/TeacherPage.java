@@ -108,8 +108,9 @@ SimpleChatClient.setRoot("FirstPage");
         }
         int msgId=0;
         EventBus.getDefault().register(this);
-        Message msg=new Message("test it baby");
-        msg.setToid(7);
+        Message msg=new Message("log in");
+        msg.setId(SimpleClient.ID);
+        msg.setType(SimpleClient.Type);
         sendMessage(msg);
         sendMessage("give me teacher data");
 

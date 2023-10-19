@@ -54,6 +54,16 @@ public class ExamsScan  implements Serializable {
 
     private String answer;
 
+    public String getChange_grade_reason() {
+        return change_grade_reason;
+    }
+
+    public void setChange_grade_reason(String change_grade_reason) {
+        this.change_grade_reason = change_grade_reason;
+    }
+
+    private String change_grade_reason;
+
     // Pay attention to this one: name is a reserved keyword in MySQL.
     @Column(name = "Exam_Name")
     private String name;

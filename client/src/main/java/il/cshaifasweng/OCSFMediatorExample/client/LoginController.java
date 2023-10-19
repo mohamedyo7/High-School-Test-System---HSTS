@@ -130,7 +130,8 @@ public class LoginController {
                 List<Student> students_from_server = event.getMessage().getStudents_list_from_server();
 
                 for (int i = 0; i < students_from_server.size(); i++) {
-                    if (students_from_server.get(i).getStudent_id() == Integer.parseInt(ID_text.getText()) && students_from_server.get(i).getPassword().equals(pass)) {
+
+                    if (students_from_server.get(i).getStudent_id() == Integer.parseInt(ID_text.getText()) && students_from_server.get(i).getPassword().equals(pass)&&!students_from_server.get(i).getOnline_state().equals("online")) {
                         c = 1;
                         break;
 
@@ -148,6 +149,7 @@ public class LoginController {
                         // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
+
                     SimpleChatClient.setRoot("StudentController");
 /*                    Message msg = new Message("give me student data");
                     // Message msg = new Message("give me the students");
@@ -164,7 +166,7 @@ public class LoginController {
                 List<Lecturer> lecturers_from_server = event.getMessage().getLecturers_list_from_server();
 
                 for (int i = 0; i < lecturers_from_server.size(); i++) {
-                    if (lecturers_from_server.get(i).getId() == Integer.parseInt(ID_text.getText()) && lecturers_from_server.get(i).getPassword().equals(pass)) {
+                    if (lecturers_from_server.get(i).getId() == Integer.parseInt(ID_text.getText()) && lecturers_from_server.get(i).getPassword().equals(pass)&&!lecturers_from_server.get(i).getOnline_state().equals("online")) {
                         c = 1;
                         break;
 
@@ -197,7 +199,7 @@ public class LoginController {
                 List<Mediator> mediators_from_server = event.getMessage().getMediators_list_from_server();
 
                 for (int i = 0; i < mediators_from_server.size(); i++) {
-                    if (mediators_from_server.get(i).getId() == Integer.parseInt(ID_text.getText()) && mediators_from_server.get(i).getPassword().equals(pass)) {
+                    if (mediators_from_server.get(i).getId() == Integer.parseInt(ID_text.getText()) && mediators_from_server.get(i).getPassword().equals(pass)&&!mediators_from_server.get(i).getOnline_state().equals("online")) {
                         c = 1;
                         break;
 

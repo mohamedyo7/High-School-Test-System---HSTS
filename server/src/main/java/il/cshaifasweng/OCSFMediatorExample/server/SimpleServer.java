@@ -289,34 +289,265 @@ public class SimpleServer extends AbstractServer {
 				System.out.println("glb generate3");
 
 				for (int i = 0; i < exams.size(); i++) {
-					if (exams.get(i).getStudent_ID() == Integer.parseInt(student_id) && exams.get(i).getName().equals(course_name) && exams.get(i).getExam_ID() == Integer.parseInt(examId) && exams.get(i).getType().equals(ques_name)) {
+					if (exams.get(i).getStudent_ID() == Integer.parseInt(student_id) && exams.get(i).getName().equals(course_name) && exams.get(i).getExam_ID() == Integer.parseInt(examId)) {
 						System.out.println("glb generate4");
 						exam = exams.get(i);
 
+
+						if (exam == null) {
+							throw new Exception("No exam found with the specified ID.");
+						}
+
+						// Update the stat
+						System.out.println("glb generate5");
+						exam.setStudent_can_scan("true");
+						if(ques_note!=null)
+							exam.setChange_grade_reason(ques_note);
+						System.out.println("glb generate6");
+
+						// Save the updated exam object
+						session.update(exam);
+						System.out.println("glb generate7");
 					}
 				}
+						session.getTransaction().commit(); // Save everything..commit();
+						System.out.println("glb generate8");
 
 
-				if (exam == null) {
-					throw new Exception("No exam found with the specified ID.");
-				}
-
-				// Update the stat
-				System.out.println("glb generate5");
-				exam.setStudent_can_scan("true");
-				System.out.println("glb generate6");
-
-				// Save the updated exam object
-				session.update(exam);
-				System.out.println("glb generate7");
-				session.getTransaction().commit(); // Save everything..commit();
-				System.out.println("glb generate8");
 
 			} catch (Exception e) {
 				session.getTransaction().rollback();
 			} finally {
 				session.close();
 			}
+	}
+	public static void updateOnlinestate_student(int id,String type) throws Exception {
+
+		List<Student> students = getAllStudents();
+
+
+		try {
+			System.out.println("glb generate2");
+			Student std = null;
+
+			// Find the corresponding Exam entity
+
+
+			System.out.println("glb generate3");
+
+
+			for (int i = 0; i < students.size(); i++) {
+				if (students.get(i).getStudent_id() == id) {
+					System.out.println("glb generate4");
+					std = students.get(i);
+
+				}
+			}
+			if (std == null) {
+				throw new Exception("No exam found with the specified ID.");
+			}
+
+			// Update the stat
+			System.out.println("glb generate5");
+			std.setOnline_state("online");
+			System.out.println("glb generate6");
+
+			// Save the updated exam object
+			session.update(std);
+			System.out.println("glb generate7");
+			session.getTransaction().commit(); // Save everything..commit();
+			System.out.println("glb generate8");
+		} catch (Exception e) {
+			session.getTransaction().rollback();
+		} finally {
+			session.close();
+		}
+	}
+
+	public static void updateOnlinestate_lecturer(int id,String type) throws Exception {
+		List<Lecturer> lecturers = getAllLecturers();
+
+
+		try {
+			System.out.println("glb generate2");
+			Lecturer lec = null;
+			// Find the corresponding Exam entity
+
+
+			System.out.println("glb generate3");
+
+
+			for (int i = 0; i < lecturers.size(); i++) {
+				if (lecturers.get(i).getId() == id) {
+					System.out.println("glb generate4");
+					lec = lecturers.get(i);
+
+				}
+			}
+
+
+			if (lec == null) {
+				throw new Exception("No exam found with the specified ID.");
+			}
+
+			// Update the stat
+			System.out.println("glb generate5");
+			lec.setOnline_state("online");
+			System.out.println("glb generate6");
+
+			// Save the updated exam object
+			session.update(lec);
+			System.out.println("glb generate7");
+			session.getTransaction().commit(); // Save everything..commit();
+			System.out.println("glb generate8");
+		} catch (Exception e) {
+			session.getTransaction().rollback();
+		} finally {
+			session.close();
+		}
+	}
+
+
+
+
+	public static void updateOnlinestate_mediator(int id,String type) throws Exception {
+		List<Mediator>mediators=getAllMediator();
+
+		try{
+
+				Mediator med=null;
+
+				for (int i = 0; i < mediators.size(); i++) {
+					if (mediators.get(i).getId() == id) {
+						System.out.println("glb generate4");
+						med = mediators.get(i);
+
+					}
+				}
+
+
+				if (med == null) {
+					throw new Exception("No exam found with the specified ID.");
+				}
+
+				// Update the stat
+				System.out.println("glb generate5");
+				med.setOnline_state("online");
+				System.out.println("glb generate6");
+
+				// Save the updated exam object
+				session.update(med);
+				System.out.println("glb generate7");
+				session.getTransaction().commit(); // Save everything..commit();
+				System.out.println("glb generate8");
+
+
+
+		} catch (Exception e) {
+			session.getTransaction().rollback();
+		} finally {
+			session.close();
+		}
+	}
+	public static void updateOfflinestate(int id,String type) throws Exception {
+		List<Lecturer>lecturers=getAllLecturers();
+		List<Student>students=getAllStudents();
+		List<Mediator>mediators=getAllMediator();
+
+
+		try {
+			System.out.println("glb generate2");
+
+			// Find the corresponding Exam entity
+			Lecturer lec=null;
+			Student std=null;
+			Mediator med=null;
+
+			System.out.println("glb generate3");
+			if(type.equals("Student")) {
+
+				for (int i = 0; i < students.size(); i++) {
+					if (students.get(i).getStudent_id() == id) {
+						System.out.println("glb generate4");
+						std = students.get(i);
+
+					}
+				}
+
+
+				if (std == null) {
+					throw new Exception("No exam found with the specified ID.");
+				}
+
+				// Update the stat
+				System.out.println("glb generate5");
+				std.setOnline_state("offline");
+				System.out.println("glb generate6");
+
+				// Save the updated exam object
+				session.update(std);
+				System.out.println("glb generate7");
+				session.getTransaction().commit(); // Save everything..commit();
+				System.out.println("glb generate8");
+			}
+			if(type.equals("Teacher")) {
+
+				for (int i = 0; i < lecturers.size(); i++) {
+					if (lecturers.get(i).getId() == id) {
+						System.out.println("glb generate4");
+						lec = lecturers.get(i);
+
+					}
+				}
+
+
+				if (lec == null) {
+					throw new Exception("No exam found with the specified ID.");
+				}
+
+				// Update the stat
+				System.out.println("glb generate5");
+				lec.setOnline_state("offline");
+				System.out.println("glb generate6");
+
+				// Save the updated exam object
+				session.update(lec);
+				System.out.println("glb generate7");
+				session.getTransaction().commit(); // Save everything..commit();
+				System.out.println("glb generate8");
+			}
+			if(type.equals("Mediator")) {
+
+				for (int i = 0; i < mediators.size(); i++) {
+					if (mediators.get(i).getId() == id) {
+						System.out.println("glb generate4");
+						med = mediators.get(i);
+
+					}
+				}
+
+
+				if (med == null) {
+					throw new Exception("No exam found with the specified ID.");
+				}
+
+				// Update the stat
+				System.out.println("glb generate5");
+				med.setOnline_state("offline");
+				System.out.println("glb generate6");
+
+				// Save the updated exam object
+				session.update(med);
+				System.out.println("glb generate7");
+				session.getTransaction().commit(); // Save everything..commit();
+				System.out.println("glb generate8");
+			}
+
+		} catch (Exception e) {
+			session.getTransaction().rollback();
+		} finally {
+			session.close();
+		}
 	}
 
 
@@ -462,13 +693,33 @@ public class SimpleServer extends AbstractServer {
 
 					} else if (request.equals("give me student data")) {
 
+					System.out.println("gbl 1");
 						message.setMessage("i will give you the student data");
+					System.out.println("gbl 2");
 						List<CourseReg> s = getAllregCourses();
+					System.out.println("gbl 3");
 						message.setCourses_list_from_server_reg(s);
+					System.out.println("gbl 4");
 
 						client.sendToClient(message);
 						//sendToAllClients(message);
-					} else if (request.equals("give me exams scans")) {
+					}
+				else if (request.equals("log in")){
+					if(message.getType().equals("Student"))
+					updateOnlinestate_student(message.getId(),message.getType());
+					else if(message.getType().equals("Teacher"))
+						updateOnlinestate_lecturer(message.getId(),message.getType());
+					else if(message.getType().equals("Mediator"))
+						updateOnlinestate_mediator(message.getId(),message.getType());
+
+
+
+				}
+				else if (request.equals("update state")) {
+					updateOfflinestate(message.getId(),message.getType());
+				}
+
+					 else if (request.equals("give me exams scans")) {
 
 						message.setMessage("i will give you exams scans");
 						List<CourseReg> s = getAllregCourses();
@@ -500,7 +751,7 @@ public class SimpleServer extends AbstractServer {
 				else if (request.equals("finish editing")) {
 
 					message.setMessage("i finished editing");
-					updateExamscanStat2(message.getCourseName(), String.valueOf(message.getStudentId()), message.getExam_id(), message.getQues_name(), message.getQues_note());
+					updateExamscanStat2(message.getCourseName(), String.valueOf(message.getStudentId()), message.getExam_id(), message.getQues_name(), message.getGrade_reason());
 					client.sendToClient(message);
 
 				}
@@ -556,14 +807,14 @@ public class SimpleServer extends AbstractServer {
 						client.sendToClient(message);
 
 					} else if (request.equals("give me teacher data")) {
-
+						 //updateOnlinestate();
 						message.setMessage("i will give you the teacher data");
 						List<CourseReg> s = getAllregCourses();
 						message.setCourses_list_from_server_reg(s);
 						client.sendToClient(message);
 
 					} else if (request.equals("give me mediator data")) {
-
+					//updateOnlinestate();
 						message.setMessage("i will give you the mediator data");
 						List<CourseReg> s = getAllregCourses();
 						message.setCourses_list_from_server_reg(s);
@@ -670,7 +921,9 @@ public class SimpleServer extends AbstractServer {
 						sendToAllClients2(message);
 					} else if (request.equals("wrong code or id")) {
 						client.sendToClient(message);
-					} else {
+					}
+
+					 else {
 						sendToAllClients(message);
 					}
 

@@ -134,7 +134,7 @@ public class StudentController {
 
 
         else if (event.getMessage().getMessage().equals("i will give you the student data")) {
-            System.out.println("hi");
+            System.out.println(SimpleClient.ID+"hi");
             int s=0;
             if (STD_ID.getItems().isEmpty()) {
                 STD_ID.getItems().add(String.valueOf(SimpleClient.ID));
@@ -175,10 +175,14 @@ public class StudentController {
             e.printStackTrace();
         }
 
-        Message msg=new Message("test it baby");
-        msg.setToid(7);
+        Message msg=new Message("log in");
+        msg.setId(SimpleClient.ID);
+        msg.setType(SimpleClient.Type);
         sendMessage(msg);
-        sendMessage("give me student data");
+
+        System.out.println("stu"+SimpleClient.ID);
+         sendMessage("give me student data");
+
         //sendMessage("Show The Courses");
 
     }

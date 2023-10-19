@@ -8,28 +8,31 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.ScanPage">
+<AnchorPane prefHeight="565.0" prefWidth="874.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.ScanPage">
    <children>
       <ListView fx:id="exam_list" prefHeight="181.0" prefWidth="200.0" />
-      <Label layoutX="328.0" layoutY="181.0" text="Correct Answer" textFill="#ff0606" />
-      <Label layoutX="342.0" layoutY="92.0" text="Your Answer" textFill="#e80909" />
-      <Button layoutX="534.0" layoutY="13.0" mnemonicParsing="false" onAction="#Back_but" text="Back" />
-      <TextArea fx:id="Your_ans" layoutX="419.0" layoutY="78.0" prefHeight="45.0" prefWidth="178.0" />
-      <TextArea fx:id="Corr_Ans" layoutX="417.0" layoutY="162.0" prefHeight="45.0" prefWidth="178.0" />
+      <Label layoutX="538.0" layoutY="159.0" text="Correct Answer" textFill="#ff0606" />
+      <Label layoutX="545.0" layoutY="92.0" text="Your Answer" textFill="#e80909" />
+      <Button layoutX="811.0" layoutY="17.0" mnemonicParsing="false" onAction="#Back_but" text="Back" />
+      <TextArea fx:id="Your_ans" layoutX="644.0" layoutY="78.0" prefHeight="45.0" prefWidth="178.0" />
+      <TextArea fx:id="Corr_Ans" layoutX="644.0" layoutY="153.0" prefHeight="45.0" prefWidth="178.0" />
       <ListView fx:id="Questions_exam_list" layoutY="215.0" onMousePressed="#Questions_exam_list_press" prefHeight="192.0" prefWidth="200.0" />
       <Button layoutX="23.0" layoutY="186.0" mnemonicParsing="false" onAction="#Show_Ques" text="Show Questions" />
-      <Label fx:id="wrong_ans" layoutX="283.0" layoutY="127.0" text="Wrong Answer!!" textFill="#e33107">
+      <Label fx:id="wrong_ans" layoutX="648.0" layoutY="228.0" text="Wrong Answer!!" textFill="#e33107">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Button fx:id="done_but" layoutX="521.0" layoutY="357.0" mnemonicParsing="false" onAction="#Done_send_grade" text="Done" />
-      <TextField fx:id="Ques_notes" layoutX="243.0" layoutY="228.0" prefHeight="76.0" prefWidth="266.0" />
-      <TextArea fx:id="Std_notes" layoutX="200.0" layoutY="228.0" prefHeight="120.0" prefWidth="378.0" />
-      <Button fx:id="insert_note_but" layoutX="302.0" layoutY="357.0" mnemonicParsing="false" onAction="#insert_note" text="Insert Note" />
-      <Label fx:id="student_grade" layoutX="205.0" layoutY="12.0" text="Student Grade" textFill="#fc0505" />
-      <TextArea fx:id="Student_grade_Area" layoutX="287.0" layoutY="2.0" prefHeight="17.0" prefWidth="41.0" />
-      <Button fx:id="change_grade_but" layoutX="205.0" layoutY="53.0" mnemonicParsing="false" onAction="#change_grade" text="Change Grade" />
-      <TextField fx:id="grade_text" layoutX="301.0" layoutY="53.0" prefHeight="25.0" prefWidth="58.0" />
+      <Button fx:id="done_but" layoutX="522.0" layoutY="433.0" mnemonicParsing="false" onAction="#Done_send_grade" text="Done" />
+      <TextField fx:id="Ques_notes" layoutX="300.0" layoutY="311.0" prefHeight="76.0" prefWidth="266.0" />
+      <TextArea fx:id="Std_notes" layoutX="244.0" layoutY="293.0" prefHeight="120.0" prefWidth="378.0" />
+      <Button fx:id="insert_note_but" layoutX="290.0" layoutY="433.0" mnemonicParsing="false" onAction="#insert_note" text="Insert Note" />
+      <Label fx:id="student_grade" layoutX="355.0" layoutY="14.0" text="Student Grade" textFill="#fc0505" />
+      <TextArea fx:id="Student_grade_Area" layoutX="455.0" layoutY="3.0" prefHeight="17.0" prefWidth="41.0" />
+      <Button fx:id="change_grade_but" layoutX="282.0" layoutY="216.0" mnemonicParsing="false" onAction="#change_grade" text="Change Grade" />
+      <TextField fx:id="grade_text" layoutX="318.0" layoutY="53.0" prefHeight="25.0" prefWidth="58.0" />
+      <Label fx:id="reson_grade" layoutX="205.0" layoutY="92.0" text="Reason To Change Grade :" textFill="#f50808" />
+      <Label fx:id="student_grade_label" layoutX="205.0" layoutY="57.0" text="Enter A New Grade" textFill="#f50505" />
+      <TextField fx:id="grade_reason_textfield" layoutX="217.0" layoutY="115.0" prefHeight="76.0" prefWidth="222.0" />
    </children>
 </AnchorPane>
