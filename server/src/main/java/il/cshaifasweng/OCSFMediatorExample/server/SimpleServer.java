@@ -614,6 +614,7 @@ public class SimpleServer extends AbstractServer {
 						client.sendToClient(message);
 				} else if (request.equals("extraTimeRequest")) {
 						updateExam(message.getExam());
+						message.setMessage("extra time request");
 					} else if (request.equals("extraTime")) {
 						message.setMessage("extra time");
 						System.out.println("etime is " + message.geteTime());

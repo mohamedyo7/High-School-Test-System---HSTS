@@ -6,10 +6,9 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.ExtraTimeRequests">
    <children>
-      <TableView fx:id="requestsTable" layoutX="121.0" layoutY="79.0" prefHeight="200.0" prefWidth="358.0">
+      <TableView fx:id="requestsTable" layoutX="121.0" layoutY="79.0" onMouseClicked="#tablemouseclick" prefHeight="200.0" prefWidth="358.0">
         <columns>
           <TableColumn fx:id="teacherName" prefWidth="102.0" text="Teacher name" />
             <TableColumn fx:id="teacherID" prefWidth="75.0" text="Teacher ID" />

@@ -32,7 +32,7 @@ public class App {
         configuration.addAnnotatedClass(Student.class);
         configuration.addAnnotatedClass(Questions.class);
         configuration.addAnnotatedClass(ExamsScan.class);
-
+        configuration.addAnnotatedClass(ExamInfo.class);
         configuration.addAnnotatedClass(CourseReg.class);
         configuration.addAnnotatedClass(Mediator.class);
 
@@ -217,7 +217,7 @@ public class App {
             exam.setRequest(updatedExam.isRequest());
             exam.setTeacherID(updatedExam.getTeacherID());
             exam.setTeacherName(updatedExam.getTeacherName());
-
+            exam.setReason(updatedExam.getReason());
             session.update(exam);
             tx.commit();
         } catch (Exception e) {

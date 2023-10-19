@@ -19,6 +19,15 @@ public class Message implements Serializable {
     double eTime=0;
     boolean is_finished;
     boolean eTimeRequest;
+    ExamInfo examInfo;
+
+    public ExamInfo getExamInfo() {
+        return examInfo;
+    }
+
+    public void setExamInfo(ExamInfo examInfo) {
+        this.examInfo = examInfo;
+    }
 
     public boolean iseTimeRequest() {
         return eTimeRequest;

@@ -25,9 +25,10 @@ public class ExamsFinal {
     @FXML
     private TextField extraTime;
     @FXML
-    private TextField eCode;
+    private TextField reason;
+    double etime;
     private double time;
-
+    Exams exam;
     @FXML
     private TextField timeT;
     @FXML
@@ -45,10 +46,10 @@ public class ExamsFinal {
     private ListView<String> coursesList;
     @FXML
     void insetTime(ActionEvent event) {
-        time = Double.parseDouble(extraTime.getText());
-        System.out.println(extraTime.getText());
-        msg.seteTime(time);
-        Exams exam = examsTable.getSelectionModel().getSelectedItem();
+        etime = Double.parseDouble(extraTime.getText());
+        System.out.println("etimeee " + etime);
+        exam = examsTable.getSelectionModel().getSelectedItem();
+        exam.setReason(reason.getText());
         exam.setRequest(true);
         msg.setExam(exam);
         msg.setMessage("extraTimeRequest");
@@ -91,6 +92,7 @@ public class ExamsFinal {
         }
 
             //examsTable.getSelectionModel().getSelectedItem().setStat(1);
+        exam=examsTable.getSelectionModel().getSelectedItem();
             msg.setExam(examsTable.getSelectionModel().getSelectedItem());
             msg.setCourseName(String.valueOf(examsTable.getSelectionModel().getSelectedItem()));
             msg.setCourse_id(Integer.parseInt(courseid));
@@ -226,6 +228,22 @@ public class ExamsFinal {
 
             }
             examsTable.refresh();
+        }else if (event.getMessage().getMessage().equals("extra time accepted")) {
+            System.out.println(event.getMessage().getExam().getId());
+            System.out.println(exam.getId());
+            if(event.getMessage().getExam().getId()==exam.getId()) {
+                System.out.println(extraTime.getText());
+                System.out.println("etime 2 is  " + etime);
+                msg.seteTime(etime);
+                courseid = coursesList.getSelectionModel().getSelectedItem();
+                Exams examID = examsTable.getSelectionModel().getSelectedItem();
+                msg.setExam(examID);
+                msg.setMessage("extraTime");
+                System.out.println("extra time");
+                sendMessage(msg);
+            }
+            else
+                System.out.println("no extra time");
         }
         }
 

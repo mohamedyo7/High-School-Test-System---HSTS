@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-
+import javafx.scene.input.MouseEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.Exams;
 import javafx.event.ActionEvent;
@@ -41,10 +41,29 @@ public class ExtraTimeRequests {
 
     @FXML
     private TableColumn<Exams, String > teacherName;
-
+    @FXML
+    void tablemouseclick(MouseEvent event) {
+        reason.setText(requestsTable.getSelectionModel().getSelectedItem().getReason());
+    }
     @FXML
     void acceptRequest(ActionEvent event) {
-
+        Exams exam = requestsTable.getSelectionModel().getSelectedItem();
+        Message msg = new Message("extra time accepted");
+        msg.setExam(exam);
+        //requestsTable.getItems().remove(exam);
+        sendMessage(msg);
+        exam.setRequest(false);
+        exam.setReason(" ");
+        msg.setExam(exam);
+        msg.setMessage("update exam");
+        sendMessage(msg);
+        for(int i=0 ; i< requestsTable.getItems().size();i++){
+            if (requestsTable.getItems().get(i).getId() == exam.getId()) {
+                requestsTable.getItems().remove(i);
+                reason.clear();
+                break;
+            }
+        }
     }
 
     @FXML
@@ -67,7 +86,8 @@ public class ExtraTimeRequests {
            }
            requestsTable.refresh();
        }
-
+        if(event.getMessage().getMessage().equals("i will show mediator requests")) {
+        }
     }
     @FXML
     void ignoreReuest(ActionEvent event) {

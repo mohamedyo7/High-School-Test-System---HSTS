@@ -132,6 +132,8 @@ public class SimpleClient extends AbstractClient {
 		}
 		else if(message.getMessage().equals("i will show mediator requests")) {
 			EventBus.getDefault().post(new MessageEvent(message));
+		}else if(message.getMessage().equals("extra time accepted" )) {
+			EventBus.getDefault().post(new MessageEvent(message));
 		}else {
 		//EventBus.getDefault().post(new MessageEvent(message));
 		}

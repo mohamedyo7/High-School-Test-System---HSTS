@@ -18,6 +18,15 @@ public class Exams implements Serializable {
     private boolean stat ;
     private String teacherID;
     private String teacherName;
+private String reason;
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
 
     public String getTeacherID() {
         return teacherID;

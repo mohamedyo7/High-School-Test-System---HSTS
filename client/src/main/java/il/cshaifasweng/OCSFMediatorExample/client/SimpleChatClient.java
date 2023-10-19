@@ -55,7 +55,7 @@ public class SimpleChatClient extends Application {
 
     @Subscribe
     public void onMessageEvent(MessageEvent message) {
-        if(!SimpleClient.show) {
+        if(SimpleClient.show) {
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
             Platform.runLater(() -> {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION,
