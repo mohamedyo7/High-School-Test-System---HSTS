@@ -4,6 +4,7 @@ import com.google.protobuf.StringValue;
 import il.cshaifasweng.OCSFMediatorExample.entities.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.CourseReg;
+import il.cshaifasweng.OCSFMediatorExample.entities.entities.ExamInfo;
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.Exams;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,6 +22,7 @@ import java.util.ResourceBundle;
 
 public class examsFinalstu {
     Message msg = new Message("");
+    ExamInfo examInfo=new ExamInfo();
     public static String courseid;
     @FXML
     private TextField eCode;
@@ -67,16 +69,24 @@ public class examsFinalstu {
             msg.setMessage("start exam");
             SimpleChatClient.setRoot("examInside");
             msg.setLogin_name("student");
-
+            System.out.println("1");
+            examInfo.setExam_id(examsTable.getSelectionModel().getSelectedItem().getId());
+            System.out.println("2");
+            examInfo.setCourseid(examsTable.getSelectionModel().getSelectedItem().getCourse_name());
+            System.out.println("3");
+            examInfo.setStudentid(SimpleClient.ID);
+            System.out.println("4");
+            msg.setExamInfo(examInfo);
+            System.out.println("5");
             //examsTable.getSelectionModel().getSelectedItem().setStat(1);
             msg.setExam(examsTable.getSelectionModel().getSelectedItem());
             msg.setCourseName(String.valueOf(examsTable.getSelectionModel().getSelectedItem()));
             msg.setCourse_id(Integer.parseInt(courseid));
             sendMessage(msg);
 
-            } else
+            } else{
                 System.out.println("Wrong code or id");
-                sendMessage("wrong code or id");
+                sendMessage("wrong code or id");}
         }
 
     @FXML

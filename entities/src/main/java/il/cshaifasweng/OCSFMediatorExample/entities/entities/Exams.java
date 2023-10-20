@@ -16,6 +16,56 @@ public class Exams implements Serializable {
     @Column(name = "ques_number")
     private int ques_number;
     private boolean stat ;
+    private String teacherID;
+    private String teacherName;
+private String reason;
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
+
+    public String getTeacherID() {
+        return teacherID;
+    }
+
+    public void setTeacherID(String teacherID) {
+        this.teacherID = teacherID;
+    }
+
+    public String getTeacherName() {
+        return teacherName;
+    }
+
+    public void setTeacherName(String teacherName) {
+        this.teacherName = teacherName;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    private boolean request;
+
+    public boolean isStat() {
+        return stat;
+    }
+
+    public boolean isRequest() {
+        return request;
+    }
+
+    public void setRequest(boolean request) {
+        this.request = request;
+    }
+
     private double time;
     private String code;
 

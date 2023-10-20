@@ -36,6 +36,10 @@ public class MediatorPage {
 
     }
     @FXML
+    void extraTimeRequests(ActionEvent event) throws IOException {
+        SimpleChatClient.setRoot("extraTimeRequests");
+    }
+    @FXML
     void Log_out(ActionEvent event) throws IOException {
     SimpleChatClient.setRoot("FirstPage");
     }

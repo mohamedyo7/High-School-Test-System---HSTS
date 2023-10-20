@@ -1,5 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
 
+import com.google.protobuf.StringValue;
 import il.cshaifasweng.OCSFMediatorExample.entities.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.CourseReg;
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.Exams;
@@ -51,6 +52,9 @@ public class ExamsPage {
     void DoneB(ActionEvent event) throws IOException {
 
         Message msg = new Message("update exam");
+        exam.setTeacherName(SimpleClient.name);
+        exam.setTeacherID(String.valueOf(SimpleClient.ID));
+        System.out.println("lecturer name  "+ SimpleClient.name);
         exam.setQues_number(qnum);
         exam.setCode(eCode.getText());
         msg.setExam(exam);

@@ -1,6 +1,7 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.Message;
+import il.cshaifasweng.OCSFMediatorExample.entities.entities.ExamInfo;
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.Exams;
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.Questions;
 import javafx.animation.PauseTransition;
@@ -14,6 +15,7 @@ import org.greenrobot.eventbus.Subscribe;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.animation.PauseTransition;
@@ -31,6 +33,7 @@ public class ExamInside {
     private boolean conditionMet;
     private double remainingTime = 0;
     String cAns;
+    ExamInfo examInfo;
     int quenum;
     String courseid;
     List<Questions> ques=new ArrayList<>();
@@ -158,7 +161,10 @@ public class ExamInside {
             conditionMet=true;
             msg.setMessage("exam is over");
             //msg.setId(exam_id);
+            examInfo.setNumberOfCompletedStudents(1);
+            msg.setExamInfo(examInfo);
             sendMessage(msg);
+
             //System.out.println("mark is " + mark);
             //msg.setMessage("the grade is");
             //msg.setGrade(mark);
@@ -212,6 +218,7 @@ public class ExamInside {
             }
 
         } else if (event.getMessage().getMessage().equals("i will start exam")) {
+            examInfo = event.getMessage().getExamInfo();
             fques.clear();
             i = 1;
             eTime=0;
@@ -226,7 +233,12 @@ public class ExamInside {
             System.out.println("time"+ time);
             msg.setStudentId(SimpleClient.ID);
             msg.setId(exam_id);
-
+            System.out.println("started exam  " + examInfo.getExam_id() +" " + examInfo.getCourseid() + " "+ examInfo
+                    .getStudentid());
+            examInfo.setActualDuration(time);
+            examInfo.setExecutionDateTime(new Date());
+            examInfo.setNumberOfStartedStudents(1);
+            msg.setExamInfo(examInfo);
             delay = new PauseTransition(Duration.millis(1000 * 60 * time));
             conditionMet = false;
             delay.setOnFinished(e -> {
@@ -238,6 +250,8 @@ public class ExamInside {
                         System.out.println("etime");
                         System.out.println(eTime);
                         System.out.println("11");
+                        examInfo.setNumberOfFailedStudents(1);
+                        msg.setExamInfo(examInfo);
                         msg.setMessage("exam is over");
                         msg.setId(exam_id);
                         sendMessage(msg);
@@ -276,8 +290,12 @@ public class ExamInside {
 
         }
         else if (event.getMessage().getMessage().equals("extra time")){
-            eTime=event.getMessage().geteTime();
-            System.out.println("etime" + eTime);
+            if(exam_id == event.getMessage().getExam().getId()) {
+                eTime = event.getMessage().geteTime();
+                System.out.println("etime" + eTime);
+            }
+            else
+                System.out.println("no eT");
         }
 
     }

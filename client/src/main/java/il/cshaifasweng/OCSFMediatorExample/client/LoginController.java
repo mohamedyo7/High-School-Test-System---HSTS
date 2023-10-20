@@ -166,7 +166,8 @@ public class LoginController {
                 List<Lecturer> lecturers_from_server = event.getMessage().getLecturers_list_from_server();
 
                 for (int i = 0; i < lecturers_from_server.size(); i++) {
-                    if (lecturers_from_server.get(i).getId() == Integer.parseInt(ID_text.getText()) && lecturers_from_server.get(i).getPassword().equals(pass)&&!lecturers_from_server.get(i).getOnline_state().equals("online")) {
+                    if (lecturers_from_server.get(i).getId() == Integer.parseInt(ID_text.getText()) && lecturers_from_server.get(i).getPassword().equals(pass)) {
+                        SimpleClient.name=lecturers_from_server.get(i).getFirstName();
                         c = 1;
                         break;
 
