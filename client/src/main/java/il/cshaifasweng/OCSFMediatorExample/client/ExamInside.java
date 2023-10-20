@@ -61,6 +61,18 @@ public class ExamInside {
     private CheckBox ans4;
 
     @FXML
+    private Text answer1;
+
+    @FXML
+    private Text answer2;
+
+    @FXML
+    private Text answer3;
+
+    @FXML
+    private Text answer4;
+
+    @FXML
     private Text question;
     Exams exam = new Exams();
     @FXML
@@ -106,28 +118,28 @@ public class ExamInside {
     void nextb(ActionEvent event) throws IOException {
         if(ans1.isSelected()){
             std_ans=ans1.getText();
-            if(ans1.getText().equals(cAns)){
+            if(answer1.getText().equals(cAns)){
                 mark+= ((double) 100 /quenum);
             }
             ans1.setSelected(false);
         }
         if(ans2.isSelected()){
             std_ans=ans2.getText();
-            if(ans2.getText().equals(cAns)){
+            if(answer2.getText().equals(cAns)){
                 mark+= ((double) 100 /quenum);
             }
             ans2.setSelected(false);
         }
         if(ans3.isSelected()){
             std_ans=ans3.getText();
-            if(ans3.getText().equals(cAns)){
+            if(answer3.getText().equals(cAns)){
                 mark+= ((double) 100 /quenum);
             }
             ans3.setSelected(false);
         }
         if(ans4.isSelected()){
             std_ans=ans4.getText();
-            if(ans4.getText().equals(cAns)){
+            if(answer4.getText().equals(cAns)){
                 mark+= ((double) 100 /quenum);
             }
             ans4.setSelected(false);
@@ -141,10 +153,10 @@ public class ExamInside {
         sendMessage(msg1);
         if(i<fques.size()){
             question.setText(fques.get(i).getQuestion());
-            ans1.setText(fques.get(i).getAns1());
-            ans2.setText(fques.get(i).getAns2());
-            ans3.setText(fques.get(i).getAns3());
-            ans4.setText(fques.get(i).getAns4());
+            answer1.setText(fques.get(i).getAns1());
+            answer2.setText(fques.get(i).getAns2());
+            answer3.setText(fques.get(i).getAns3());
+            answer4.setText(fques.get(i).getAns4());
             cAns=fques.get(i).getCorrect_ans();
             i++;
         }
@@ -187,10 +199,10 @@ public class ExamInside {
                 question.setText(fques.get(i).getQuestion());
                 System.out.println("ques is "+fques.get(i).getQuestion());
                 if(!fques.get(i).getQues_id().equals("empty")) {
-                    ans1.setText(fques.get(i).getAns1());
-                    ans2.setText(fques.get(i).getAns2());
-                    ans3.setText(fques.get(i).getAns3());
-                    ans4.setText(fques.get(i).getAns4());
+                    answer1.setText(fques.get(i).getAns1());
+                    answer2.setText(fques.get(i).getAns2());
+                    answer3.setText(fques.get(i).getAns3());
+                    answer4.setText(fques.get(i).getAns4());
                     cAns = fques.get(i).getCorrect_ans();
                 }
                     i++;
