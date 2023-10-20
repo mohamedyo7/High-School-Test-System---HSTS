@@ -211,6 +211,17 @@ public class Message implements Serializable {
     }
     private List<Exams> exams_list_from_server;
 
+    public List<ExamInfo> getExamsinfo_list_from_server() {
+        return examsinfo_list_from_server;
+    }
+
+
+    public void setExamsinfo_list_from_server(List<ExamInfo> examsinfo_list_from_server) {
+        this.examsinfo_list_from_server = examsinfo_list_from_server;
+    }
+
+    private List<ExamInfo>examsinfo_list_from_server;
+
     public List<Exams> getExams_list_from_server() {
         return exams_list_from_server;
     }

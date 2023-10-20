@@ -1,23 +1,17 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
 
-import com.google.protobuf.StringValue;
 import il.cshaifasweng.OCSFMediatorExample.entities.Message;
-import il.cshaifasweng.OCSFMediatorExample.entities.entities.Course;
-import il.cshaifasweng.OCSFMediatorExample.entities.entities.CourseReg;
-import il.cshaifasweng.OCSFMediatorExample.entities.entities.ExamInfo;
-import il.cshaifasweng.OCSFMediatorExample.entities.entities.Exams;
+import il.cshaifasweng.OCSFMediatorExample.entities.entities.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -96,6 +90,7 @@ public class examsFinalstu {
                 List<Exams>Exams_from_server=event.getMessage().getExams_list_from_server();
                 List<Course>courses=event.getMessage().getCourses_list_from_server();
 
+
                 for (int i = 0; i < Courses_from_server_reg.size(); i++) {
                     // Set the data to the table
                     if (Courses_from_server_reg.get(i).getStudent() != null)
@@ -113,12 +108,15 @@ public class examsFinalstu {
                             }
 
                         }
+
                 }
+
                 coursesList.refresh();
 
         } else if (event.getMessage().getMessage().equals("i will give you the exams")) {
             examsTable.getItems().clear();
             List<Exams> exams = event.getMessage().getExams_list_from_server();
+            List<ExamsScan>examScanList=event.getMessage().getExamsScans_list_from_server();
 
 
             examsTablemini.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -131,6 +129,17 @@ public class examsFinalstu {
                     }
 
 
+            }
+            for(int i=0;i<examScanList.size();i++) {
+                if (examScanList.get(i).getStudent_ID() == SimpleClient.ID) {
+                    if (coursesList.getSelectionModel().getSelectedItem().equals(examScanList.get(i).getName())){
+                        for(int j=0;j<examsTable.getItems().size();j++){
+                            if(examsTable.getItems().get(j).getId()==examScanList.get(i).getExam_ID()&&examScanList.get(i).getStudent_state_tostart().equals("false"))
+                                examsTable.getItems().remove(j);
+                        }
+
+                    }
+                }
             }
             examsTable.refresh();
         }

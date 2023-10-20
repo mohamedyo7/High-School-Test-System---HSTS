@@ -1,6 +1,5 @@
 package il.cshaifasweng.OCSFMediatorExample.server;
 
-import il.cshaifasweng.OCSFMediatorExample.client.ExtraTimeRequests;
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import il.cshaifasweng.OCSFMediatorExample.entities.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.*;
@@ -274,6 +273,52 @@ public class SimpleServer extends AbstractServer {
 			// Update the stat
 			System.out.println("glb generate5");
 			exam.setState(ques_note);
+			System.out.println("glb generate6");
+
+			// Save the updated exam object
+			session.update(exam);
+			System.out.println("glb generate7");
+			session.getTransaction().commit(); // Save everything..commit();
+			System.out.println("glb generate8");
+
+		} catch (Exception e) {
+			session.getTransaction().rollback();
+		} finally {
+			session.close();
+		}
+	}
+	public static void updateExamscanStat_studentstate(String course_name, String student_id, String examId) throws Exception {
+		System.out.println("glb generate0");
+		List<ExamsScan> exams = getAllexamsscans();
+		System.out.println("glb generate00");
+	/*	if(exams.size()==0) {
+			System.out.println("glb generate1");
+			exit();
+		}*/
+
+		try {
+			System.out.println("glb generate2");
+
+			// Find the corresponding Exam entity
+			ExamsScan exam = null;
+			System.out.println("glb generate3");
+
+			for (int i = 0; i < exams.size(); i++) {
+				if (exams.get(i).getStudent_ID() == Integer.parseInt(student_id) && exams.get(i).getName().equals(course_name) && exams.get(i).getExam_ID() == Integer.parseInt(examId)) {
+					System.out.println("glb generate4");
+					exam = exams.get(i);
+
+				}
+			}
+
+
+			if (exam == null) {
+				throw new Exception("No exam found with the specified ID.");
+			}
+
+			// Update the stat
+			System.out.println("glb generate5");
+			exam.setStudent_state_tostart("true");
 			System.out.println("glb generate6");
 
 			// Save the updated exam object
@@ -602,6 +647,7 @@ public class SimpleServer extends AbstractServer {
 					message.setMediators_list_from_server(getAllMediator());
 					client.sendToClient(message);
 
+
 				} else if (request.equals("check id exist")) {
 
 					message.setMessage("i will check id exist");
@@ -742,7 +788,27 @@ public class SimpleServer extends AbstractServer {
 
 						client.sendToClient(message);
 						//sendToAllClients(message);
-					} else if (request.equals("add note")) {
+					}
+				else if (request.equals("give me teacher exams")) {
+
+					message.setMessage("i will give you teacher exams");
+					List<CourseReg> s = getAllregCourses();
+					message.setCourses_list_from_server_reg(s);
+					List<Questions> questions = getAllQuestions();
+					List<ExamsScan> examsScans = getAllexamsscans();
+					List<Exams> exams = getAllExams();
+					message.setQuestions_list_from_server(questions);
+					message.setExamsScans_list_from_server(examsScans);
+					message.setExams_list_from_server(exams);
+					message.setGrades_list_from_server(getAllgrades());
+					message.setCourses_list_from_server(getAllCourses());
+
+					client.sendToClient(message);
+					//sendToAllClients(message);
+				}
+
+
+					 else if (request.equals("add note")) {
 
 						message.setMessage("i will add note");
 						updateExamscanStat(message.getCourseName(), String.valueOf(message.getStudentId()), message.getExam_id(), message.getQues_name(), message.getQues_note());
@@ -846,9 +912,19 @@ public class SimpleServer extends AbstractServer {
 						message.setGrades_list_from_server(grades);
 						message.setLecturers_list_from_server(lec);
 						message.setCourses_list_from_server_reg(s);
+						message.setExamInfos(getAllExamInfo());
+						message.setExamsScans_list_from_server(getAllexamsscans());
 						client.sendToClient(message);
 
-					} else if (request.equals("update exam")) {
+					}
+				else if (request.equals("give me exams info")){
+					message.setMessage("i will give you exams info");
+					message.setExamInfos(getAllExamInfo());
+					client.sendToClient(message);
+
+				}
+
+					 else if (request.equals("update exam")) {
 
 						Exams exams = message.getExam();
 						updateExam(exams);

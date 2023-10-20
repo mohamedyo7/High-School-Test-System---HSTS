@@ -26,6 +26,16 @@ public class TeacherPage {
     void ExamsB(ActionEvent event) throws IOException {
         SimpleChatClient.setRoot("TeacherEamsController");
     }
+    @FXML
+    void exams_scans_but(ActionEvent event) throws IOException {
+        SimpleChatClient.setRoot("ExamsScan");
+        Message msg=new Message("give me teacher stats");
+        if(!Techer_ID.getItems().get(0).isEmpty())
+            msg.setId(Integer.parseInt(Techer_ID.getItems().get(0)));
+        msg.setLogin_name("Teacher");
+        sendMessage(msg);
+    }
+
 
     @FXML
     void GradesB(ActionEvent event) throws IOException {
@@ -114,6 +124,7 @@ SimpleChatClient.setRoot("FirstPage");
             }
         }
     }
+
 
     @FXML
     void initialize() {

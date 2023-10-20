@@ -24,6 +24,16 @@ public class ExamsScan  implements Serializable {
 
     private String type;
 
+    public String getStudent_state_tostart() {
+        return Student_state_tostart;
+    }
+
+    public void setStudent_state_tostart(String student_state_tostart) {
+        Student_state_tostart = student_state_tostart;
+    }
+
+    private String Student_state_tostart;
+
     public String getStudent_can_scan() {
         return student_can_scan;
     }
@@ -110,6 +120,7 @@ public class ExamsScan  implements Serializable {
         setAnswer(ans);
         setState(state);
         setStudent_can_scan("false");
+        setStudent_state_tostart("false");
 
 
 
@@ -123,6 +134,7 @@ public class ExamsScan  implements Serializable {
         this.answer=exam.answer;
         this.state=exam.state;
         this.student_can_scan="false";
+        this.Student_state_tostart="false";
     }
 
     public int getId() {
