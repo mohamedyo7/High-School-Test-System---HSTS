@@ -101,7 +101,6 @@ public class StudentController {
         }
          else if (event.getMessage().getMessage().equals("i will give you the student grades")) {
 
-           // Grade_Text.getItems().clear();
             grade_show.clear();
 
 
@@ -115,33 +114,18 @@ public class StudentController {
                 if(grades_list_from_server1.get(i).getStudent().getStudent_id()==event.getMessage().getId()) {
                     if (grades_list_from_server1.get(i).getCourseName().equals(Student_Courses_Table.getSelectionModel().getSelectedItem())) {
                        s= (grades_list_from_server1.get(i).getGrade());
-                        //Grade_Text.getItems().add(String.valueOf(s));
-                        //Grade_Text.refresh();
                         grade_show.setText((s));
 
-
-                        //break;
                     }
 
                 }
             }
-           // Grade_Text.refresh();
-            //
-            //grade_show.refresh();
-            //Student_Courses_Table.refresh();
         }
-
-
-
         else if (event.getMessage().getMessage().equals("i will give you the student data")) {
-            System.out.println("hi");
             int s=0;
             if (STD_ID.getItems().isEmpty()) {
                 STD_ID.getItems().add(String.valueOf(SimpleClient.ID));
-
-
             }
-
                 Student_Courses_Table.getItems().clear();
                 List<CourseReg> Courses_from_server_reg = event.getMessage().getCourses_list_from_server_reg();
 
@@ -149,10 +133,7 @@ public class StudentController {
                     // Set the data to the table
                     if(Courses_from_server_reg.get(i).getStudent()!=null)
                     if(Courses_from_server_reg.get(i).getStudent().getStudent_id()==SimpleClient.ID){
-
-
                         Student_Courses_Table.getItems().add(Courses_from_server_reg.get(i).getName());
-                        System.out.println(Courses_from_server_reg.get(i).getName());
                     }
                 }
                 Student_Courses_Table.refresh();

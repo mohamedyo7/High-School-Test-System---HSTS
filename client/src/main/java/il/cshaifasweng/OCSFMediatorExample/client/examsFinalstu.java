@@ -72,7 +72,6 @@ public class examsFinalstu {
             msg.setCourse_id(Integer.parseInt(courseid));
             SimpleChatClient.setRoot("examInside");
             sendMessage(msg);
-            System.out.println("msgg ??");
 
             } else{
                 System.out.println("Wrong code or id");

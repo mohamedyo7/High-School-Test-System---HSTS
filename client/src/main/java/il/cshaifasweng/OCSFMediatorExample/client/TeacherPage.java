@@ -100,19 +100,7 @@ SimpleChatClient.setRoot("FirstPage");
 
             }
         }
-        else if (event.getMessage().getMessage().equals("i will give you exams info")) {
-            List<ExamInfo> lst = event.getMessage().getExamInfos();
-            for (ExamInfo examInfo : lst) {
-                System.out.println("exam info " + examInfo.getExam_id());
-                System.out.println("exam info " + examInfo.getCourseid());
-                System.out.println("exam info " + examInfo.getStudentid());
-                System.out.println("exam info " + examInfo.getActualDuration());
-                System.out.println("exam info " + examInfo.getExecutionDateTime());
-                System.out.println("exam info " + examInfo.getNumberOfCompletedStudents());
-                System.out.println("exam info " + examInfo.getNumberOfFailedStudents());
-                System.out.println("exam info " + examInfo.getNumberOfStartedStudents());
-            }
-        }
+
     }
 
     @FXML

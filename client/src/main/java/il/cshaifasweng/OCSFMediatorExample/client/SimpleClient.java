@@ -23,7 +23,6 @@ public class SimpleClient extends AbstractClient {
 		Message message = (Message) msg;
 
 		if (message.getMessage().equals("client added successfully")) {
-		System.out.println("client2"+SimpleChatClient.client_id);
 		} else if (message.getMessage().equals("i will give you the students")) {
 		EventBus.getDefault().post(new MessageEvent(message));
 		} else if (message.getMessage().equals("i will give you the students2")) {
@@ -67,20 +66,16 @@ public class SimpleClient extends AbstractClient {
 		EventBus.getDefault().post(new MessageEvent(message));
 		} else if(message.getMessage().equals("I Saved The Student Details")){
 		ID= message.getId();
-		System.out.println(ID);
 		EventBus.getDefault().post(new MessageEvent(message));
 		} else if(message.getMessage().equals("I Saved The Mediator Details")){
 		ID= message.getId();
-		System.out.println(ID);
 		EventBus.getDefault().post(new MessageEvent(message));
 		} else if(message.getMessage().equals("I Saved The Teacher Details")){
 		ID= message.getId();
-		System.out.println(ID);
 		EventBus.getDefault().post(new MessageEvent(message));
 		} else if (message.getMessage().equals("course has been registered")) {
 		EventBus.getDefault().post(new MessageEvent(message));
 		} else if(message.getMessage().equals("i will give you the student data")){
-		System.out.println(ID);
 		EventBus.getDefault().post(new MessageEvent(message));
 		} else if(message.getMessage().equals("i will give you the teacher data")){
 		EventBus.getDefault().post(new MessageEvent(message));
@@ -100,9 +95,7 @@ public class SimpleClient extends AbstractClient {
 		} else if (message.getMessage().equals("i will give you the exams")) {
 		EventBus.getDefault().post(new MessageEvent(message));
 		} else if (message.getMessage().equals("i will start exam")) {
-			System.out.println("?");
 		cname=message.getCourseName();
-		System.out.println("??");
 		EventBus.getDefault().post(new MessageEvent(message));
 		}else if (message.getMessage().equals("i added the exam")) {
 		EventBus.getDefault().post(new MessageEvent(message));
@@ -123,9 +116,6 @@ public class SimpleClient extends AbstractClient {
 		else if(message.getMessage().equals("the grade is")) {
 		EventBus.getDefault().post(new MessageEvent(message));}
 		else if(message.getMessage().equals("test") && message.getToid()==ID) {
-			System.out.println(ID);
-			System.out.println("Test1!!!");
-			System.out.println(message.getToid());
 			EventBus.getDefault().post(new MessageEvent(message));
 		}
 		else if(message.getMessage().equals("wrong code or id")) {

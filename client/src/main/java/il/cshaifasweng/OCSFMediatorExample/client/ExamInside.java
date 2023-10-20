@@ -177,8 +177,6 @@ public class ExamInside {
 
     @Subscribe
     public void setDataFromServerTF(MessageEvent event) throws IOException {
-        System.out.println("got the message ?");
-        System.out.println(event.getMessage().getMessage());
         if (event.getMessage().getMessage().equals("i will show questions2")){
 
 
@@ -189,7 +187,6 @@ public class ExamInside {
             i=0;
             for (Questions que : ques) {
                 if (que.getQues_id().equals(id)) {
-                    System.out.println("id is"+ que.getQuestion()+ " " + que.getAns1()+" " + que.getAns2());
                     fques.add(que);
                 }
 
@@ -197,7 +194,6 @@ public class ExamInside {
 
             if(!(fques.isEmpty())){
                 question.setText(fques.get(i).getQuestion());
-                System.out.println("ques is "+fques.get(i).getQuestion());
                 if(!fques.get(i).getQues_id().equals("empty")) {
                     answer1.setText(fques.get(i).getAns1());
                     answer2.setText(fques.get(i).getAns2());
@@ -214,7 +210,6 @@ public class ExamInside {
             }
 
         } else if (event.getMessage().getMessage().equals("i will start exam")) {
-            System.out.println("started the exam 3");
             examInfo = event.getMessage().getExamInfo();
             fques.clear();
             i = 1;
@@ -223,38 +218,26 @@ public class ExamInside {
             quenum = 0;
             mark = 0.0;
             exam_id=event.getMessage().getExam().getId();
-            System.out.println("hi2 " +event.getMessage().getExam().getCode() );
             exam_name=event.getMessage().getExam().getCourse_name();
-            System.out.println("hi"+exam_id);
             time = event.getMessage().getExam().getTime();
-            System.out.println("time"+ time);
             msg.setStudentId(SimpleClient.ID);
             msg.setId(exam_id);
-            System.out.println("started exam  " + examInfo.getExam_id() +" " + examInfo.getCourseid() + " "+ examInfo
-                    .getStudentid());
             examInfo.setActualDuration(time);
-            Date f=new Date();
-            System.out.println(f);
             examInfo.setExecutionDateTime(new Date());
             examInfo.setNumberOfStartedStudents(1);
             msg.setExamInfo(examInfo);
             delay = new PauseTransition(Duration.millis(1000 * 60 * time));
             conditionMet = false;
             delay.setOnFinished(e -> {
-                System.out.println(conditionMet);
                 if (conditionMet) {
                 }else {
                     delay2 = new PauseTransition(Duration.millis(1000 * 60 * eTime));
                     delay2.setOnFinished(d -> {
-                        System.out.println("etime");
-                        System.out.println(eTime);
-                        System.out.println("11");
                         examInfo.setNumberOfFailedStudents(1);
                         msg.setExamInfo(examInfo);
                         msg.setMessage("exam is over");
                         msg.setId(exam_id);
                         sendMessage(msg);
-                        System.out.println("2222");
                     });
                     delay2.play();
                     }
@@ -264,10 +247,6 @@ public class ExamInside {
 
         }
         else if (event.getMessage().getMessage().equals("exam is over done")){
-            //changeGrade(message.getStudentId(), message.getCourse_id(), message.getGrade_to_change());
-            System.out.println("3");
-            System.out.println(exam_id);
-            System.out.println(event.getMessage().getId());
             if(exam_id==event.getMessage().getId()){
                 msg.setIs_finished(conditionMet);
                 msg.setMessage("end exam");
@@ -280,13 +259,11 @@ public class ExamInside {
                 SimpleChatClient.setRoot("gradeExam");
                 sendMessage(msg);
             }
-            System.out.println("4");
 
         }
         else if (event.getMessage().getMessage().equals("extra time")){
             if(exam_id == event.getMessage().getExam().getId()) {
                 eTime = event.getMessage().geteTime();
-                System.out.println("etime" + eTime);
             }
             else
                 System.out.println("no eT");
@@ -328,11 +305,9 @@ public class ExamInside {
     }
     @FXML
     void initialize() {
-        System.out.println("exam started1");
         EventBus.getDefault().register(this);
         conditionMet = true;
         fques.clear();
-        System.out.println("exam started 2");
         i=1;
         mark=0.0;
         cAns="";

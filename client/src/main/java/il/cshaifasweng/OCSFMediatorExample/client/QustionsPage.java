@@ -96,12 +96,7 @@ public class QustionsPage {
             list.getItems().clear();
             List<CourseReg> Courses_from_server_reg = event.getMessage().getCourses_list_from_server_reg();
 
-/*            course_column.setCellValueFactory(new PropertyValueFactory<>("id"));
-            course_column.setCellValueFactory(new PropertyValueFactory<>("name"));*/
-
-
             for (int i = 0; i < Courses_from_server_reg.size(); i++) {
-                // Set the data to the table
                 if(Courses_from_server_reg.get(i).getLecturer()!=null)
                     if(Courses_from_server_reg.get(i).getLecturer().getId()==SimpleClient.ID){
 

@@ -77,7 +77,6 @@ public class TeacherStats {
 
 
                         Teacher_Courses.getItems().add(Courses_from_server_reg.get(i).getName());
-                        System.out.println(Courses_from_server_reg.get(i).getName());
                     }
             }
             Teacher_Courses.refresh();
@@ -97,8 +96,6 @@ public class TeacherStats {
             else{
                 List<CourseReg>courses=event.getMessage().getCourses_list_from_server_reg();
                 List<Grade>grades=event.getMessage().getGrades_list_from_server();
-                System.out.println(courses.get(0).getStudent()+"hat");
-                System.out.println(grades.get(0).getStudent()+"hat2");
                 for(int i=0;i<courses.size();i++){
                     if(courses.get(i).getType().equals("Student")&&courses.get(i).getName().equals(Name)){
                         for(int j=0;j<grades.size();j++){
@@ -140,7 +137,6 @@ public class TeacherStats {
                     Lowest_Grade.setText("null");
                 else
                 Lowest_Grade.setText(String.valueOf(lowest_grade));
-                System.out.println(students_num+"num");
             }
 
 

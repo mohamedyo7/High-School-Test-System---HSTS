@@ -74,19 +74,11 @@ public class CoursesReg {
                 STD_ID_Reg.getItems().add(String.valueOf(event.getMessage().getStudentId()));
             Reg_Courses_Table.getItems().clear();
             List<Course> Courses_from_server = event.getMessage().getCourses_list_from_server();
-            System.out.println(event.getMessage().getStudentId());
 
             for (int i = 0; i < Courses_from_server.size(); i++) {
-                // Set the data to the table
-                //if(Courses_from_server.get(i).getName().equals(Std_name.getText()))
                 Reg_Courses_Table.getItems().add(Courses_from_server.get(i).getName());
-                // System.out.println(Courses_from_server.get(i).getName());
             }
             Reg_Courses_Table.refresh();
-        }
-        else if (event.getMessage().getMessage().equals("i will give you the students")) {
-            List<Student> students_from_server = event.getMessage().getStudents_list_from_server();
-
         }
         else if (event.getMessage().getMessage().equals("I Saved The Student Details")) {
             if (STD_ID_Reg.getItems().isEmpty()) {
@@ -116,20 +108,6 @@ public class CoursesReg {
             }
             Reg_Courses_Table.refresh();
         }
-        else if (event.getMessage().getMessage().equals("course has been registered")) {
-          /*  if(STD_ID.getItems().isEmpty()) {
-                STD_ID.getItems().add(String.valueOf(event.getMessage().getStudentId()));
-
-
-            }*/
-            List<Student> s1 = event.getMessage().getStudents_list_from_server();
-
-
-            //System.out.println(s1.get(0).getCoursesReg() + "tq");
-
-
-        }
-
 
         }
 
@@ -137,7 +115,6 @@ public class CoursesReg {
     @FXML
     void initialize() {
         EventBus.getDefault().register(this);
-        // sendMessage("give me the courses");
     }
 
 }
