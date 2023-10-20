@@ -74,25 +74,12 @@ public class ExamsFinal {
 
     @FXML
     void startB(ActionEvent event) throws IOException {
-      /*  delay = new PauseTransition(Duration.millis(1000*60*60*time));
-
-        delay.setOnFinished(e -> {
-            Message msg = new Message("exam is over");
-            System.out.println("over");
-            msg.setExam(examsTable.getSelectionModel().getSelectedItem());
-            sendMessage(msg);
-        });*/
         msg.setMessage("start exam");
-        if(SimpleClient.Type.equals("Student")){
-        }
-        else{
             time=Double.parseDouble(timeT.getText());
             msg.setLogin_name("teacher");
             msg.setTime(time);
-        }
 
-            //examsTable.getSelectionModel().getSelectedItem().setStat(1);
-        exam=examsTable.getSelectionModel().getSelectedItem();
+            exam=examsTable.getSelectionModel().getSelectedItem();
             msg.setExam(examsTable.getSelectionModel().getSelectedItem());
             msg.setCourseName(String.valueOf(examsTable.getSelectionModel().getSelectedItem()));
             msg.setCourse_id(Integer.parseInt(courseid));
@@ -105,8 +92,6 @@ public class ExamsFinal {
             msg.setStudentId(SimpleClient.ID);
         }
         msg.setLogin_name(SimpleClient.Type);
-
-        //examsTable.getSelectionModel().getSelectedItem().setStat(1);
         msg.setExam(examsTable.getSelectionModel().getSelectedItem());
         msg.setId(examsTable.getSelectionModel().getSelectedItem().getId());
         msg.setCourseName(String.valueOf(examsTable.getSelectionModel().getSelectedItem()));
@@ -132,7 +117,6 @@ public class ExamsFinal {
             int c=0;
 
             coursesList.getItems().clear();
-            if(SimpleClient.Type.equals("Teacher")) {
 
                 List<CourseReg> Courses_from_server_reg = event.getMessage().getCourses_list_from_server_reg();
                 List<Course>courses=event.getMessage().getCourses_list_from_server();
@@ -152,44 +136,7 @@ public class ExamsFinal {
                         }
 
                 }
-            }
-            else if(SimpleClient.Type.equals("Student")){
-                List<CourseReg> Courses_from_server_reg = event.getMessage().getCourses_list_from_server_reg();
-                List<Exams>Exams_from_server=event.getMessage().getExams_list_from_server();
-                List<Course>courses=event.getMessage().getCourses_list_from_server();
-                List<ExamsScan>examsScanList=event.getMessage().getExamsScans_list_from_server();
 
-                for (int i = 0; i < Courses_from_server_reg.size(); i++) {
-                    // Set the data to the table
-                    if (Courses_from_server_reg.get(i).getStudent() != null)
-                        if (Courses_from_server_reg.get(i).getStudent().getId() == SimpleClient.ID) {
-                            for(int j=0;j<Exams_from_server.size();j++){
-                                if(Courses_from_server_reg.get(i).getName().equals(Exams_from_server.get(j).getCourse_name()))
-                                    if(Exams_from_server.get(j).getStat()) {
-                                        for(int x=0;x<coursesList.getItems().size();x++){
-                                            System.out.println(coursesList.getItems().get(x)+"course");
-                                            System.out.println(Courses_from_server_reg.get(i).getName()+"coursereg");
-                                            if(coursesList.getItems().get(x).equals(Courses_from_server_reg.get(i).getName())) {
-                                                c = 1;
-                                                break;
-                                            }
-
-                                        }
-                                        if(c==0)
-                                        coursesList.getItems().add(Courses_from_server_reg.get(i).getName());
-
-                                        for(int x=0;x<courses.size();x++){
-                                            if(Courses_from_server_reg.get(i).getName().equals(courses.get(x).getName()))
-                                                courseid= String.valueOf(courses.get(x).getId());
-                                        }
-                                    }
-                            }
-
-
-                        }
-
-                }
-            }
             coursesList.refresh();
         } else if (event.getMessage().getMessage().equals("i will give you the exams")) {
             examsTable.getItems().clear();
@@ -207,26 +154,7 @@ public class ExamsFinal {
                         }
                     }
                 }
-            if(event.getMessage().getLogin_name().equals("Student")) {
-                for(int i=0;i<examsScanList.size();i++){
-                    if(examsScanList.get(i).getStudent_ID()==event.getMessage().getId()) {
-                        for (int j = 0; j < examsTable.getItems().size(); j++) {
 
-                            if (examsTable.getItems().get(j).getId() == examsScanList.get(i).getExam_ID() && examsTable.getItems().get(j).getCourse_name().equals(examsScanList.get(i).getName())) {
-                                for(int x=0;x<exams.size();x++){
-                                    if(exams.get(x).getId()==examsTable.getItems().get(j).getId()&&exams.get(x).getCourse_name().equals(examsTable.getItems().get(j).getCourse_name())) {
-                                        if (!exams.get(x).getStat())
-                                            examsTable.getItems().remove(j);
-                                    }
-                                }
-
-                            }
-                        }
-                    }
-                }
-
-
-            }
             examsTable.refresh();
         }else if (event.getMessage().getMessage().equals("extra time accepted")) {
             System.out.println(event.getMessage().getExam().getId());

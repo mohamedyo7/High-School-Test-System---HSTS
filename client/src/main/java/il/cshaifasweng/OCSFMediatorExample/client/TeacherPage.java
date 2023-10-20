@@ -1,6 +1,7 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.Message;
+import il.cshaifasweng.OCSFMediatorExample.entities.entities.ExamInfo;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
@@ -9,6 +10,8 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class TeacherPage {
@@ -36,6 +39,9 @@ public class TeacherPage {
 
     @FXML
     void StatsB(ActionEvent event) throws IOException {
+
+       sendMessage("give me exams info");
+
         SimpleChatClient.setRoot("TeacherStats");
         Message msg=new Message("give me teacher stats");
         if(!Techer_ID.getItems().get(0).isEmpty())
@@ -94,8 +100,20 @@ SimpleChatClient.setRoot("FirstPage");
 
             }
         }
+        else if (event.getMessage().getMessage().equals("i will give you exams info")) {
+            List<ExamInfo> lst = event.getMessage().getExamInfos();
+            for (ExamInfo examInfo : lst) {
+                System.out.println("exam info " + examInfo.getExam_id());
+                System.out.println("exam info " + examInfo.getCourseid());
+                System.out.println("exam info " + examInfo.getStudentid());
+                System.out.println("exam info " + examInfo.getActualDuration());
+                System.out.println("exam info " + examInfo.getExecutionDateTime());
+                System.out.println("exam info " + examInfo.getNumberOfCompletedStudents());
+                System.out.println("exam info " + examInfo.getNumberOfFailedStudents());
+                System.out.println("exam info " + examInfo.getNumberOfStartedStudents());
+            }
+        }
     }
-
 
     @FXML
     void initialize() {

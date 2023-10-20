@@ -15,6 +15,7 @@ import org.greenrobot.eventbus.Subscribe;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -84,7 +85,7 @@ public class ExamInside {
 
     @FXML
     void backB(ActionEvent event) throws IOException {
-        SimpleChatClient.setRoot("examsFinal");
+        SimpleChatClient.setRoot("examsFinalStu");
     }
 
     @FXML
@@ -103,7 +104,6 @@ public class ExamInside {
 
     @FXML
     void nextb(ActionEvent event) throws IOException {
-
         if(ans1.isSelected()){
             std_ans=ans1.getText();
             if(ans1.getText().equals(cAns)){
@@ -132,20 +132,13 @@ public class ExamInside {
             }
             ans4.setSelected(false);
         }
-        System.out.println("mark is 1 ");
         Message msg1=new Message("save data");
-        System.out.println("mark is 2 ");
         msg1.setId(exam_id);
-        System.out.println(exam_id+"mark is 3 ");
         msg1.setCourseName(exam_name);
-        System.out.println(exam_name+"mark is 4 ");
         msg1.setAns(std_ans);
-        System.out.println(std_ans+"mark is 5 ");
         msg1.setStudentId(SimpleClient.ID);
-        System.out.println(SimpleClient.ID+"mark is 6 ");
         msg1.setType(question.getText());
         sendMessage(msg1);
-        System.out.println("mark is 7 ");
         if(i<fques.size()){
             question.setText(fques.get(i).getQuestion());
             ans1.setText(fques.get(i).getAns1());
@@ -165,11 +158,6 @@ public class ExamInside {
             msg.setExamInfo(examInfo);
             sendMessage(msg);
 
-            //System.out.println("mark is " + mark);
-            //msg.setMessage("the grade is");
-            //msg.setGrade(mark);
-            //SimpleChatClient.setRoot("gradeExam");
-            //sendMessage(msg);
         }
 
     }
@@ -177,7 +165,8 @@ public class ExamInside {
 
     @Subscribe
     public void setDataFromServerTF(MessageEvent event) throws IOException {
-
+        System.out.println("got the message ?");
+        System.out.println(event.getMessage().getMessage());
         if (event.getMessage().getMessage().equals("i will show questions2")){
 
 
@@ -198,15 +187,10 @@ public class ExamInside {
                 question.setText(fques.get(i).getQuestion());
                 System.out.println("ques is "+fques.get(i).getQuestion());
                 if(!fques.get(i).getQues_id().equals("empty")) {
-                    //if(ans1.getText().isEmpty())
                     ans1.setText(fques.get(i).getAns1());
-                    // if(ans2.getText().isEmpty())
                     ans2.setText(fques.get(i).getAns2());
-                    // if(ans3.getText().isEmpty())
                     ans3.setText(fques.get(i).getAns3());
-                    // if(ans4.getText().isEmpty())
                     ans4.setText(fques.get(i).getAns4());
-                    // if(cAns.isEmpty())
                     cAns = fques.get(i).getCorrect_ans();
                 }
                     i++;
@@ -218,6 +202,7 @@ public class ExamInside {
             }
 
         } else if (event.getMessage().getMessage().equals("i will start exam")) {
+            System.out.println("started the exam 3");
             examInfo = event.getMessage().getExamInfo();
             fques.clear();
             i = 1;
@@ -236,6 +221,8 @@ public class ExamInside {
             System.out.println("started exam  " + examInfo.getExam_id() +" " + examInfo.getCourseid() + " "+ examInfo
                     .getStudentid());
             examInfo.setActualDuration(time);
+            Date f=new Date();
+            System.out.println(f);
             examInfo.setExecutionDateTime(new Date());
             examInfo.setNumberOfStartedStudents(1);
             msg.setExamInfo(examInfo);
@@ -264,11 +251,6 @@ public class ExamInside {
             sendMessage("show questions2");
 
         }
-        else if (event.getMessage().getMessage().equals("i will save data")) {
-            System.out.println("beje?");
-
-        }
-
         else if (event.getMessage().getMessage().equals("exam is over done")){
             //changeGrade(message.getStudentId(), message.getCourse_id(), message.getGrade_to_change());
             System.out.println("3");
@@ -334,9 +316,11 @@ public class ExamInside {
     }
     @FXML
     void initialize() {
+        System.out.println("exam started1");
         EventBus.getDefault().register(this);
         conditionMet = true;
         fques.clear();
+        System.out.println("exam started 2");
         i=1;
         mark=0.0;
         cAns="";

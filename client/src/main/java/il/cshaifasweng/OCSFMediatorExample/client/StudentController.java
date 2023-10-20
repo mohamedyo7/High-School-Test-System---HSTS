@@ -141,6 +141,7 @@ public class StudentController {
 
 
             }
+
                 Student_Courses_Table.getItems().clear();
                 List<CourseReg> Courses_from_server_reg = event.getMessage().getCourses_list_from_server_reg();
 

@@ -9,14 +9,15 @@ import java.util.List;
 @Table(name = "ExamInfo")
 public class ExamInfo implements Serializable {
     @Id
-    @Column (name = "exam_Id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
     private int exam_id;
     private Date executionDateTime;
     private double actualDuration=0;
     private int numberOfStartedStudents=0;
     private int numberOfCompletedStudents=0;
     private int numberOfFailedStudents=0;
-
     private int studentid;
 
     private String courseid;
@@ -100,10 +101,16 @@ public class ExamInfo implements Serializable {
     }
 
     public void setId(int id) {
-        this.exam_id = id;
+        this.id = id;
     }
 
     public int getId() {
+        return id;
+    }
+    public int getexamId() {
         return exam_id;
     }
+
+public void setexamId(int id) {
+        this.exam_id = id;}
 }
