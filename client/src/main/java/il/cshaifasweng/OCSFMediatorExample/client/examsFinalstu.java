@@ -17,12 +17,13 @@ import org.greenrobot.eventbus.Subscribe;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class examsFinalstu {
     Message msg = new Message("");
-    ExamInfo examInfo=new ExamInfo();
+
     public static String courseid;
     @FXML
     private TextField eCode;
@@ -52,37 +53,26 @@ public class examsFinalstu {
     private Button start_b;
     @FXML
     void BackB(ActionEvent event) throws IOException {
-        if(SimpleClient.Type.equals("Teacher"))
-            SimpleChatClient.setRoot("ExamsPage");
-        else if(SimpleClient.Type.equals("Student")){
             Message msg = new Message("give me student data");
             sendMessage(msg);
             SimpleChatClient.setRoot("StudentController");}
-    }
 
     @FXML
     void startB(ActionEvent event) throws IOException {
-        System.out.println("heeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
-        System.out.println(examsTable.getSelectionModel().getSelectedItem().getId());
         if(examsTable.getSelectionModel().getSelectedItem().getCode().equals(eCode.getText())&&Integer.parseInt(studenid.getText())==SimpleClient.ID){
-            System.out.println("yo yo");
             msg.setMessage("start exam");
-            SimpleChatClient.setRoot("examInside");
             msg.setLogin_name("student");
-            System.out.println("1");
+            ExamInfo examInfo=new ExamInfo();
             examInfo.setExam_id(examsTable.getSelectionModel().getSelectedItem().getId());
-            System.out.println("2");
             examInfo.setCourseid(examsTable.getSelectionModel().getSelectedItem().getCourse_name());
-            System.out.println("3");
             examInfo.setStudentid(SimpleClient.ID);
-            System.out.println("4");
             msg.setExamInfo(examInfo);
-            System.out.println("5");
-            //examsTable.getSelectionModel().getSelectedItem().setStat(1);
             msg.setExam(examsTable.getSelectionModel().getSelectedItem());
             msg.setCourseName(String.valueOf(examsTable.getSelectionModel().getSelectedItem()));
             msg.setCourse_id(Integer.parseInt(courseid));
+            SimpleChatClient.setRoot("examInside");
             sendMessage(msg);
+            System.out.println("msgg ??");
 
             } else{
                 System.out.println("Wrong code or id");
@@ -101,27 +91,7 @@ public class examsFinalstu {
         if (event.getMessage().getMessage().equals("i will give you the courses")) {
 
             coursesList.getItems().clear();
-            if(SimpleClient.Type.equals("Teacher")) {
 
-                List<CourseReg> Courses_from_server_reg = event.getMessage().getCourses_list_from_server_reg();
-                List<Course>courses=event.getMessage().getCourses_list_from_server();
-
-                for (int i = 0; i < Courses_from_server_reg.size(); i++) {
-                    // Set the data to the table
-                    if (Courses_from_server_reg.get(i).getLecturer() != null)
-                        if (Courses_from_server_reg.get(i).getLecturer().getId() == SimpleClient.ID) {
-
-                            coursesList.getItems().add(Courses_from_server_reg.get(i).getName());
-                            for(int j=0;j<courses.size();j++){
-                                if(Courses_from_server_reg.get(i).getName().equals(courses.get(j).getName()))
-                                    courseid= String.valueOf(courses.get(j).getId());
-                            }
-
-                        }
-
-                }
-            }
-            else if(SimpleClient.Type.equals("Student")){
                 List<CourseReg> Courses_from_server_reg = event.getMessage().getCourses_list_from_server_reg();
                 List<Exams>Exams_from_server=event.getMessage().getExams_list_from_server();
                 List<Course>courses=event.getMessage().getCourses_list_from_server();
@@ -130,24 +100,22 @@ public class examsFinalstu {
                     // Set the data to the table
                     if (Courses_from_server_reg.get(i).getStudent() != null)
                         if (Courses_from_server_reg.get(i).getStudent().getId() == SimpleClient.ID) {
-                            for(int j=0;j<Exams_from_server.size();j++){
-                                if(Courses_from_server_reg.get(i).getName().equals(Exams_from_server.get(j).getCourse_name()))
-                                    if(Exams_from_server.get(j).getStat()) {
+                            for (int j = 0; j < Exams_from_server.size(); j++) {
+                                if (Courses_from_server_reg.get(i).getName().equals(Exams_from_server.get(j).getCourse_name()))
+                                    if (Exams_from_server.get(j).getStat()) {
                                         exams.add(Exams_from_server.get(j));
                                         coursesList.getItems().add(Courses_from_server_reg.get(i).getName());
-                                        for(int x=0;x<courses.size();x++){
-                                            if(Courses_from_server_reg.get(i).getName().equals(courses.get(x).getName()))
-                                                courseid= String.valueOf(courses.get(x).getId());
+                                        for (int x = 0; x < courses.size(); x++) {
+                                            if (Courses_from_server_reg.get(i).getName().equals(courses.get(x).getName()))
+                                                courseid = String.valueOf(courses.get(x).getId());
                                         }
                                     }
                             }
 
-
                         }
-
                 }
-            }
-            coursesList.refresh();
+                coursesList.refresh();
+
         } else if (event.getMessage().getMessage().equals("i will give you the exams")) {
             examsTable.getItems().clear();
             List<Exams> exams = event.getMessage().getExams_list_from_server();

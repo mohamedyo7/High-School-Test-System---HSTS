@@ -883,11 +883,13 @@ public class SimpleServer extends AbstractServer {
 							System.out.println("ab" + message.getTime());
 							System.out.println("bbbb");
 						}
+						System.out.println("?1");
 						generateExamInfo(message.getExamInfo());
 						message.setCourseName(message.getExam().getCourse_name());
 						message.setMessage("i will start exam");
 						message.setId(message.getExam().getId());
 						client.sendToClient(message);
+						System.out.println("2");
 
 					} else if (request.equals("save data")) {
 						message.setMessage("i will save data");
@@ -940,7 +942,13 @@ public class SimpleServer extends AbstractServer {
 						 message.setExams_list_from_server(exams);
 						 message.setCourses_list_from_server_reg(courseRegs);
 						 client.sendToClient(message);
-					} else {
+					}
+				else if (request.equals("give me exams info")){
+					message.setMessage("i will give you exams info");
+					message.setExamInfos(getAllExamInfo());
+					client.sendToClient(message);
+
+				} else {
 						sendToAllClients(message);
 					}
 

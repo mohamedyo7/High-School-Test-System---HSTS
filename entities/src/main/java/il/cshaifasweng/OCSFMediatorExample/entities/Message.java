@@ -28,6 +28,15 @@ public class Message implements Serializable {
     public void setExamInfo(ExamInfo examInfo) {
         this.examInfo = examInfo;
     }
+    List<ExamInfo> examInfos;
+
+    public List<ExamInfo> getExamInfos() {
+        return examInfos;
+    }
+
+    public void setExamInfos(List<ExamInfo> examInfos) {
+        this.examInfos = examInfos;
+    }
 
     public boolean iseTimeRequest() {
         return eTimeRequest;

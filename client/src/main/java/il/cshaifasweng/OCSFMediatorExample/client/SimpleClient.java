@@ -110,7 +110,9 @@ public class SimpleClient extends AbstractClient {
 		} else if (message.getMessage().equals("i will give you the exams")) {
 		EventBus.getDefault().post(new MessageEvent(message));
 		} else if (message.getMessage().equals("i will start exam")) {
+			System.out.println("?");
 		cname=message.getCourseName();
+		System.out.println("??");
 		EventBus.getDefault().post(new MessageEvent(message));
 		}else if (message.getMessage().equals("i added the exam")) {
 		EventBus.getDefault().post(new MessageEvent(message));
@@ -132,7 +134,6 @@ public class SimpleClient extends AbstractClient {
 		EventBus.getDefault().post(new MessageEvent(message));}
 		else if(message.getMessage().equals("test") && message.getToid()==ID) {
 			System.out.println(ID);
-
 			System.out.println("Test1!!!");
 			System.out.println(message.getToid());
 			EventBus.getDefault().post(new MessageEvent(message));
@@ -144,7 +145,10 @@ public class SimpleClient extends AbstractClient {
 			EventBus.getDefault().post(new MessageEvent(message));
 		}else if(message.getMessage().equals("extra time accepted" )) {
 			EventBus.getDefault().post(new MessageEvent(message));
-		}else {
+		} else if(message.getMessage().equals("i will give you exams info")) {
+		EventBus.getDefault().post(new MessageEvent(message));
+	}
+		else {
 		//EventBus.getDefault().post(new MessageEvent(message));
 		}
 
