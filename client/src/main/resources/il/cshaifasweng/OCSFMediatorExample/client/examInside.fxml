@@ -5,16 +5,19 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.ExamInside">
    <children>
-      <Text fx:id="question" layoutX="172.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="150.13671875" />
-      <CheckBox fx:id="ans1" layoutX="99.0" layoutY="136.0" mnemonicParsing="false" onAction="#ans1b" text="CheckBox" />
-      <CheckBox fx:id="ans4" layoutX="99.0" layoutY="249.0" mnemonicParsing="false" onAction="#ans4b" text="CheckBox" />
-      <CheckBox fx:id="ans3" layoutX="99.0" layoutY="212.0" mnemonicParsing="false" onAction="#ans3b" text="CheckBox" />
-      <CheckBox fx:id="ans2" layoutX="99.0" layoutY="174.0" mnemonicParsing="false" onAction="#ans2b" text="CheckBox" />
+      <Text fx:id="question" layoutX="30.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="539.13671875" />
+      <CheckBox fx:id="ans1" layoutX="99.0" layoutY="136.0" mnemonicParsing="false" onAction="#ans1b" />
+      <CheckBox fx:id="ans4" layoutX="99.0" layoutY="249.0" mnemonicParsing="false" onAction="#ans4b" />
+      <CheckBox fx:id="ans3" layoutX="99.0" layoutY="212.0" mnemonicParsing="false" onAction="#ans3b" />
+      <CheckBox fx:id="ans2" layoutX="99.0" layoutY="174.0" mnemonicParsing="false" onAction="#ans2b" />
       <Button layoutX="99.0" layoutY="296.0" mnemonicParsing="false" onAction="#nextb" text="Next" />
       <Button layoutX="534.0" layoutY="14.0" mnemonicParsing="false" onAction="#backB" text="Back" />
       <Button layoutX="470.0" layoutY="296.0" mnemonicParsing="false" onAction="#doneB" text="Done" />
+      <Text fx:id="answer1" layoutX="120.0" layoutY="149.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="465.13671875" />
+      <Text fx:id="answer2" layoutX="120.0" layoutY="187.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="465.13671875" />
+      <Text fx:id="answer3" layoutX="120.0" layoutY="225.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="465.13671875" />
+      <Text fx:id="answer4" layoutX="120.0" layoutY="262.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="465.13671875" />
    </children>
 </AnchorPane>
