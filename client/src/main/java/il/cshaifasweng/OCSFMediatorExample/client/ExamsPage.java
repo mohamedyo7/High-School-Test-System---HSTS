@@ -54,7 +54,7 @@ public class ExamsPage {
         Message msg = new Message("update exam");
         exam.setTeacherName(SimpleClient.name);
         exam.setTeacherID(String.valueOf(SimpleClient.ID));
-        System.out.println("lecturer name  "+ SimpleClient.name);
+
         exam.setQues_number(qnum);
         exam.setCode(eCode.getText());
         msg.setExam(exam);

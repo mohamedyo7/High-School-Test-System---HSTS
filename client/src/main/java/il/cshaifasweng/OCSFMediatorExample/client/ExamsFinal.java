@@ -47,7 +47,6 @@ public class ExamsFinal {
     @FXML
     void insetTime(ActionEvent event) {
         etime = Double.parseDouble(extraTime.getText());
-        System.out.println("etimeee " + etime);
         exam = examsTable.getSelectionModel().getSelectedItem();
         exam.setReason(reason.getText());
         exam.setRequest(true);
@@ -157,17 +156,12 @@ public class ExamsFinal {
 
             examsTable.refresh();
         }else if (event.getMessage().getMessage().equals("extra time accepted")) {
-            System.out.println(event.getMessage().getExam().getId());
-            System.out.println(exam.getId());
             if(event.getMessage().getExam().getId()==exam.getId()) {
-                System.out.println(extraTime.getText());
-                System.out.println("etime 2 is  " + etime);
                 msg.seteTime(etime);
                 courseid = coursesList.getSelectionModel().getSelectedItem();
                 Exams examID = examsTable.getSelectionModel().getSelectedItem();
                 msg.setExam(examID);
                 msg.setMessage("extraTime");
-                System.out.println("extra time");
                 sendMessage(msg);
             }
             else
