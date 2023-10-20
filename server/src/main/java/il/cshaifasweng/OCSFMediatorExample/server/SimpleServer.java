@@ -93,7 +93,17 @@ public class SimpleServer extends AbstractServer {
 		List<ExamsScan> ques = session.createQuery(query).getResultList();
 		return ques;
 	}
-
+	public static List<ExamInfo> getAllExamInfo() throws Exception {
+		CriteriaBuilder builder = session.getCriteriaBuilder();
+		CriteriaQuery<ExamInfo> query = builder.createQuery(ExamInfo.class);
+		query.from(ExamInfo.class);
+		List<ExamInfo> data = session.createQuery(query).getResultList();
+		return data;
+	}
+	public static void generateExamInfo(ExamInfo examInfo) throws Exception{
+		session.save(examInfo);
+		session.flush();
+	}
 	private static void generateStudents(Student s) throws Exception {
 
 		Student std0 = new Student(s);
@@ -575,6 +585,7 @@ public class SimpleServer extends AbstractServer {
 							System.out.println("ab" + message.getTime());
 							System.out.println("bbbb");
 						}
+						generateExamInfo(message.getExamInfo());
 						message.setCourseName(message.getExam().getCourse_name());
 						message.setMessage("i will start exam");
 						message.setId(message.getExam().getId());
@@ -590,7 +601,7 @@ public class SimpleServer extends AbstractServer {
 						client.sendToClient(message);
 
 					} else if (request.equals("exam is over")) {
-
+						updateExamInfo(message.getExamInfo());
 						message.setMessage("exam is over done");
 						client.sendToClient(message);
 

@@ -228,9 +228,55 @@ public class App {
             throw e; // Rethrow the exception for higher-level error handling
         }
     }
+    public static List<ExamInfo> getAllExamInfo() throws Exception {
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<ExamInfo> query = builder.createQuery(ExamInfo.class);
+        query.from(ExamInfo.class);
+        List<ExamInfo> data = session.createQuery(query).getResultList();
+        return data;
+    }
+    public static void updateExamInfo(ExamInfo updatedExamInfo) throws Exception {
 
+        Transaction tx = null;
+        try (Session session = sessionFactory.openSession()) {
+            tx = session.beginTransaction();
 
-    public static List<Grade> getGradesByStudentId(int studentId) throws Exception{
+            List<ExamInfo> exams = getAllExamInfo();
+
+            ExamInfo exam = null;
+            for (ExamInfo e : exams) {
+                if (e.getId() == updatedExamInfo.getId()) {
+                    exam = e;
+                    break;
+                }
+            }
+
+            if (exam == null) {
+                throw new Exception("No exam found with the specified ID.");
+            }
+
+            // Update exam properties
+            exam.setExam_id(updatedExamInfo.getExam_id());
+            exam.setStudentid(updatedExamInfo.getStudentid());
+            exam.setNumberOfFailedStudents(updatedExamInfo.getNumberOfFailedStudents());
+            exam.setNumberOfStartedStudents(updatedExamInfo.getNumberOfStartedStudents());
+            exam.setNumberOfCompletedStudents(updatedExamInfo.getNumberOfCompletedStudents());
+            exam.setExecutionDateTime(updatedExamInfo.getExecutionDateTime());
+            exam.setActualDuration(updatedExamInfo.getActualDuration());
+            exam.setId(updatedExamInfo.getId());
+            exam.setCourseid(updatedExamInfo.getCourseid());
+            session.update(exam);
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+            throw e; // Rethrow the exception for higher-level error handling
+        }
+    }
+
+        public static List<Grade> getGradesByStudentId(int studentId) throws Exception{
 
 
         boolean found=false;

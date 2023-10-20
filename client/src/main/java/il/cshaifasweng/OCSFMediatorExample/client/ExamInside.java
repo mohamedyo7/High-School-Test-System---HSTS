@@ -238,6 +238,7 @@ public class ExamInside {
             examInfo.setActualDuration(time);
             examInfo.setExecutionDateTime(new Date());
             examInfo.setNumberOfStartedStudents(1);
+            msg.setExamInfo(examInfo);
             delay = new PauseTransition(Duration.millis(1000 * 60 * time));
             conditionMet = false;
             delay.setOnFinished(e -> {
