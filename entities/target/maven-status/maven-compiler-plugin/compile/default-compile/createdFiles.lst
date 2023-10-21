@@ -4,6 +4,8 @@ il\cshaifasweng\OCSFMediatorExample\entities\entities\Mediator.class
 il\cshaifasweng\OCSFMediatorExample\entities\Warning.class
 il\cshaifasweng\OCSFMediatorExample\entities\entities\ExamsScan.class
 il\cshaifasweng\OCSFMediatorExample\entities\entities\Student.class
+il\cshaifasweng\OCSFMediatorExample\entities\entities\ExamInfo.class
+il\cshaifasweng\OCSFMediatorExample\entities\entities\Exams.class
 il\cshaifasweng\OCSFMediatorExample\entities\entities\Grade.class
 il\cshaifasweng\OCSFMediatorExample\entities\Message.class
 il\cshaifasweng\OCSFMediatorExample\entities\entities\CourseReg.class
