@@ -13,14 +13,10 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
-import org.apache.poi.xwpf.usermodel.XWPFDocument;
-import org.apache.poi.xwpf.usermodel.XWPFParagraph;
-import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -252,16 +248,15 @@ public class LoginController {
 
     @FXML
     void initialize() throws IOException {
-        String desktopPath = System.getProperty("user.home") + "/Desktop/output.docx";
+/*        String desktopPath = System.getProperty("user.home") + "/Desktop/output.docx";
         XWPFDocument document=new XWPFDocument();
         FileOutputStream out = new FileOutputStream(desktopPath);
-
         XWPFParagraph paragraph=document.createParagraph();
         XWPFRun run=paragraph.createRun();
         run.setText("hi rai");
         document.write(out);
         out.close();
-        System.out.println("hiiiiiii");
+        System.out.println("hiiiiiii");*/
 
         EventBus.getDefault().register(this);
 

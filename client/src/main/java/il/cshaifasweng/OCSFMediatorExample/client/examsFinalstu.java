@@ -6,9 +6,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -17,6 +22,8 @@ import java.util.ResourceBundle;
 
 public class examsFinalstu {
     Message msg = new Message("");
+
+
 
     public static String courseid;
     @FXML
@@ -45,11 +52,49 @@ public class examsFinalstu {
 
     @FXML
     private Button start_b;
+
+    public examsFinalstu() throws FileNotFoundException {
+    }
+
     @FXML
     void BackB(ActionEvent event) throws IOException {
             Message msg = new Message("give me student data");
             sendMessage(msg);
             SimpleChatClient.setRoot("StudentController");}
+    @FXML
+    void download_exam(ActionEvent event) throws FileNotFoundException {
+
+        submit_but.setVisible(true);
+        submit_exam.setVisible(true);
+        submit_textfield.setVisible(true);
+        Message msg=new Message("download the exam");
+        msg.setExam(examsTable.getSelectionModel().getSelectedItem());
+        msg.setCourseName(coursesList.getSelectionModel().getSelectedItem());
+        sendMessage(msg);
+
+    }
+    @FXML
+    private Button submit_but;
+
+    @FXML
+    private Label submit_exam;
+
+    @FXML
+    private TextField submit_textfield;
+    @FXML
+    void Submit_but(ActionEvent event) {
+
+        Message msg=new Message("update document");
+        msg.setExam(examsTable.getSelectionModel().getSelectedItem());
+        msg.setStudentId(Integer.parseInt(studenid.getText()));
+        msg.setPath(submit_textfield.getText());
+        msg.setCourseName(coursesList.getSelectionModel().getSelectedItem());
+        sendMessage(msg);
+
+
+
+
+    }
 
     @FXML
     void startB(ActionEvent event) throws IOException {
@@ -80,7 +125,7 @@ public class examsFinalstu {
     }
 
     @Subscribe
-    public void setDataFromServerTF(MessageEvent event) {
+    public void setDataFromServerTF(MessageEvent event) throws IOException {
         if (event.getMessage().getMessage().equals("i will give you the courses")) {
 
             coursesList.getItems().clear();
@@ -91,23 +136,34 @@ public class examsFinalstu {
 
 
                 for (int i = 0; i < Courses_from_server_reg.size(); i++) {
+
                     // Set the data to the table
-                    if (Courses_from_server_reg.get(i).getStudent() != null)
-                        if (Courses_from_server_reg.get(i).getStudent().getId() == SimpleClient.ID) {
+                    if (Courses_from_server_reg.get(i).getStudent() != null) {
+
+                        if (Courses_from_server_reg.get(i).getStudent().getStudent_id() == SimpleClient.ID) {
+
                             for (int j = 0; j < Exams_from_server.size(); j++) {
-                                if (Courses_from_server_reg.get(i).getName().equals(Exams_from_server.get(j).getCourse_name()))
+
+                                if (Courses_from_server_reg.get(i).getName().equals(Exams_from_server.get(j).getCourse_name())) {
+
                                     if (Exams_from_server.get(j).getStat()) {
+
                                         exams.add(Exams_from_server.get(j));
+
                                         coursesList.getItems().add(Courses_from_server_reg.get(i).getName());
+
                                         for (int x = 0; x < courses.size(); x++) {
+
                                             if (Courses_from_server_reg.get(i).getName().equals(courses.get(x).getName()))
                                                 courseid = String.valueOf(courses.get(x).getId());
                                         }
                                     }
+                                }
                             }
 
                         }
 
+                    }
                 }
 
                 coursesList.refresh();
@@ -142,6 +198,50 @@ public class examsFinalstu {
             }
             examsTable.refresh();
         }
+        else if (event.getMessage().getMessage().equals("i will download the exam")) {
+            String desktopPath = System.getProperty("user.home") + "/Desktop/"+ examsTable.getSelectionModel().getSelectedItem().getId()+"_"+ SimpleClient.ID +".docx";
+            submit_textfield.setText(desktopPath);
+            XWPFDocument document=new XWPFDocument();
+            FileOutputStream out = new FileOutputStream(desktopPath);
+            XWPFParagraph paragraph=document.createParagraph();
+            XWPFRun run=paragraph.createRun();
+            List<Questions>questionsList=event.getMessage().getQuestions_list_from_server();
+            run.setText("Please Answer The Questions Below :");
+            run.addBreak();
+            run.addBreak();
+            run.addBreak();
+
+
+            for(int i=0;i<questionsList.size();i++){
+                if(questionsList.get(i).getQues_id().equals(String.valueOf(event.getMessage().getExam().getId()))&&questionsList.get(i).getCourse_name().equals(event.getMessage().getCourseName())){
+
+                    run.setText(questionsList.get(i).getQuestion());
+                    run.addBreak();
+                    run.addBreak();
+
+                    run.setText("1) "+questionsList.get(i).getAns1());
+                    run.addBreak();
+                    run.setText("2) "+questionsList.get(i).getAns2());
+                    run.addBreak();
+                    run.setText("3) "+questionsList.get(i).getAns3());
+                    run.addBreak();
+                    run.setText("4) "+questionsList.get(i).getAns4());
+                    run.addBreak();
+                    run.addBreak();
+                    run.setText("Please Write Your Answer : ");
+                    run.addBreak();
+                    run.setText("");
+                    run.addBreak();
+                    run.addBreak();
+                    run.addBreak();
+
+
+                }
+            }
+            document.write(out);
+            out.close();
+
+        }
     }
 
     void sendMessage(Message message) {
@@ -166,6 +266,9 @@ public class examsFinalstu {
     @FXML
     void initialize() {
         EventBus.getDefault().register(this);
+        submit_but.setVisible(false);
+        submit_exam.setVisible(false);
+        submit_textfield.setVisible(false);
         sendMessage("give me the courses");
         assert coursesList != null : "fx:id=\"coursesList\" was not injected: check your FXML file 'examsFinal.fxml'.";
         assert examsTable != null : "fx:id=\"examsTable\" was not injected: check your FXML file 'examsFinal.fxml'.";

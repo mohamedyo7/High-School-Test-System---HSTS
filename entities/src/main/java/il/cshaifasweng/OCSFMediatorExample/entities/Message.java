@@ -94,6 +94,16 @@ public class Message implements Serializable {
     String test;
     String exam_id;
 
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    String path;
+
     public String getGrade_reason() {
         return grade_reason;
     }
@@ -235,6 +245,16 @@ public class Message implements Serializable {
     private List<Course> courses_list_from_server;
     private List<CourseReg> courses_list_from_server_reg;
     private List<ExamsScan>examsScans_list_from_server;
+
+    public List<Document> getDocuments_list_from_server() {
+        return documents_list_from_server;
+    }
+
+    public void setDocuments_list_from_server(List<Document> documents_list_from_server) {
+        this.documents_list_from_server = documents_list_from_server;
+    }
+
+    private List<Document>documents_list_from_server;
 
     public List<ExamsScan> getExamsScans_list_from_server() {
         return examsScans_list_from_server;

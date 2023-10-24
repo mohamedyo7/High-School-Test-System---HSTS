@@ -35,6 +35,7 @@ public class App {
         configuration.addAnnotatedClass(ExamInfo.class);
         configuration.addAnnotatedClass(CourseReg.class);
         configuration.addAnnotatedClass(Mediator.class);
+        configuration.addAnnotatedClass(Document.class);
 
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                 .applySettings(configuration.getProperties())

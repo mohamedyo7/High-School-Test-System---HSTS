@@ -81,8 +81,15 @@ public class SimpleClient extends AbstractClient {
 		}else if(message.getMessage().equals("i added the course")) {
 		EventBus.getDefault().post(new MessageEvent(message));
 		} else if(message.getMessage().equals("i will show questions")) {
-		EventBus.getDefault().post(new MessageEvent(message));
-		} else if(message.getMessage().equals("I Saved The Student Details")){
+			EventBus.getDefault().post(new MessageEvent(message));
+		}
+		else if(message.getMessage().equals("i will download the exam")) {
+			EventBus.getDefault().post(new MessageEvent(message));
+		}
+		else if(message.getMessage().equals("i will give you word scan")) {
+			EventBus.getDefault().post(new MessageEvent(message));
+		}
+		else if(message.getMessage().equals("I Saved The Student Details")){
 		ID= message.getId();
 		EventBus.getDefault().post(new MessageEvent(message));
 		} else if(message.getMessage().equals("I Saved The Mediator Details")){

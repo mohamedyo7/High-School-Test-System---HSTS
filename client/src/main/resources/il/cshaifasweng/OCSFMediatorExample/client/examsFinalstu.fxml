@@ -20,7 +20,7 @@
       </TableView>
       <ListView fx:id="coursesList" layoutX="286.0" layoutY="73.0" prefHeight="200.0" prefWidth="200.0" />
       <Button layoutX="524.0" layoutY="14.0" mnemonicParsing="false" onAction="#BackB" text="Back" />
-      <Button fx:id="start_b" layoutX="87.0" layoutY="296.0" mnemonicParsing="false" onAction="#startB" prefHeight="25.0" prefWidth="74.0" text="Start Exam" />
+      <Button fx:id="start_b" layoutX="35.0" layoutY="296.0" mnemonicParsing="false" onAction="#startB" prefHeight="25.0" prefWidth="74.0" text="Start Exam" />
       <Button layoutX="345.0" layoutY="296.0" mnemonicParsing="false" onAction="#showExams" text="Show Exams" />
       <Label layoutX="182.0" layoutY="396.0" />
       <TextField fx:id="eCode" layoutX="42.0" layoutY="371.0" />
@@ -35,5 +35,9 @@
             <Font size="14.0" />
          </font>
       </Text>
+      <Button layoutX="140.0" layoutY="296.0" mnemonicParsing="false" onAction="#download_exam" text="Download Exam" />
+      <Label fx:id="submit_exam" layoutX="255.0" layoutY="375.0" text="Please Submit Your Exam" textFill="#f80505" />
+      <TextField fx:id="submit_textfield" layoutX="248.0" layoutY="401.0" />
+      <Button fx:id="submit_but" layoutX="297.0" layoutY="450.0" mnemonicParsing="false" onAction="#Submit_but" text="Submit" />
    </children>
 </AnchorPane>

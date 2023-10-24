@@ -10,17 +10,20 @@ import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
-import javafx.animation.PauseTransition;
-import javafx.util.Duration;
 public class ExamInside {
     int i=1;
     double time;
@@ -36,6 +39,7 @@ public class ExamInside {
     String cAns;
     ExamInfo examInfo;
     int quenum;
+
     String courseid;
     List<Questions> ques=new ArrayList<>();
     List<Questions> fques=new ArrayList<>();
@@ -75,6 +79,10 @@ public class ExamInside {
     @FXML
     private Text question;
     Exams exam = new Exams();
+
+    public ExamInside() throws FileNotFoundException {
+    }
+
     @FXML
     void ans1b(ActionEvent event) {
 
@@ -117,7 +125,9 @@ public class ExamInside {
     @FXML
     void nextb(ActionEvent event) throws IOException {
         if(ans1.isSelected()){
-            std_ans=ans1.getText();
+
+
+
             if(answer1.getText().equals(cAns)){
                 mark+= ((double) 100 /quenum);
             }
@@ -179,6 +189,11 @@ public class ExamInside {
     public void setDataFromServerTF(MessageEvent event) throws IOException {
         if (event.getMessage().getMessage().equals("i will show questions2")){
 
+           // run.setText("hi rai");
+
+            //out.close();
+            System.out.println("hiiiiiii");
+
 
             ques = event.getMessage().getQuestions_list_from_server();
             exams = event.getMessage().getExams_list_from_server();
@@ -194,7 +209,11 @@ public class ExamInside {
 
             if(!(fques.isEmpty())){
                 question.setText(fques.get(i).getQuestion());
+
+
                 if(!fques.get(i).getQues_id().equals("empty")) {
+
+
                     answer1.setText(fques.get(i).getAns1());
                     answer2.setText(fques.get(i).getAns2());
                     answer3.setText(fques.get(i).getAns3());

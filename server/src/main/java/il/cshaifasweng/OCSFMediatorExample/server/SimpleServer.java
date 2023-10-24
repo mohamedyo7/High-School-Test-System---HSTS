@@ -51,6 +51,13 @@ public class SimpleServer extends AbstractServer {
 		List<Lecturer> Letcurers = session.createQuery(query).getResultList();
 		return Letcurers;
 	}
+	public static List<Document> getAllLDecuments() throws Exception {
+		CriteriaBuilder builder = session.getCriteriaBuilder();
+		CriteriaQuery<Document> query = builder.createQuery(Document.class);
+		query.from(Document.class);
+		List<Document> dec = session.createQuery(query).getResultList();
+		return dec;
+	}
 
 	public static List<Questions> getAllQuestions() {
 		CriteriaBuilder builder = session.getCriteriaBuilder();
@@ -121,6 +128,11 @@ public class SimpleServer extends AbstractServer {
 
 		Mediator lect = new Mediator(lec);
 		session.save(lect);
+		session.flush();
+	}
+	private static void generateDocument(Document lec) throws Exception {
+
+		session.save(lec);
 		session.flush();
 	}
 
@@ -645,6 +657,7 @@ public class SimpleServer extends AbstractServer {
 					message.setStudents_list_from_server(getAllStudents());
 					message.setLecturers_list_from_server(getAllLecturers());
 					message.setMediators_list_from_server(getAllMediator());
+
 					client.sendToClient(message);
 
 
@@ -771,6 +784,18 @@ public class SimpleServer extends AbstractServer {
 				else if (request.equals("update state")) {
 					updateOfflinestate(message.getId(),message.getType());
 				}
+				else if (request.equals("update document")) {
+					System.out.println("ya rb1");
+					Document doc=new Document(String.valueOf(message.getExam().getId()),String.valueOf(message.getStudentId()), message.getPath(),"text", message.getCourseName());
+					System.out.println("ya rb2");
+					generateDocument(doc);
+					System.out.println("ya rb3");
+				}
+				else if (request.equals("download the exam")) {
+					message.setMessage("i will download the exam");
+					message.setQuestions_list_from_server(getAllQuestions());
+					client.sendToClient(message);
+				}
 
 					 else if (request.equals("give me exams scans")) {
 
@@ -854,10 +879,29 @@ public class SimpleServer extends AbstractServer {
 						message.setQuestions_list_from_server(questions);
 						message.setExamsScans_list_from_server(examsScans);
 						message.setExams_list_from_server(exams);
+						message.setDocuments_list_from_server(getAllLDecuments());
 
 						client.sendToClient(message);
 						//sendToAllClients(message);
-					} else if (request.equals("give me exam questions")) {
+					}
+				else if (request.equals("give me word scan")) {
+
+					message.setMessage("i will give you word scan");
+					List<CourseReg> s = getAllregCourses();
+					message.setCourses_list_from_server_reg(s);
+					List<Questions> questions = getAllQuestions();
+					List<ExamsScan> examsScans = getAllexamsscans();
+					List<Exams> exams = getAllExams();
+					message.setQuestions_list_from_server(questions);
+					message.setExamsScans_list_from_server(examsScans);
+					message.setExams_list_from_server(exams);
+					message.setDocuments_list_from_server(getAllLDecuments());
+
+					client.sendToClient(message);
+					//sendToAllClients(message);
+				}
+
+					 else if (request.equals("give me exam questions")) {
 
 						message.setMessage("i will give you exams questions");
 						List<Questions> questions = getAllQuestions();
