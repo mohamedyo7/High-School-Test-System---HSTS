@@ -7,7 +7,6 @@ import il.cshaifasweng.OCSFMediatorExample.entities.entities.Exams;
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.ExamsScan;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
@@ -141,6 +140,11 @@ public class EditGrade {
                 if (examsScanList.get(x).getName().equals(s)) {
                     if (!isExitst(examsScanList, examsScanList.get(x).getStudent_ID()))
                         STD_ID_LIST.getItems().add(String.valueOf(examsScanList.get(x).getStudent_ID()));
+                    // for(int y=0;y<STD_ID_LIST.getItems().size();y++){
+                    //if(!STD_ID_LIST.getItems().get(y).equals(String.valueOf(examsScanList.get(x).getStudent_ID()))) {
+
+
+                    // }
 
                 }
 
@@ -161,7 +165,7 @@ public class EditGrade {
 
                 }
             }
-            if(s1.equals(""))
+            if(s1.equals("0"))
                 word_scan.setText("");
             else {
                 try {
@@ -177,13 +181,13 @@ public class EditGrade {
                     }
 
 
-                    fis.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+            fis.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-    }
+            }
+        }
 }
 
 
