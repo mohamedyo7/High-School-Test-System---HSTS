@@ -30,8 +30,8 @@ public class CoursesReg {
         if(Name!= null) {
             int s;
             Message msg = new Message("register the course");
-           msg.setLogin_name(SimpleClient.Type);
-            s= Integer.parseInt(String.valueOf(SimpleClient.ID));
+            msg.setLogin_name(STD_ID_Reg.getItems().get(1));
+            s= Integer.parseInt(STD_ID_Reg.getItems().get(0));
             msg.setCourseName(Name);
             CourseReg cor=new CourseReg(Name);
           msg.setCourse(cor);
@@ -69,8 +69,11 @@ public class CoursesReg {
     @Subscribe
     public void setDataFromServerTF(MessageEvent event) {
         if (event.getMessage().getMessage().equals("i will give you the courses")) {
-            if (STD_ID_Reg.getItems().isEmpty())
+            if (STD_ID_Reg.getItems().isEmpty()) {
                 STD_ID_Reg.getItems().add(String.valueOf(SimpleClient.ID));
+                STD_ID_Reg.getItems().add((SimpleClient.Type));
+
+            }
             Reg_Courses_Table.getItems().clear();
             List<Course> Courses_from_server = event.getMessage().getCourses_list_from_server();
 
