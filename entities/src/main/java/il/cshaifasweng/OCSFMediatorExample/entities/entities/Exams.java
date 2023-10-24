@@ -1,9 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.entities.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 @Entity
 @Table(name = "Exams")
@@ -12,7 +9,20 @@ public class Exams implements Serializable {
 
     @Id
     @Column (name = "exam_id")
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int intid;
+    private String id;
+
+    private String eid="";
+
+    public String getEid() {
+        return eid;
+    }
+
+    public void setEid(String eid) {
+        this.eid = eid;
+    }
+
     @Column(name = "ques_number")
     private int ques_number;
     private boolean stat ;
@@ -87,7 +97,7 @@ private String reason;
 
     private String name;
 
-    public Exams(int id) {
+    public Exams(String id) {
         this.id = id;
         this.stat=false;
         this.time=0.00001;
@@ -104,7 +114,7 @@ private String reason;
     }
     public Exams() {
         this.stat=false;
-        this.id=1;
+        this.id="-1";
         this.time=0.00001;
     }
 
@@ -132,11 +142,11 @@ private String reason;
         this.course_name = course_name;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public int getId() {
+    public String getId() {
         return this.id;
     }
 }

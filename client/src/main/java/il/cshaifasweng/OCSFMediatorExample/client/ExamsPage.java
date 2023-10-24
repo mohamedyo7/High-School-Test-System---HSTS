@@ -18,9 +18,14 @@ import org.greenrobot.eventbus.Subscribe;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
-import java.util.ResourceBundle;
+import java.util.ResourceBundle;import javafx.scene.text.Text;
 public class ExamsPage {
     Exams exam = new Exams();
+    @FXML
+    private Text errorText;
+    @FXML
+    private Text errorText2;
+    String courseid;
     int qnum;
     @FXML
     private TextField exam_id;
@@ -34,7 +39,6 @@ public class ExamsPage {
     private TextField eCode;
     @FXML
     private URL location;
-
     @FXML
     private ListView<String> coursesList;
 
@@ -58,8 +62,9 @@ public class ExamsPage {
         exam.setQues_number(qnum);
         exam.setCode(eCode.getText());
         msg.setExam(exam);
-        if(!exam_id.getText().isEmpty())
-        msg.setId(Integer.parseInt(exam_id.getText()));
+        if(!exam_id.getText().isEmpty()){
+            msg.setExam_id(exam_id.getText() + courseid + courseid);
+            msg.setId(Integer.parseInt(exam_id.getText()));}
         sendMessage(msg);
         SimpleChatClient.setRoot("examsFinal");
     }
@@ -67,10 +72,9 @@ public class ExamsPage {
     @FXML
     void addToExamB(ActionEvent event) {
         Questions ques = tableviewq.getSelectionModel().getSelectedItem();
-        ques.setQues_id(exam_id.getText());
-        exam.setId(Integer.parseInt(exam_id.getText()));
-        //exam.add_Ques(ques);
-
+        ques.setQues_id(exam_id.getText() + SimpleClient.getCourderid(coursesList.getSelectionModel().getSelectedItem()) + SimpleClient.getCourderid(coursesList.getSelectionModel().getSelectedItem()));
+        exam.setId(exam_id.getText() + courseid + courseid);
+        ques.setToShow(false);
         Message msg = new Message("add ques to exam");
         msg.setQuestion(ques);
         sendMessage(msg);
@@ -90,16 +94,35 @@ public class ExamsPage {
 
     @FXML
     void insert_id(ActionEvent event) {
-        Message msg = new Message("add exam");
-        exam.setId(Integer.parseInt(exam_id.getText()));
-        exam.setCourse_name(coursesList.getSelectionModel().getSelectedItem());
-        msg.setExam(exam);
-        sendMessage(msg);
+        int allow = 1;
+        if (exam_id.getText().length() != 2) {
+            errorText.setText("Error ! exam id should be 2 digits");
+            allow = 0;
+        }
+        if (eCode.getText().length() != 4) {
+            errorText2.setText("Error ! Exam Code should be 4 digits");
+            allow = 0;
+        }
+        if (allow == 1) {
+            errorText.setText(" ");
+            errorText2.setText(" ");
+            Message msg = new Message("add exam");
+            courseid = SimpleClient.getCourderid(coursesList.getSelectionModel().getSelectedItem());
+            String id = exam_id.getText() + courseid;
+            System.out.println(id + "   is the id i printed");
+            exam.setId(exam_id.getText() + courseid + courseid);
+            exam.setEid(exam_id.getText() + courseid + courseid);
+            System.out.println(exam.getEid());
+            exam.setCourse_name(coursesList.getSelectionModel().getSelectedItem());
+            msg.setExam(exam);
+            sendMessage(msg);
+        }
     }
     @FXML
     void showQuestionsB(ActionEvent event) {
         Message msg=new Message("show questions");
-        exam.setId(Integer.parseInt(exam_id.getText()));
+        exam.setId(exam_id.getText() + courseid + courseid);
+        exam.setEid(exam_id.getText() + courseid + courseid);
         msg.setExam(exam);
 /*        msg.setMessage("update exam");
         sendMessage(msg)*/;
@@ -130,15 +153,19 @@ public class ExamsPage {
             List<Questions> ques = event.getMessage().getQuestions_list_from_server();
             tablecol.setCellValueFactory(new PropertyValueFactory<>("question"));
             exam.setCourse_name(coursesList.getSelectionModel().getSelectedItem());
-            for(int i=1;i<ques.size();i++){
+            for(int i=0;i<ques.size();i++){
                 if(coursesList.getSelectionModel().getSelectedItem()!=null)
                 if(coursesList.getSelectionModel().getSelectedItem().equals(ques.get(i).getCourse_name())){
-                    if(ques.get(i).getQues_id().equals("empty"))
+                    if(ques.get(i).isToShow())
                     tableviewq.getItems().add(ques.get(i));
                 }
 
             }
             tableviewq.refresh();
+        }
+        if(event.getMessage().getMessage().equals("exam id already exists")){
+            errorText.setText("Error ! exam id already exists");
+
         }
     }
     void sendMessage(Message message) {

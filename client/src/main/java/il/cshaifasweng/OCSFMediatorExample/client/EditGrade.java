@@ -47,6 +47,7 @@ public class EditGrade {
         String s=STD_ID_LIST.getSelectionModel().getSelectedItem();
         if(s!=null) {
             msg.setId(Integer.parseInt(s));
+            msg.setExam_id(s);
             student_id_toaddnote = Integer.parseInt(s);
         }
         course_name=STD_Course_LIST.getSelectionModel().getSelectedItem();
@@ -113,22 +114,38 @@ public class EditGrade {
 
             for(int x=0;x<examsScanList.size();x++){
                 if(examsScanList.get(x).getName().equals(s)){
-                    for(int y=0;y<STD_ID_LIST.getItems().size();y++){
-                        if(STD_ID_LIST.getItems().get(y).equals(String.valueOf(examsScanList.get(x).getStudent_ID()))) {
-                            c = 1;
-                            break;
-                        }
+                    if(!isExitst(examsScanList,examsScanList.get(x).getStudent_ID()))
+                        STD_ID_LIST.getItems().add(String.valueOf(examsScanList.get(x).getStudent_ID()));
+                   // for(int y=0;y<STD_ID_LIST.getItems().size();y++){
+                        //if(!STD_ID_LIST.getItems().get(y).equals(String.valueOf(examsScanList.get(x).getStudent_ID()))) {
+
+
+                       // }
 
                     }
-                    if(c==0)
-                        STD_ID_LIST.getItems().add(String.valueOf(examsScanList.get(x).getStudent_ID()));
+
+
                 }
-            }
+
+/*            for(int i=0;i<STD_ID_LIST.getItems().size();i++){
+                for(int j=i+1;j<STD_ID_LIST.getItems().size()-1;j++){
+                    if(STD_ID_LIST.getItems().get(j).equals(STD_ID_LIST.getItems().get(i)))
+                        STD_ID_LIST.getItems().remove(j);
+                }
+            }*/
 
 
 
         }
     }
+    public boolean isExitst(List<ExamsScan> l , int id){
+        for(int i =0 ; i<STD_ID_LIST.getItems().size();i++){
+            if(STD_ID_LIST.getItems().get(i).equals(String.valueOf(id))){
+                return true;
+            }
+        }
+        return false;
+        }
 
 
     @FXML

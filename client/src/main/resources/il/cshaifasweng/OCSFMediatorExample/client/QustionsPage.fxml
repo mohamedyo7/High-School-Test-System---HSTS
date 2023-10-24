@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="505.0" prefWidth="624.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.QustionsPage">
+<AnchorPane prefHeight="520.0" prefWidth="624.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.QustionsPage">
    <children>
       <TextField fx:id="quesionText" layoutX="94.0" layoutY="27.0" prefHeight="69.0" prefWidth="290.0" />
       <TextField fx:id="answerText1" layoutX="94.0" layoutY="238.0" prefHeight="25.0" prefWidth="303.0" />
@@ -15,8 +15,8 @@
       <TextField fx:id="answerText3" layoutX="94.0" layoutY="315.0" prefHeight="25.0" prefWidth="303.0" />
       <TextField fx:id="answerText2" layoutX="94.0" layoutY="277.0" prefHeight="25.0" prefWidth="303.0" />
       <Button layoutX="582.0" layoutY="27.0" mnemonicParsing="false" onAction="#backB" text="Back" />
-      <Button layoutX="273.0" layoutY="132.0" mnemonicParsing="false" onAction="#deleteButton" text="Button" />
-      <Button layoutX="148.0" layoutY="132.0" mnemonicParsing="false" onAction="#addButton" text="Add" />
+      <Button layoutX="315.0" layoutY="459.0" mnemonicParsing="false" onAction="#deleteButton" text="Exam's Page" />
+      <Button layoutX="160.0" layoutY="459.0" mnemonicParsing="false" onAction="#addButton" text="Add" />
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
       <Text layoutX="11.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Answer 1" wrappingWidth="62.13671875" />
       <Text layoutX="11.0" layoutY="294.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Answer 2" wrappingWidth="62.13671875" />
@@ -24,5 +24,9 @@
       <Text layoutX="11.0" layoutY="374.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Answer 4" wrappingWidth="62.13671875" />
       <Text layoutX="11.0" layoutY="412.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Correct Answer" wrappingWidth="83.13671875" />
       <ListView fx:id="list" layoutX="397.0" layoutY="27.0" onEditStart="#listac" prefHeight="210.0" prefWidth="173.0" />
+      <TextField fx:id="idText" layoutX="94.0" layoutY="459.0" prefHeight="25.0" prefWidth="52.0" />
+      <Text layoutX="7.0" layoutY="476.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Question ID:" wrappingWidth="69.13671875" />
+      <Text fill="#ff0202" layoutX="94.0" layoutY="445.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please inset 3 digits id" wrappingWidth="388.0" />
+      <Text fx:id="errorText" fill="#ff0202" layoutX="94.0" layoutY="502.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="381.0" />
    </children>
 </AnchorPane>

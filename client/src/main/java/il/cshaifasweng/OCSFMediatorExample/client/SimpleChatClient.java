@@ -9,7 +9,8 @@ import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 
@@ -32,6 +33,7 @@ public class SimpleChatClient extends Application {
         scene = new Scene(loadFXML("FirstPage"), 700, 742);
         stage.setScene(scene);
         stage.show();
+
     }
 
     static void setRoot(String fxml) throws IOException {
@@ -77,6 +79,5 @@ public class SimpleChatClient extends Application {
 
         launch();
 
-    }
 
-}
+}}
