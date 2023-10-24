@@ -786,12 +786,10 @@ public class SimpleServer extends AbstractServer {
 						message.setQuestions_list_from_server(questions);
 						message.setExamsScans_list_from_server(examsScans);
 						message.setExams_list_from_server(exams);
-
 						client.sendToClient(message);
-						//sendToAllClients(message);
+
 
 					} else if (request.equals("give me students id2")) {
-
 						message.setMessage("i will give you students id2");
 						List<CourseReg> s = getAllregCourses();
 						message.setCourses_list_from_server_reg(s);
@@ -802,9 +800,7 @@ public class SimpleServer extends AbstractServer {
 						message.setExamsScans_list_from_server(examsScans);
 						message.setExams_list_from_server(exams);
 						message.setDocuments_list_from_server(getAllLDecuments());
-
 						client.sendToClient(message);
-						//sendToAllClients(message);
 					}
 				else if (request.equals("give me word scan")) {
 
@@ -818,9 +814,7 @@ public class SimpleServer extends AbstractServer {
 					message.setExamsScans_list_from_server(examsScans);
 					message.setExams_list_from_server(exams);
 					message.setDocuments_list_from_server(getAllLDecuments());
-
 					client.sendToClient(message);
-					//sendToAllClients(message);
 				}
 
 					 else if (request.equals("give me exam questions")) {
@@ -832,7 +826,9 @@ public class SimpleServer extends AbstractServer {
 						message.setExamsScans_list_from_server(examsScans);
 						client.sendToClient(message);
 						//sendToAllClients(message);
+
 					} else if (request.equals("Show Answers")) {
+
 						message.setMessage("i will Show Answers");
 						List<Questions> questions = getAllQuestions();
 						List<ExamsScan> examsScans = getAllexamsscans();
@@ -878,6 +874,7 @@ public class SimpleServer extends AbstractServer {
 
 					}
 				else if (request.equals("give me exams info")){
+
 					message.setMessage("i will give you exams info");
 					message.setExamInfos(getAllExamInfo());
 					client.sendToClient(message);

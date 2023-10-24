@@ -266,7 +266,7 @@ public class App {
         }
     }
 
-        public static List<Grade> getGradesByStudentId(int studentId) throws Exception{
+    public static List<Grade> getGradesByStudentId(int studentId) throws Exception{
 
 
         boolean found=false;
@@ -349,7 +349,7 @@ public class App {
         List<Course> COURSES = session.createQuery(query).getResultList();
         return COURSES;
     }
-public static void generate(){
+    public static void generate(){
         Lecturer lec = new Lecturer(7,"Rai","Massalha","7");
         session.save(lec);
         session.flush();
@@ -360,7 +360,7 @@ public static void generate(){
             session.flush();
         }
 
-}
+    }
     public static void main(String[] args) {
 
         try {

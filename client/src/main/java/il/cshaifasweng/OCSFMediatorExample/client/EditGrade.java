@@ -125,27 +125,27 @@ public class EditGrade {
 
 
         } else if (event.getMessage().getMessage().equals("i will give you students id2")) {
-            System.out.println("hat tnshof 1");
+            System.out.println("kol");
             int c = 0;
-            int h=0;
+            int h = 0;
             String s = STD_Course_LIST.getSelectionModel().getSelectedItem();
             List<ExamsScan> examsScanList = event.getMessage().getExamsScans_list_from_server();
             List<Document> documentList = event.getMessage().getDocuments_list_from_server();
 
-            for(int x=0;x<examsScanList.size();x++){
-                if(examsScanList.get(x).getName().equals(s)){
-                    if(!isExitst(examsScanList,examsScanList.get(x).getStudent_ID()))
+            for (int x = 0; x < examsScanList.size(); x++) {
+                if (examsScanList.get(x).getName().equals(s)) {
+                    if (!isExitst(examsScanList, examsScanList.get(x).getStudent_ID()))
                         STD_ID_LIST.getItems().add(String.valueOf(examsScanList.get(x).getStudent_ID()));
-                   // for(int y=0;y<STD_ID_LIST.getItems().size();y++){
-                        //if(!STD_ID_LIST.getItems().get(y).equals(String.valueOf(examsScanList.get(x).getStudent_ID()))) {
+                    // for(int y=0;y<STD_ID_LIST.getItems().size();y++){
+                    //if(!STD_ID_LIST.getItems().get(y).equals(String.valueOf(examsScanList.get(x).getStudent_ID()))) {
 
 
-                       // }
-
-                    }
-
+                    // }
 
                 }
+
+
+            }
 
 /*            for(int i=0;i<STD_ID_LIST.getItems().size();i++){
                 for(int j=i+1;j<STD_ID_LIST.getItems().size()-1;j++){
@@ -153,18 +153,16 @@ public class EditGrade {
                         STD_ID_LIST.getItems().remove(j);
                 }
             }*/
-
-            List<Document>documentList=event.getMessage().getDocuments_list_from_server();
-            String s = "";
+            String s1 = "";
             System.out.println("haa 2");
-            for(int i=0;i<documentList.size();i++){
-                if(documentList.get(i).getId_student().equals(String.valueOf(event.getMessage().getStudentId()))&&documentList.get(i).getCourse_name().equals(event.getMessage().getCourseName())){
-                    s=documentList.get(i).getPath();
+            for (int i = 0; i < documentList.size(); i++) {
+                if (documentList.get(i).getId_student().equals(String.valueOf(event.getMessage().getStudentId())) && documentList.get(i).getCourse_name().equals(event.getMessage().getCourseName())) {
+                    s1 = documentList.get(i).getPath();
                     System.out.println("haa 3");
                 }
             }
             try {
-                FileInputStream fis = new FileInputStream(s);
+                FileInputStream fis = new FileInputStream(s1);
                 XWPFDocument document = new XWPFDocument(fis);
 
                 for (XWPFParagraph paragraph : document.getParagraphs()) {
@@ -173,8 +171,20 @@ public class EditGrade {
                     word_scan.setText(text);
                     System.out.println(text);
 
+                }
+
+
+            fis.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
     }
+}
+
+
+
+
     public boolean isExitst(List<ExamsScan> l , int id){
         for(int i =0 ; i<STD_ID_LIST.getItems().size();i++){
             if(STD_ID_LIST.getItems().get(i).equals(String.valueOf(id))){
@@ -183,15 +193,7 @@ public class EditGrade {
         }
         return false;
         }
-                }
 
-                fis.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-        }
-    }
 
     @FXML
     void initialize() {
