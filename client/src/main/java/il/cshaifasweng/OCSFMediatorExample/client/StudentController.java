@@ -10,13 +10,16 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-
+import javafx.scene.control.TextField;
 import java.io.IOException;
 import java.util.List;
 
 public class StudentController {
 
-
+    @FXML
+    private ListView<String> Grade_Text;
+    @FXML
+    private TextField grade_show;
     @FXML
     private TextField Std_name;
 
@@ -67,11 +70,11 @@ public class StudentController {
        msg.setStudentId(Integer.parseInt(STD_ID.getItems().get(0)));
         sendMessage(msg);
     }
-    @FXML
-    private ListView<String> Grade_Text;
-    @FXML
-    private TextArea grade_show;
 
+    @FXML
+    void registerToCourse(ActionEvent event) {
+
+    }
 
     void sendMessage(Message message) {
 
