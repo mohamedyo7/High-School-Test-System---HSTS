@@ -32,7 +32,7 @@ public class examsFinalstu {
     String exam_id;
     double time;
     double eTime;
-    ExamInfo examInfo;
+    ExamInfo examInfo = new ExamInfo();
     public static String courseid;
     @FXML
     private TextField eCode;
@@ -71,56 +71,59 @@ public class examsFinalstu {
             SimpleChatClient.setRoot("StudentController");}
     @FXML
     void download_exam(ActionEvent event) throws FileNotFoundException {
-        //downlodExamid.setVisible(false);
-        start_b.setVisible(false);
-        submit_but.setVisible(true);
-        submit_exam.setVisible(true);
-        submit_textfield.setVisible(true);
-        ExamInfo examInfo=new ExamInfo();
-        examInfo.setExam_id(examsTable.getSelectionModel().getSelectedItem().getId());
-        examInfo.setCourseid(examsTable.getSelectionModel().getSelectedItem().getCourse_name());
-        examInfo.setStudentid(SimpleClient.ID);
-        examInfo.setActualDuration(time);
-        examInfo.setExecutionDateTime(new Date());
-        examInfo.setNumberOfStartedStudents(1);
-        msg.setExamInfo(examInfo);
-        msg.setExam(examsTable.getSelectionModel().getSelectedItem());
-        msg.setCourseName(String.valueOf(examsTable.getSelectionModel().getSelectedItem()));
-        msg.setCourse_id(Integer.parseInt(courseid));
-        msg.setMessage("download the exam");
-        msg.setCourseName(coursesList.getSelectionModel().getSelectedItem());
-        sendMessage(msg);
-        exam_id = examsTable.getSelectionModel().getSelectedItem().getId();
-        time = msg.getExam().getTime();
-        delay = new PauseTransition(Duration.millis(1000 * 60 * time));
-        conditionMet = false;
-        delay.setOnFinished(e -> {
-            if (conditionMet) {
-            }else {
-                delay2 = new PauseTransition(Duration.millis(1000 * 60 * eTime));
-                delay2.setOnFinished(d -> {
-                    examInfo.setNumberOfFailedStudents(1);
-                    msg.setExamInfo(examInfo);
-                    msg.setMessage("exam is over");
-                    msg.setExam_id(exam_id);
-                    submit_textfield.setText("");
-                    submit_but.setVisible(false);
-                    submit_exam.setVisible(false);
-                    submit_textfield.setVisible(false);
-                    msg.setExam(examsTable.getSelectionModel().getSelectedItem());
-                    msg.setStudentId(Integer.parseInt(studenid.getText()));
-                    msg.setPath("0");
-                    msg.setCourseName(coursesList.getSelectionModel().getSelectedItem());
-                    sendMessage(msg);
-                    System.out.println("exam is over");
-                    sendMessage(msg);
-                    msg.setMessage("update document");
-                    sendMessage(msg);
-                });
-                delay2.play();
-            }
-        });
-        delay.play();
+        if(examsTable.getSelectionModel().getSelectedItem().getCode().equals(eCode.getText())&&Integer.parseInt(studenid.getText())==SimpleClient.ID) {
+            //downlodExamid.setVisible(false);
+            start_b.setVisible(false);
+            submit_but.setVisible(true);
+            submit_exam.setVisible(true);
+            submit_textfield.setVisible(true);
+            examInfo.setExam_id(examsTable.getSelectionModel().getSelectedItem().getId());
+            examInfo.setCourseid(examsTable.getSelectionModel().getSelectedItem().getCourse_name());
+            examInfo.setStudentid(SimpleClient.ID);
+            examInfo.setActualDuration(time);
+            examInfo.setExecutionDateTime(new Date());
+            examInfo.setNumberOfStartedStudents(1);
+            msg.setExamInfo(examInfo);
+            msg.setExam(examsTable.getSelectionModel().getSelectedItem());
+            msg.setCourseName(String.valueOf(examsTable.getSelectionModel().getSelectedItem()));
+            msg.setCourse_id(Integer.parseInt(courseid));
+            msg.setMessage("download the exam");
+            msg.setCourseName(coursesList.getSelectionModel().getSelectedItem());
+            sendMessage(msg);
+            exam_id = examsTable.getSelectionModel().getSelectedItem().getId();
+            time = msg.getExam().getTime();
+            delay = new PauseTransition(Duration.millis(1000 * 60 * time));
+            conditionMet = false;
+            delay.setOnFinished(e -> {
+                if (conditionMet) {
+                } else {
+                    delay2 = new PauseTransition(Duration.millis(1000 * 60 * eTime));
+                    delay2.setOnFinished(d -> {
+                        examInfo.setNumberOfFailedStudents(1);
+                        System.out.println("enifo  " + examInfo.getId());
+                        msg.setExamInfo(examInfo);
+                        msg.setMessage("exam is over");
+                        msg.setExam_id(exam_id);
+                        submit_textfield.setText("");
+                        submit_but.setVisible(false);
+                        submit_exam.setVisible(false);
+                        submit_textfield.setVisible(false);
+                        msg.setExam(examsTable.getSelectionModel().getSelectedItem());
+                        msg.setStudentId(Integer.parseInt(studenid.getText()));
+                        msg.setPath("0");
+                        msg.setCourseName(coursesList.getSelectionModel().getSelectedItem());
+                        sendMessage(msg);
+                        System.out.println("exam is over");
+                        sendMessage(msg);
+                        msg.setMessage("update document");
+                        sendMessage(msg);
+                    });
+                    delay2.play();
+                }
+            });
+            delay.play();
+        }
+        else System.out.println("Wrong code");
     }
     @FXML
     private Button submit_but;
@@ -152,7 +155,6 @@ public class examsFinalstu {
         if(examsTable.getSelectionModel().getSelectedItem().getCode().equals(eCode.getText())&&Integer.parseInt(studenid.getText())==SimpleClient.ID){
             msg.setMessage("start exam");
             msg.setLogin_name("student");
-            ExamInfo examInfo=new ExamInfo();
             examInfo.setExam_id(examsTable.getSelectionModel().getSelectedItem().getId());
             examInfo.setCourseid(examsTable.getSelectionModel().getSelectedItem().getCourse_name());
             examInfo.setStudentid(SimpleClient.ID);
