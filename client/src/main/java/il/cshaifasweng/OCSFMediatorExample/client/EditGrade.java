@@ -153,33 +153,42 @@ public class EditGrade {
                         STD_ID_LIST.getItems().remove(j);
                 }
             }*/
-            String s1 = "";
+            String s1 = " ";
             System.out.println("haa 2");
             for (int i = 0; i < documentList.size(); i++) {
-                if (documentList.get(i).getId_student().equals(String.valueOf(event.getMessage().getStudentId())) && documentList.get(i).getCourse_name().equals(event.getMessage().getCourseName())) {
-                    s1 = documentList.get(i).getPath();
-                    System.out.println("haa 3");
+                System.out.println(documentList.get(i).getId_student() + " " + event.getMessage().getStudentId() + " " + documentList.get(i).getCourse_name() + " " + event.getMessage().getCourseName());
+                if(documentList.get(i).getCourse_name().equals(event.getMessage().getCourseName())) {
+                    if(!documentList.get(i).getPath().equals(""))
+                        s1 = documentList.get(i).getPath();
+                        System.out.println("haa 3");
+
                 }
+                System.out.println("haa 3.2");
             }
-            try {
-                FileInputStream fis = new FileInputStream(s1);
-                XWPFDocument document = new XWPFDocument(fis);
+            System.out.println("haa 3.4");
+            if (s1.equals("0")) {
+                word_scan.setText("");
+            } else {
+                try {
+                    FileInputStream fis = new FileInputStream(s1);
+                    XWPFDocument document = new XWPFDocument(fis);
 
-                for (XWPFParagraph paragraph : document.getParagraphs()) {
-                    System.out.println("haa 4");
-                    String text = paragraph.getText();
-                    word_scan.setText(text);
-                    System.out.println(text);
+                    for (XWPFParagraph paragraph : document.getParagraphs()) {
+                        System.out.println("haa 4");
+                        String text = paragraph.getText();
+                        word_scan.setText(text);
+                        System.out.println(text);
 
+                    }
+
+
+                    fis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
 
-
-            fis.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+            }
         }
-
-    }
 }
 
 

@@ -2,10 +2,12 @@ package il.cshaifasweng.OCSFMediatorExample.client;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.*;
+import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Duration;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
@@ -17,18 +19,23 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class examsFinalstu {
     Message msg = new Message("");
-
-
-
+    private boolean conditionMet;
+    private PauseTransition delay;
+    private PauseTransition delay2;
+    double mark;
+    String exam_id;
+    double time;
+    double eTime;
+    ExamInfo examInfo;
     public static String courseid;
     @FXML
     private TextField eCode;
-    private double time;
     List<Exams> exams= new ArrayList<>() ;
     @FXML
     private TableColumn<Exams, String> examsTablemini;
@@ -37,7 +44,8 @@ public class examsFinalstu {
     private TableColumn<Exams, String> numberTable;
     @FXML
     private ResourceBundle resources;
-
+    @FXML
+    private Button downlodExamid;
     @FXML
     private URL location;
 
@@ -63,15 +71,56 @@ public class examsFinalstu {
             SimpleChatClient.setRoot("StudentController");}
     @FXML
     void download_exam(ActionEvent event) throws FileNotFoundException {
-
+        //downlodExamid.setVisible(false);
+        start_b.setVisible(false);
         submit_but.setVisible(true);
         submit_exam.setVisible(true);
         submit_textfield.setVisible(true);
-        Message msg=new Message("download the exam");
+        ExamInfo examInfo=new ExamInfo();
+        examInfo.setExam_id(examsTable.getSelectionModel().getSelectedItem().getId());
+        examInfo.setCourseid(examsTable.getSelectionModel().getSelectedItem().getCourse_name());
+        examInfo.setStudentid(SimpleClient.ID);
+        examInfo.setActualDuration(time);
+        examInfo.setExecutionDateTime(new Date());
+        examInfo.setNumberOfStartedStudents(1);
+        msg.setExamInfo(examInfo);
         msg.setExam(examsTable.getSelectionModel().getSelectedItem());
+        msg.setCourseName(String.valueOf(examsTable.getSelectionModel().getSelectedItem()));
+        msg.setCourse_id(Integer.parseInt(courseid));
+        msg.setMessage("download the exam");
         msg.setCourseName(coursesList.getSelectionModel().getSelectedItem());
         sendMessage(msg);
-
+        exam_id = examsTable.getSelectionModel().getSelectedItem().getId();
+        time = msg.getExam().getTime();
+        delay = new PauseTransition(Duration.millis(1000 * 60 * time));
+        conditionMet = false;
+        delay.setOnFinished(e -> {
+            if (conditionMet) {
+            }else {
+                delay2 = new PauseTransition(Duration.millis(1000 * 60 * eTime));
+                delay2.setOnFinished(d -> {
+                    examInfo.setNumberOfFailedStudents(1);
+                    msg.setExamInfo(examInfo);
+                    msg.setMessage("exam is over");
+                    msg.setExam_id(exam_id);
+                    submit_textfield.setText("");
+                    submit_but.setVisible(false);
+                    submit_exam.setVisible(false);
+                    submit_textfield.setVisible(false);
+                    msg.setExam(examsTable.getSelectionModel().getSelectedItem());
+                    msg.setStudentId(Integer.parseInt(studenid.getText()));
+                    msg.setPath("0");
+                    msg.setCourseName(coursesList.getSelectionModel().getSelectedItem());
+                    sendMessage(msg);
+                    System.out.println("exam is over");
+                    sendMessage(msg);
+                    msg.setMessage("update document");
+                    sendMessage(msg);
+                });
+                delay2.play();
+            }
+        });
+        delay.play();
     }
     @FXML
     private Button submit_but;
@@ -85,7 +134,9 @@ public class examsFinalstu {
     void Submit_but(ActionEvent event) {
 
         Message msg=new Message("update document");
-        msg.setExam(examsTable.getSelectionModel().getSelectedItem());
+        if(examsTable.getSelectionModel().getSelectedItem().getCode().equals(eCode.getText())&&Integer.parseInt(studenid.getText())==SimpleClient.ID) {
+
+        } msg.setExam(examsTable.getSelectionModel().getSelectedItem());
         msg.setStudentId(Integer.parseInt(studenid.getText()));
         msg.setPath(submit_textfield.getText());
         msg.setCourseName(coursesList.getSelectionModel().getSelectedItem());
@@ -168,6 +219,17 @@ public class examsFinalstu {
 
                 coursesList.refresh();
 
+        } else if (event.getMessage().getMessage().equals("exam is over done")){
+            if(exam_id.equals(event.getMessage().getExam_id())){
+                msg.setIs_finished(conditionMet);
+                msg.setMessage("end exam");
+                msg.setStudentId(SimpleClient.ID);
+                msg.setGrade_to_change((int)mark);
+                msg.setExam_id(exam_id);
+                sendMessage(msg);
+                SimpleChatClient.setRoot("StudentController");
+            }
+
         } else if (event.getMessage().getMessage().equals("i will give you the exams")) {
             examsTable.getItems().clear();
             List<Exams> exams = event.getMessage().getExams_list_from_server();
@@ -242,6 +304,15 @@ public class examsFinalstu {
             out.close();
 
         }
+        else if (event.getMessage().getMessage().equals("extra time")){
+            System.out.println("etttttttttt");
+            if(exam_id.equals(event.getMessage().getExam().getId())) {
+                eTime = event.getMessage().geteTime();
+                System.out.println("etime is +  " + eTime);
+            }
+            else
+                System.out.println("no eT");
+        }
     }
 
     void sendMessage(Message message) {
@@ -266,9 +337,12 @@ public class examsFinalstu {
     @FXML
     void initialize() {
         EventBus.getDefault().register(this);
+        conditionMet = true;
         submit_but.setVisible(false);
         submit_exam.setVisible(false);
         submit_textfield.setVisible(false);
+
+        eTime=0;
         sendMessage("give me the courses");
         assert coursesList != null : "fx:id=\"coursesList\" was not injected: check your FXML file 'examsFinal.fxml'.";
         assert examsTable != null : "fx:id=\"examsTable\" was not injected: check your FXML file 'examsFinal.fxml'.";

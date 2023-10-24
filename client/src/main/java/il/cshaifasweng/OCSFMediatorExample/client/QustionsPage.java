@@ -84,9 +84,8 @@ int allow=0;
     }
 
     @FXML
-    void deleteButton(ActionEvent event) {
-        Message msg=new Message("show questions");
-        sendMessage(msg);
+    void deleteButton(ActionEvent event) throws IOException {
+        SimpleChatClient.setRoot("ExamsPage");
     }
     void sendMessage(Message message) {
 

@@ -152,7 +152,7 @@ public class ExamsFinal {
 
             examsTable.refresh();
         }else if (event.getMessage().getMessage().equals("extra time accepted")) {
-            if(event.getMessage().getExam().getId()==exam.getId()) {
+            if(event.getMessage().getExam().getId().equals(exam.getId())) {
                 msg.seteTime(etime);
                 courseid = coursesList.getSelectionModel().getSelectedItem();
                 Exams examID = examsTable.getSelectionModel().getSelectedItem();

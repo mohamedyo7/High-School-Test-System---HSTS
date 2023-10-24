@@ -94,6 +94,8 @@ public class ExamsPage {
 
     @FXML
     void insert_id(ActionEvent event) {
+        errorText.setText(" ");
+        errorText2.setText(" ");
         int allow = 1;
         if (exam_id.getText().length() != 2) {
             errorText.setText("Error ! exam id should be 2 digits");

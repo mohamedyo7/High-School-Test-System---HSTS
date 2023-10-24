@@ -23,7 +23,7 @@ public class ExtraTimeRequests {
 
     @FXML
     private URL location;
-
+    Message msg = new Message("");
     @FXML
     private TableColumn<Exams, String > courseName;
 
@@ -48,7 +48,7 @@ public class ExtraTimeRequests {
     @FXML
     void acceptRequest(ActionEvent event) {
         Exams exam = requestsTable.getSelectionModel().getSelectedItem();
-        Message msg = new Message("extra time accepted");
+        msg.setMessage("extra time accepted");
         msg.setExam(exam);
         //requestsTable.getItems().remove(exam);
         sendMessage(msg);
@@ -58,7 +58,7 @@ public class ExtraTimeRequests {
         msg.setMessage("update exam");
         sendMessage(msg);
         for(int i=0 ; i< requestsTable.getItems().size();i++){
-            if (requestsTable.getItems().get(i).getId() == exam.getId()) {
+            if (requestsTable.getItems().get(i).getId().equals(exam.getId())) {
                 requestsTable.getItems().remove(i);
                 reason.clear();
                 break;
@@ -87,6 +87,7 @@ public class ExtraTimeRequests {
            requestsTable.refresh();
        }
         if(event.getMessage().getMessage().equals("i will show mediator requests")) {
+
         }
     }
     @FXML

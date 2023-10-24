@@ -722,6 +722,7 @@ public class SimpleServer extends AbstractServer {
 				}
 				else if (request.equals("download the exam")) {
 					message.setMessage("i will download the exam");
+					generateExamInfo(message.getExamInfo());
 					message.setQuestions_list_from_server(getAllQuestions());
 					client.sendToClient(message);
 				}
@@ -973,6 +974,7 @@ public class SimpleServer extends AbstractServer {
 				} else if (request.equals("extraTimeRequest")) {
 						updateExam(message.getExam());
 						message.setMessage("extra time request");
+						sendToAllClients(msg);
 					} else if (request.equals("extraTime")) {
 						message.setMessage("extra time");
 						sendToAllClients(message);
