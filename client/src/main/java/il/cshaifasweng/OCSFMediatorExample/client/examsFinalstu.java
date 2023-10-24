@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class examsFinalstu {
@@ -63,7 +64,17 @@ public class examsFinalstu {
             SimpleChatClient.setRoot("StudentController");}
     @FXML
     void download_exam(ActionEvent event) throws FileNotFoundException {
-
+        Message msg1=new Message("start exam");
+        msg1.setLogin_name("student");
+        ExamInfo examInfo=new ExamInfo();
+        examInfo.setExam_id(examsTable.getSelectionModel().getSelectedItem().getId());
+        examInfo.setCourseid(examsTable.getSelectionModel().getSelectedItem().getCourse_name());
+        examInfo.setStudentid(SimpleClient.ID);
+        msg1.setExamInfo(examInfo);
+        msg1.setExam(examsTable.getSelectionModel().getSelectedItem());
+        msg1.setCourseName(String.valueOf(examsTable.getSelectionModel().getSelectedItem()));
+        msg1.setCourse_id(Integer.parseInt(courseid));
+        sendMessage(msg1);
         submit_but.setVisible(true);
         submit_exam.setVisible(true);
         submit_textfield.setVisible(true);
@@ -172,6 +183,7 @@ public class examsFinalstu {
             examsTable.getItems().clear();
             List<Exams> exams = event.getMessage().getExams_list_from_server();
             List<ExamsScan>examScanList=event.getMessage().getExamsScans_list_from_server();
+            List<Document>documentList=event.getMessage().getDocuments_list_from_server();
 
 
             examsTablemini.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -189,17 +201,30 @@ public class examsFinalstu {
                 if (examScanList.get(i).getStudent_ID() == SimpleClient.ID) {
                     if (coursesList.getSelectionModel().getSelectedItem().equals(examScanList.get(i).getName())){
                         for(int j=0;j<examsTable.getItems().size();j++){
-                            if(examsTable.getItems().get(j).getId()==examScanList.get(i).getExam_ID()&&examScanList.get(i).getStudent_state_tostart().equals("false"))
+                            if(Objects.equals(examsTable.getItems().get(j).getId(), examScanList.get(i).getExam_ID()) &&examScanList.get(i).getStudent_state_tostart().equals("false"))
                                 examsTable.getItems().remove(j);
                         }
 
                     }
                 }
             }
+            for(int i=0;i<documentList.size();i++) {
+                if (documentList.get(i).getId_student().equals( String.valueOf(SimpleClient.ID))) {
+                    if (coursesList.getSelectionModel().getSelectedItem().equals(documentList.get(i).getCourse_name())){
+                        for(int j=0;j<examsTable.getItems().size();j++){
+                            if(Objects.equals(examsTable.getItems().get(j).getId(), documentList.get(i).getId_exam()) &&documentList.get(i).getDocinsidetext().equals("false"))
+                                examsTable.getItems().remove(j);
+                        }
+
+                    }
+                }
+            }
+
             examsTable.refresh();
         }
         else if (event.getMessage().getMessage().equals("i will download the exam")) {
             String desktopPath = System.getProperty("user.home") + "/Desktop/"+ examsTable.getSelectionModel().getSelectedItem().getId()+"_"+ SimpleClient.ID +".docx";
+            examsTable.getItems().remove(examsTable.getSelectionModel().getSelectedItem());
             submit_textfield.setText(desktopPath);
             XWPFDocument document=new XWPFDocument();
             FileOutputStream out = new FileOutputStream(desktopPath);
