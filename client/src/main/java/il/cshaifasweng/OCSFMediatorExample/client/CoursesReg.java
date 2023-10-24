@@ -3,7 +3,6 @@ package il.cshaifasweng.OCSFMediatorExample.client;
 import il.cshaifasweng.OCSFMediatorExample.entities.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.CourseReg;
-import il.cshaifasweng.OCSFMediatorExample.entities.entities.Student;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
@@ -31,8 +30,8 @@ public class CoursesReg {
         if(Name!= null) {
             int s;
             Message msg = new Message("register the course");
-           msg.setLogin_name(STD_ID_Reg.getItems().get(1));
-            s= Integer.parseInt(STD_ID_Reg.getItems().get(0));
+           msg.setLogin_name(SimpleClient.Type);
+            s= Integer.parseInt(String.valueOf(SimpleClient.ID));
             msg.setCourseName(Name);
             CourseReg cor=new CourseReg(Name);
           msg.setCourse(cor);
@@ -71,7 +70,7 @@ public class CoursesReg {
     public void setDataFromServerTF(MessageEvent event) {
         if (event.getMessage().getMessage().equals("i will give you the courses")) {
             if (STD_ID_Reg.getItems().isEmpty())
-                STD_ID_Reg.getItems().add(String.valueOf(event.getMessage().getStudentId()));
+                STD_ID_Reg.getItems().add(String.valueOf(SimpleClient.ID));
             Reg_Courses_Table.getItems().clear();
             List<Course> Courses_from_server = event.getMessage().getCourses_list_from_server();
 
