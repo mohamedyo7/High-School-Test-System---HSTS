@@ -7,6 +7,7 @@ import il.cshaifasweng.OCSFMediatorExample.entities.entities.Exams;
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.ExamsScan;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
@@ -155,7 +156,7 @@ public class EditGrade {
             String s1 = "";
             System.out.println("haa 2");
             for (int i = 0; i < documentList.size(); i++) {
-                if (documentList.get(i).getId_student().equals(String.valueOf(event.getMessage().getStudentId())) && documentList.get(i).getCourse_name().equals(event.getMessage().getCourseName())) {
+                if (documentList.get(i).getCourse_name().equals(event.getMessage().getCourseName())) {
                     s1 = documentList.get(i).getPath();
                     if (!isExitstdoc(documentList, Integer.parseInt(documentList.get(i).getId_student()))){
                         student_word.getItems().add(String.valueOf(documentList.get(i).getId_student()));

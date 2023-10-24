@@ -2,10 +2,12 @@ package il.cshaifasweng.OCSFMediatorExample.client;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.*;
+import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Duration;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
@@ -16,9 +18,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class examsFinalstu {
     Message msg = new Message("");
@@ -33,7 +33,6 @@ public class examsFinalstu {
     public static String courseid;
     @FXML
     private TextField eCode;
-    private double time;
     List<Exams> exams= new ArrayList<>() ;
     @FXML
     private TableColumn<Exams, String> examsTablemini;
@@ -250,7 +249,7 @@ public class examsFinalstu {
                 if (examScanList.get(i).getStudent_ID() == SimpleClient.ID) {
                     if (coursesList.getSelectionModel().getSelectedItem().equals(examScanList.get(i).getName())){
                         for(int j=0;j<examsTable.getItems().size();j++){
-                            if(Objects.equals(examsTable.getItems().get(j).getId(), examScanList.get(i).getExam_ID()) &&examScanList.get(i).getStudent_state_tostart().equals("false"))
+                            if(examsTable.getItems().get(j).getId().equals(examScanList.get(i).getExam_ID())&&examScanList.get(i).getStudent_state_tostart().equals("false"))
                                 examsTable.getItems().remove(j);
                         }
 
