@@ -235,7 +235,7 @@ public class App {
 
             ExamInfo exam = null;
             for (ExamInfo e : exams) {
-                if (e.getId() == updatedExamInfo.getId()) {
+                if(e.getExam_id().equals(updatedExamInfo.getExam_id()) && e.getStudentid()==updatedExamInfo.getStudentid() && e.getCourseid().equals(updatedExamInfo.getCourseid())) {
                     exam = e;
                     break;
                 }
