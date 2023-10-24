@@ -14,12 +14,15 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-
+import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 public class QustionsPage {
 
     @FXML
+    private TextField idText;
+    @FXML
     private ResourceBundle resources;
-
+int allow=0;
     @FXML
     private URL location;
 
@@ -27,7 +30,8 @@ public class QustionsPage {
     private ListView<String> list;
     @FXML
     private TextField answerText1;
-
+    @FXML
+    private Text errorText;
     @FXML
     private TextField answerText2;
 
@@ -53,17 +57,30 @@ public class QustionsPage {
 
     @FXML
     void addButton(ActionEvent event) {
-        String question = quesionText.getText();
-        String ans1 = answerText1.getText();
-        String ans2 = answerText2.getText();
-        String ans3 = answerText3.getText();
-        String ans4 = answerText4.getText();
-        String cans = answerText5.getText();
-        Message msg=new Message("create question");;
-        Questions q = new Questions(question,ans1,ans2,ans3,ans4,cans);
-        q.setCourse_name(list.getSelectionModel().getSelectedItem());
-        msg.setQuestion(q);
-        sendMessage(msg);
+        allow=1;
+        if (idText.getText().length() != 3)
+            errorText.setText("The id you intered is not 3 digits long , please try again");
+        else {
+                errorText.setText("Question added Successfully");
+                String question = quesionText.getText();
+                String ans1 = answerText1.getText();
+                String ans2 = answerText2.getText();
+                String ans3 = answerText3.getText();
+                String ans4 = answerText4.getText();
+                String cans = answerText5.getText();
+                Message msg = new Message("create question");
+                Questions q = new Questions(question, ans1, ans2, ans3, ans4, cans);
+                q.setToShow(true);
+                String a = idText.getText() + SimpleClient.getCourderid(list.getSelectionModel().getSelectedItem());
+                q.setId(a);
+                System.out.println(a);
+                q.setCourse_name(list.getSelectionModel().getSelectedItem());
+                msg.setQuestion(q);
+                sendMessage(msg);
+            if(allow == 0){
+                errorText.setText("error ! Question id already exists");
+            }
+        }
     }
 
     @FXML
@@ -107,6 +124,10 @@ public class QustionsPage {
                     }
             }
             list.refresh();
+        } else if (event.getMessage().getMessage().equals("questions id exist")) {
+            errorText.setText("Error ! Question id already exists");
+            allow = 0;
+
         }
     }
     @FXML

@@ -12,7 +12,7 @@ public class ExamInfo implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private int exam_id;
+    private String exam_id;
     private Date executionDateTime;
     private double actualDuration=0;
     private int numberOfStartedStudents=0;
@@ -30,11 +30,11 @@ public class ExamInfo implements Serializable {
         this.studentid = studentid;
     }
 
-    public int getExam_id() {
+    public String getExam_id() {
         return exam_id;
     }
 
-    public void setExam_id(int exam_id) {
+    public void setExam_id(String exam_id) {
         this.exam_id = exam_id;
     }
 
@@ -107,10 +107,10 @@ public class ExamInfo implements Serializable {
     public int getId() {
         return id;
     }
-    public int getexamId() {
+    public String  getexamId() {
         return exam_id;
     }
 
-public void setexamId(int id) {
+public void setexamId(String id) {
         this.exam_id = id;}
 }

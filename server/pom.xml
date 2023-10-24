@@ -45,76 +45,7 @@
             <version>0.0.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
-        <dependency>
-            <groupId>org.apache.servicemix.document</groupId>
-            <artifactId>org.apache.servicemix.document</artifactId>
-            <version>1.6.1</version>
-        </dependency>
-		<dependency>
-			<groupId>org.apache.servicemix.document</groupId>
-			<artifactId>org.apache.servicemix.document</artifactId>
-			<version>1.6.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.servicemix.document</groupId>
-			<artifactId>org.apache.servicemix.document</artifactId>
-			<version>1.6.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.servicemix.document</groupId>
-			<artifactId>org.apache.servicemix.document</artifactId>
-			<version>1.6.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.servicemix.document</groupId>
-			<artifactId>org.apache.servicemix.document</artifactId>
-			<version>1.6.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.servicemix.document</groupId>
-			<artifactId>org.apache.servicemix.document</artifactId>
-			<version>1.6.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.servicemix.document</groupId>
-			<artifactId>org.apache.servicemix.document</artifactId>
-			<version>1.6.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.servicemix.document</groupId>
-			<artifactId>org.apache.servicemix.document</artifactId>
-			<version>1.6.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.incode.module.document</groupId>
-			<artifactId>incode-module-document-dom</artifactId>
-			<version>1.15.1.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.servicemix.document</groupId>
-			<artifactId>org.apache.servicemix.document</artifactId>
-			<version>1.6.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.servicemix.document</groupId>
-			<artifactId>org.apache.servicemix.document</artifactId>
-			<version>1.6.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.servicemix.document</groupId>
-			<artifactId>org.apache.servicemix.document</artifactId>
-			<version>1.6.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.servicemix.document</groupId>
-			<artifactId>org.apache.servicemix.document</artifactId>
-			<version>1.6.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.servicemix.document</groupId>
-			<artifactId>org.apache.servicemix.document</artifactId>
-			<version>1.6.1</version>
-		</dependency>
+
 
 
 	</dependencies>

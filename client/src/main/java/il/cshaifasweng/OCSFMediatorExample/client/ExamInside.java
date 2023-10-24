@@ -31,7 +31,7 @@ public class ExamInside {
     private PauseTransition delay;
     private PauseTransition delay2;
     double mark;
-    int exam_id;
+    String exam_id;
     String exam_name;
     String std_ans;
     private boolean conditionMet;
@@ -125,37 +125,35 @@ public class ExamInside {
     @FXML
     void nextb(ActionEvent event) throws IOException {
         if(ans1.isSelected()){
-
-
-
+            std_ans=answer1.getText();
             if(answer1.getText().equals(cAns)){
                 mark+= ((double) 100 /quenum);
             }
             ans1.setSelected(false);
         }
         if(ans2.isSelected()){
-            std_ans=ans2.getText();
+            std_ans=answer2.getText();
             if(answer2.getText().equals(cAns)){
                 mark+= ((double) 100 /quenum);
             }
             ans2.setSelected(false);
         }
         if(ans3.isSelected()){
-            std_ans=ans3.getText();
+            std_ans=answer3.getText();
             if(answer3.getText().equals(cAns)){
                 mark+= ((double) 100 /quenum);
             }
             ans3.setSelected(false);
         }
         if(ans4.isSelected()){
-            std_ans=ans4.getText();
+            std_ans=answer4.getText();
             if(answer4.getText().equals(cAns)){
                 mark+= ((double) 100 /quenum);
             }
             ans4.setSelected(false);
         }
         Message msg1=new Message("save data");
-        msg1.setId(exam_id);
+        msg1.setExam_id(exam_id);
         msg1.setCourseName(exam_name);
         msg1.setAns(std_ans);
         msg1.setStudentId(SimpleClient.ID);
@@ -198,7 +196,7 @@ public class ExamInside {
             ques = event.getMessage().getQuestions_list_from_server();
             exams = event.getMessage().getExams_list_from_server();
             fques.clear();
-            id = String.valueOf(exam_id);
+            id = exam_id;
             i=0;
             for (Questions que : ques) {
                 if (que.getQues_id().equals(id)) {
@@ -240,7 +238,7 @@ public class ExamInside {
             exam_name=event.getMessage().getExam().getCourse_name();
             time = event.getMessage().getExam().getTime();
             msg.setStudentId(SimpleClient.ID);
-            msg.setId(exam_id);
+            msg.setExam_id(exam_id);
             examInfo.setActualDuration(time);
             examInfo.setExecutionDateTime(new Date());
             examInfo.setNumberOfStartedStudents(1);
@@ -255,7 +253,7 @@ public class ExamInside {
                         examInfo.setNumberOfFailedStudents(1);
                         msg.setExamInfo(examInfo);
                         msg.setMessage("exam is over");
-                        msg.setId(exam_id);
+                        msg.setExam_id(exam_id);
                         sendMessage(msg);
                     });
                     delay2.play();
@@ -266,12 +264,12 @@ public class ExamInside {
 
         }
         else if (event.getMessage().getMessage().equals("exam is over done")){
-            if(exam_id==event.getMessage().getId()){
+            if(exam_id.equals(event.getMessage().getExam_id())){
                 msg.setIs_finished(conditionMet);
                 msg.setMessage("end exam");
                 msg.setStudentId(SimpleClient.ID);
                 msg.setGrade_to_change((int)mark);
-                msg.setId(exam_id);
+                msg.setExam_id(exam_id);
                 sendMessage(msg);
                 msg.setMessage("the grade is");
                 msg.setGrade(mark);
@@ -281,7 +279,7 @@ public class ExamInside {
 
         }
         else if (event.getMessage().getMessage().equals("extra time")){
-            if(exam_id == event.getMessage().getExam().getId()) {
+            if(exam_id.equals(event.getMessage().getExam().getId())) {
                 eTime = event.getMessage().geteTime();
             }
             else

@@ -3,13 +3,18 @@ package il.cshaifasweng.OCSFMediatorExample.client;
 import il.cshaifasweng.OCSFMediatorExample.client.ocsf.AbstractClient;
 import il.cshaifasweng.OCSFMediatorExample.entities.Message;
 import org.greenrobot.eventbus.EventBus;
+/*import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+import org.apache.poi.xwpf.usermodel.XWPFRun;*/
 
 public class SimpleClient extends AbstractClient {
 
 	private static SimpleClient client = null;
 	public static int ID;
 	public static boolean show=false;
+
 	public static String Type;
+	public static String text = "dddddddddddddssssss";
 	public static String cname;
 	public static String name;
 	private int client_id;
@@ -20,7 +25,7 @@ public class SimpleClient extends AbstractClient {
 
 	@Override
 	protected void handleMessageFromServer(Object msg) {
-		Message message = (Message) msg;
+			Message message = (Message) msg;
 
 		if (message.getMessage().equals("client added successfully")) {
 		} else if (message.getMessage().equals("i will give you the students")) {
@@ -152,6 +157,10 @@ public class SimpleClient extends AbstractClient {
 			EventBus.getDefault().post(new MessageEvent(message));
 		} else if(message.getMessage().equals("i will give you exams info")) {
 		EventBus.getDefault().post(new MessageEvent(message));
+		} else if(message.getMessage().equals("questions id exist")) {
+			EventBus.getDefault().post(new MessageEvent(message));
+		} else if(message.getMessage().equals("exam id already exists")) {
+			EventBus.getDefault().post(new MessageEvent(message));
 	}
 		else {
 		//EventBus.getDefault().post(new MessageEvent(message));
@@ -167,5 +176,37 @@ public class SimpleClient extends AbstractClient {
 		}
 		return client;
 	}
+public static String getCourderid(String name){
+	if(name.equals("Math"))
+		return String.valueOf(10);
+	else if(name.equals("English"))
+		return String.valueOf(11);
+	else if(name.equals("Arabic"))
+		return String.valueOf(12);
+	else if(name.equals("Hebrew"))
+		return String.valueOf(13);
+	else if(name.equals("Music"))
+		return String.valueOf(14);
+	else if(name.equals("Data Structure"))
+		return String.valueOf(15);
+	else if(name.equals("Algorithmes"))
+		return String.valueOf(16);
+	else if(name.equals("Object Oriented Programming"))
+		return String.valueOf(17);
+	else if(name.equals("Assemble"))
+		return String.valueOf(18);
+	else if(name.equals("Sport"))
+		return String.valueOf(19);
+	return "99";
 
 }
+}
+
+
+
+
+
+
+
+
+

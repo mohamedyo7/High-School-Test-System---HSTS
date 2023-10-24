@@ -78,11 +78,11 @@ public class ExamsScan  implements Serializable {
     @Column(name = "Exam_Name")
     private String name;
 
-    public int getExam_ID() {
+    public String getExam_ID() {
         return Exam_ID;
     }
 
-    public void setExam_ID(int exam_ID) {
+    public void setExam_ID(String exam_ID) {
         Exam_ID = exam_ID;
     }
 
@@ -95,7 +95,7 @@ public class ExamsScan  implements Serializable {
     }
 
     @Column(name = "Exam_ID")
-    private int Exam_ID;
+    private String Exam_ID;
 
 
     public int getStudent_ID() {
@@ -110,7 +110,7 @@ public class ExamsScan  implements Serializable {
     private int Student_ID;
 
 
-    public ExamsScan(int student_id,String exam_name, int exam_id,String type,String ans,String state)
+    public ExamsScan(int student_id,String exam_name, String exam_id,String type,String ans,String state)
     {
 
         setStudent_ID(student_id);

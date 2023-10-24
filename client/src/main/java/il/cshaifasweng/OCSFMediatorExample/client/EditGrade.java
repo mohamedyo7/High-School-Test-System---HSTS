@@ -68,6 +68,7 @@ public class EditGrade {
         String s=STD_ID_LIST.getSelectionModel().getSelectedItem();
         if(s!=null) {
             msg.setId(Integer.parseInt(s));
+            msg.setExam_id(s);
             student_id_toaddnote = Integer.parseInt(s);
         }
         course_name=STD_Course_LIST.getSelectionModel().getSelectedItem();
@@ -131,42 +132,27 @@ public class EditGrade {
             List<ExamsScan> examsScanList = event.getMessage().getExamsScans_list_from_server();
             List<Document> documentList = event.getMessage().getDocuments_list_from_server();
 
-            for (int x = 0; x < examsScanList.size(); x++) {
-                System.out.println("hat tnshof 2");
-                if (examsScanList.get(x).getName().equals(s)) {
-                    for (int y = 0; y < STD_ID_LIST.getItems().size(); y++) {
-                        if (STD_ID_LIST.getItems().get(y).equals(String.valueOf(examsScanList.get(x).getStudent_ID()))) {
-                            c = 1;
-                            break;
-                        }
-
-                    }
-                    if (c == 0)
+            for(int x=0;x<examsScanList.size();x++){
+                if(examsScanList.get(x).getName().equals(s)){
+                    if(!isExitst(examsScanList,examsScanList.get(x).getStudent_ID()))
                         STD_ID_LIST.getItems().add(String.valueOf(examsScanList.get(x).getStudent_ID()));
-                }
-            }
-            System.out.println("hat tnshof 3");
-            for (int x = 0; x < documentList.size(); x++) {
-                System.out.println("hat tnshof 4");
-                if (documentList.get(x).getCourse_name().equals(s)) {
-                    System.out.println("hat tnshof 5");
-                    for (int y = 0; y < student_word.getItems().size(); y++) {
-                        System.out.println("hat tnshof 6");
-                        if (student_word.getItems().get(y).equals(String.valueOf(documentList.get(x).getId_student()))) {
-                            System.out.println("hat tnshof 7");
-                            h = 1;
-                            break;
-                        }
+                   // for(int y=0;y<STD_ID_LIST.getItems().size();y++){
+                        //if(!STD_ID_LIST.getItems().get(y).equals(String.valueOf(examsScanList.get(x).getStudent_ID()))) {
+
+
+                       // }
 
                     }
-                    if (h == 0)
-                        student_word.getItems().add(String.valueOf(documentList.get(x).getId_student()));
+
+
                 }
-            }
 
-
-        } else if (event.getMessage().getMessage().equals("i will give you word scan")) {
-            System.out.println("haa 1");
+/*            for(int i=0;i<STD_ID_LIST.getItems().size();i++){
+                for(int j=i+1;j<STD_ID_LIST.getItems().size()-1;j++){
+                    if(STD_ID_LIST.getItems().get(j).equals(STD_ID_LIST.getItems().get(i)))
+                        STD_ID_LIST.getItems().remove(j);
+                }
+            }*/
 
             List<Document>documentList=event.getMessage().getDocuments_list_from_server();
             String s = "";
@@ -187,6 +173,16 @@ public class EditGrade {
                     word_scan.setText(text);
                     System.out.println(text);
 
+        }
+    }
+    public boolean isExitst(List<ExamsScan> l , int id){
+        for(int i =0 ; i<STD_ID_LIST.getItems().size();i++){
+            if(STD_ID_LIST.getItems().get(i).equals(String.valueOf(id))){
+                return true;
+            }
+        }
+        return false;
+        }
                 }
 
                 fis.close();

@@ -112,7 +112,7 @@ sendMessage(msg);
                 ExamInfo examInfo = null;
                 List<ExamInfo> examInfos = event.getMessage().getExamInfos();
                 for (int i = 0; i < examInfos.size(); i++) {
-                    if (examInfos.get(i).getCourseid().equals(Name) && examInfos.get(i).getExam_id() == Integer.parseInt(ID)) {
+                    if (examInfos.get(i).getCourseid().equals(Name) && examInfos.get(i).getExam_id().equals(ID)) {
 
                         examInfo = examInfos.get(i);
 

@@ -77,7 +77,6 @@ public class ExamsFinal {
             time=Double.parseDouble(timeT.getText());
             msg.setLogin_name("teacher");
             msg.setTime(time);
-
             exam=examsTable.getSelectionModel().getSelectedItem();
             msg.setExam(examsTable.getSelectionModel().getSelectedItem());
             msg.setCourseName(String.valueOf(examsTable.getSelectionModel().getSelectedItem()));
@@ -92,11 +91,8 @@ public class ExamsFinal {
         }
         msg.setLogin_name(SimpleClient.Type);
         msg.setExam(examsTable.getSelectionModel().getSelectedItem());
-        msg.setId(examsTable.getSelectionModel().getSelectedItem().getId());
+        msg.setExam_id(examsTable.getSelectionModel().getSelectedItem().getId());
         msg.setCourseName(String.valueOf(examsTable.getSelectionModel().getSelectedItem()));
-
-
-
         sendMessage(msg);
 
 

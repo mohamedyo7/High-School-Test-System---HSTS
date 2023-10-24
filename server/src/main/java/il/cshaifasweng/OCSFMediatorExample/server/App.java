@@ -46,34 +46,34 @@ public class App {
 
     private static void generateCourses() throws Exception {
 
-        Course course0 = new Course("Math");
+        Course course0 = new Course("Math",10);
         session.save(course0);
         session.flush();
-        Course course1 = new Course("English");
+        Course course1 = new Course("English",11);
         session.save(course1);
         session.flush();
-        Course course2 = new Course("Arabic");
+        Course course2 = new Course("Arabic",12);
         session.save(course2);
         session.flush();
-        Course course3 = new Course("Hebrew");
+        Course course3 = new Course("Hebrew",13);
         session.save(course3);
         session.flush();
-        Course course4 = new Course("Music");
+        Course course4 = new Course("Music",14);
         session.save(course4);
         session.flush();
-        Course course5 = new Course("Data Structure");
+        Course course5 = new Course("Data Structure",15);
         session.save(course5);
         session.flush();
-        Course course6 = new Course("Algorithmes");
+        Course course6 = new Course("Algorithmes",16);
         session.save(course6);
         session.flush();
-        Course course7 = new Course("Object Oriented Programming");
+        Course course7 = new Course("Object Oriented Programming",17);
         session.save(course7);
         session.flush();
-        Course course8 = new Course("Assemble");
+        Course course8 = new Course("Assemble",18);
         session.save(course8);
         session.flush();
-        Course course9 = new Course("Sport");
+        Course course9 = new Course("Sport",19);
         session.save(course9);
         session.flush();
     }
@@ -115,7 +115,7 @@ public class App {
     }
 
 
-    public static void updateExamStat(int examId, boolean newStat,double time) throws Exception {
+    public static void updateExamStat(String examId, boolean newStat,double time) throws Exception {
 
         List<Exams> exams = getAllExams();
 
@@ -125,7 +125,7 @@ public class App {
             // Find the corresponding Exam entity
             Exams exam = null;
             for (Exams e : exams) {
-                if (e.getId() == examId) {
+                if (e.getId().equals(examId)) {
                     exam = e;
                     break;
                 }
@@ -150,13 +150,13 @@ public class App {
         }
     }
 
-    public static void updatethetime(int examId, double newStat) throws Exception {
+    public static void updatethetime(String examId, double newStat) throws Exception {
         List<Exams> exams = getAllExams();
         try {
             // Find the corresponding Exam entity
             Exams exam = null;
             for (Exams e : exams) {
-                if (e.getId() == examId) {
+                if (e.getId().equals(examId)) {
                     exam = e;
                     break;
                 }
@@ -187,7 +187,7 @@ public class App {
 
             Exams exam = null;
             for (Exams e : exams) {
-                if (e.getId() == updatedExam.getId()) {
+                if (e.getId().equals(updatedExam.getId())) {
                     exam = e;
                     break;
                 }
@@ -207,6 +207,7 @@ public class App {
             exam.setTeacherID(updatedExam.getTeacherID());
             exam.setTeacherName(updatedExam.getTeacherName());
             exam.setReason(updatedExam.getReason());
+            exam.setEid(updatedExam.getEid());
             session.update(exam);
             tx.commit();
         } catch (Exception e) {
@@ -337,7 +338,7 @@ public class App {
         session.flush();
     }
     public static void generateExams(){
-        Exams exam = new Exams(1);
+        Exams exam = new Exams("-1");
         session.save(exam);
         session.flush();
     }
@@ -359,11 +360,7 @@ public static void generate(){
             session.flush();
         }
 
-
 }
-
-
-
     public static void main(String[] args) {
 
         try {
@@ -373,7 +370,7 @@ public static void generate(){
             }catch (HibernateException e){
                 e.printStackTrace();
             }
-            generateQuestions();
+            //generateQuestions();
             generateCourses();
             generateExams();
             generate();
