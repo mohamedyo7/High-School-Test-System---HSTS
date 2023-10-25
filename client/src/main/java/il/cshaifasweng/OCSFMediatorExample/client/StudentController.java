@@ -6,11 +6,10 @@ import il.cshaifasweng.OCSFMediatorExample.entities.entities.Grade;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-import javafx.scene.control.TextField;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -72,7 +71,12 @@ public class StudentController {
     }
 
     @FXML
-    void registerToCourse(ActionEvent event) {
+    void registerToCourse(ActionEvent event) throws IOException {
+        SimpleChatClient.setRoot("CoursesReg");
+        Message msg = new Message("give me the courses");
+        msg.setStudentId(Integer.parseInt(STD_ID.getItems().get(0)));
+        sendMessage(msg);
+
 
     }
 

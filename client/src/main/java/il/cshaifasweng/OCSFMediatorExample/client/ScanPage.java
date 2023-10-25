@@ -30,6 +30,8 @@ public class ScanPage {
 
     @FXML
     private Label student_grade;
+    @FXML
+    private Label Correct_ans;
      String grade_reason=null;
 
 public static String course_ID;
@@ -244,9 +246,12 @@ public static String course_ID;
             }
 
 
-            if(!Corr_Ans.getText().equals(Your_ans.getText()))
-                wrong_ans.setVisible(true);;
+            if(!Corr_Ans.getText().equals(Your_ans.getText())) {
+                wrong_ans.setVisible(true);
 
+            }
+            else
+            Correct_ans.setVisible(true);
 
         }
         else  if (event.getMessage().getMessage().equals("i will add note")) {
@@ -268,6 +273,7 @@ public static String course_ID;
     @FXML
     void initialize() {
         wrong_ans.setVisible(false);
+        Correct_ans.setVisible(false);
         if(SimpleClient.Type.equals("Teacher"))
             Std_notes.setVisible(false);
         if(SimpleClient.Type.equals("Student")) {

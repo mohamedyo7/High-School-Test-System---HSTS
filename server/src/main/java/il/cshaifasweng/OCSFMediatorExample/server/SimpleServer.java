@@ -715,7 +715,7 @@ public class SimpleServer extends AbstractServer {
 				}
 				else if (request.equals("update document")) {
 					System.out.println("ya rb1");
-					Document doc=new Document(String.valueOf(message.getExam().getId()),String.valueOf(message.getStudentId()), message.getPath(),"text", message.getCourseName());
+					Document doc=new Document(String.valueOf(message.getExam().getId()),String.valueOf(message.getStudentId()), message.getPath(),"false", message.getCourseName());
 					System.out.println("ya rb2");
 					generateDocument(doc);
 					System.out.println("ya rb3");
@@ -724,6 +724,7 @@ public class SimpleServer extends AbstractServer {
 					message.setMessage("i will download the exam");
 					generateExamInfo(message.getExamInfo());
 					message.setQuestions_list_from_server(getAllQuestions());
+					message.setDocuments_list_from_server(getAllLDecuments());
 					client.sendToClient(message);
 				}
 
@@ -895,6 +896,7 @@ public class SimpleServer extends AbstractServer {
 						List<Exams> exams = getAllExams();
 						message.setExamsScans_list_from_server(getAllexamsscans());
 						message.setExams_list_from_server(exams);
+						message.setDocuments_list_from_server(getAllLDecuments());
 						client.sendToClient(message);
 
 					} else if (request.equals("add exam")) {

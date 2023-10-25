@@ -7,6 +7,7 @@ import il.cshaifasweng.OCSFMediatorExample.entities.entities.Exams;
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.ExamsScan;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
@@ -41,6 +42,9 @@ public class EditGrade {
     private ListView<String> STD_Course_LIST;
 
     @FXML
+    private Label student_scan_label;
+
+    @FXML
     void STD_Course_LIST_Pressed(MouseEvent event) {
         Message msg=new Message("give me students id2");
         String s1=STD_Course_LIST.getSelectionModel().getSelectedItem();
@@ -52,6 +56,7 @@ public class EditGrade {
     @FXML
     void student_word_pressed(MouseEvent event) {
         word_scan.setVisible(true);
+        student_scan_label.setVisible(true);
         Message msg=new Message("give me word scan");
         msg.setStudentId(Integer.parseInt(student_word.getSelectionModel().getSelectedItem()));
         msg.setCourseName(STD_Course_LIST.getSelectionModel().getSelectedItem());
@@ -147,28 +152,23 @@ public class EditGrade {
 
             }
 
-/*            for(int i=0;i<STD_ID_LIST.getItems().size();i++){
-                for(int j=i+1;j<STD_ID_LIST.getItems().size()-1;j++){
-                    if(STD_ID_LIST.getItems().get(j).equals(STD_ID_LIST.getItems().get(i)))
-                        STD_ID_LIST.getItems().remove(j);
-                }
-            }*/
-            String s1 = " ";
+
+            String s1 = "";
             System.out.println("haa 2");
             for (int i = 0; i < documentList.size(); i++) {
-                System.out.println(documentList.get(i).getId_student() + " " + event.getMessage().getStudentId() + " " + documentList.get(i).getCourse_name() + " " + event.getMessage().getCourseName());
-                if(documentList.get(i).getCourse_name().equals(event.getMessage().getCourseName())) {
-                    if(!documentList.get(i).getPath().equals(""))
-                        s1 = documentList.get(i).getPath();
-                        System.out.println("haa 3");
+                if (documentList.get(i).getCourse_name().equals(event.getMessage().getCourseName())) {
+                    s1 = documentList.get(i).getPath();
+                    if (!isExitstdoc(documentList, Integer.parseInt(documentList.get(i).getId_student()))){
+                        student_word.getItems().add(String.valueOf(documentList.get(i).getId_student()));
 
                 }
-                System.out.println("haa 3.2");
+
+
+                }
             }
-            System.out.println("haa 3.4");
-            if (s1.equals("0")) {
+            if(s1.equals("0"))
                 word_scan.setText("");
-            } else {
+            else {
                 try {
                     FileInputStream fis = new FileInputStream(s1);
                     XWPFDocument document = new XWPFDocument(fis);
@@ -182,10 +182,10 @@ public class EditGrade {
                     }
 
 
-                    fis.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            fis.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
             }
         }
@@ -202,12 +202,21 @@ public class EditGrade {
         }
         return false;
         }
+    public boolean isExitstdoc(List<Document> l , int id){
+        for(int i =0 ; i<student_word.getItems().size();i++){
+            if(student_word.getItems().get(i).equals(String.valueOf(id))){
+                return true;
+            }
+        }
+        return false;
+    }
 
 
     @FXML
     void initialize() {
         int msgId=0;
         word_scan.setVisible(false);
+        student_scan_label.setVisible(false);
         EventBus.getDefault().register(this);
 
         Message msg=new Message("give me students id");
