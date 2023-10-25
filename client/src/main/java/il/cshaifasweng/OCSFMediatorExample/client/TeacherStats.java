@@ -72,12 +72,14 @@ public class TeacherStats {
 
             for (int i = 0; i < Courses_from_server_reg.size(); i++) {
                 // Set the data to the table
-                if(Courses_from_server_reg.get(i).getLecturer()!=null)
-                    if(Courses_from_server_reg.get(i).getLecturer().getId()==event.getMessage().getId()){
-
+                if(Courses_from_server_reg.get(i).getLecturer()!=null) {
+                    if (Courses_from_server_reg.get(i).getLecturer().getId() == event.getMessage().getId()) {
 
                         Teacher_Courses.getItems().add(Courses_from_server_reg.get(i).getName());
                     }
+                    if (event.getMessage().getLogin_name().equals("Mediator"))
+                        Teacher_Courses.getItems().add(Courses_from_server_reg.get(i).getName());
+                }
             }
             Teacher_Courses.refresh();
 
@@ -101,7 +103,7 @@ public class TeacherStats {
                         for(int j=0;j<grades.size();j++){
                             if(courses.get(i).getStudent().equals(grades.get(j).getStudent())){
                                 if(grades.get(j).getCourse_name().equals(Name)) {
-                                    if (!grades.get(j).getGrade().equals("null")) {
+                                    if (!grades.get(j).getGrade().equals("No grade yet")) {
                                         if(Integer.parseInt(grades.get(j).getGrade())>higher_grade)
                                             higher_grade=Integer.parseInt(grades.get(j).getGrade());
                                         if(Integer.parseInt(grades.get(j).getGrade())<lowest_grade);
