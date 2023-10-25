@@ -1,16 +1,12 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.Message;
-import il.cshaifasweng.OCSFMediatorExample.entities.entities.CourseReg;
-import il.cshaifasweng.OCSFMediatorExample.entities.entities.Document;
-import il.cshaifasweng.OCSFMediatorExample.entities.entities.Exams;
-import il.cshaifasweng.OCSFMediatorExample.entities.entities.ExamsScan;
+import il.cshaifasweng.OCSFMediatorExample.entities.entities.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.greenrobot.eventbus.EventBus;
@@ -32,6 +28,7 @@ public class EditGrade {
 
     public static int student_id_toaddnote;
     public static String course_name;
+     public static int course_id_to_word;
 
     @FXML
     void Back_but(ActionEvent event) throws IOException {
@@ -56,7 +53,11 @@ public class EditGrade {
     @FXML
     void student_word_pressed(MouseEvent event) {
         word_scan.setVisible(true);
-        student_scan_label.setVisible(true);
+        word_scan_label.setVisible(true);
+        insert_grade_but.setVisible(true);
+        insert_grade_field.setVisible(true);
+        insert_grade_label.setVisible(true);
+        //student_scan_label.setVisible(true);
         Message msg=new Message("give me word scan");
         msg.setStudentId(Integer.parseInt(student_word.getSelectionModel().getSelectedItem()));
         msg.setCourseName(STD_Course_LIST.getSelectionModel().getSelectedItem());
@@ -65,6 +66,31 @@ public class EditGrade {
 
 
     }
+    @FXML
+    private Button insert_grade_but;
+
+    @FXML
+    private TextField insert_grade_field;
+
+    @FXML
+    private Text insert_grade_label;
+
+    @FXML
+    private Text word_scan_label;
+    @FXML
+    void insert_grade_but(ActionEvent event) {
+        System.out.println("hi 1"+course_id_to_word);
+        Message msg = new Message("change the student grade");
+        msg.setGrade(Double.parseDouble(insert_grade_field.getText()));
+        msg.setGrade_to_change((int) msg.getGrade());
+        msg.setCourse_id(course_id_to_word);
+        msg.setStudentId(Integer.parseInt(student_word.getSelectionModel().getSelectedItem()));
+        sendMessage(msg);
+        System.out.println("hi 2");
+
+        }
+
+
 
     @FXML
     void STD_ID_LIST_PRESS(MouseEvent event) throws IOException {
@@ -110,6 +136,7 @@ public class EditGrade {
             List<Exams> examsList = event.getMessage().getExams_list_from_server();
             List<ExamsScan> examsScanList = event.getMessage().getExamsScans_list_from_server();
 
+
             for (int i = 0; i < coursesRegList.size(); i++) {
                 if (coursesRegList.get(i).getType().equals("Teacher") && coursesRegList.get(i).getLecturer().getId() == event.getMessage().getId()) {
                     for (int j = 0; j < examsList.size(); j++) {
@@ -130,22 +157,23 @@ public class EditGrade {
 
 
         } else if (event.getMessage().getMessage().equals("i will give you students id2")) {
-            System.out.println("kol");
-            int c = 0;
-            int h = 0;
+
             String s = STD_Course_LIST.getSelectionModel().getSelectedItem();
             List<ExamsScan> examsScanList = event.getMessage().getExamsScans_list_from_server();
             List<Document> documentList = event.getMessage().getDocuments_list_from_server();
+            List<Course>courseList=event.getMessage().getCourses_list_from_server();
+            if(courseList!=null)
+                for(int i=0;i<courseList.size();i++){
+                    if(courseList.get(i).getName().equals(STD_Course_LIST.getSelectionModel().getSelectedItem())) {
+                        course_id_to_word = courseList.get(i).getId();
+                    }
+                }
 
             for (int x = 0; x < examsScanList.size(); x++) {
                 if (examsScanList.get(x).getName().equals(s)) {
                     if (!isExitst(examsScanList, examsScanList.get(x).getStudent_ID()))
                         STD_ID_LIST.getItems().add(String.valueOf(examsScanList.get(x).getStudent_ID()));
-                    // for(int y=0;y<STD_ID_LIST.getItems().size();y++){
-                    //if(!STD_ID_LIST.getItems().get(y).equals(String.valueOf(examsScanList.get(x).getStudent_ID()))) {
 
-
-                    // }
 
                 }
 
@@ -154,7 +182,7 @@ public class EditGrade {
 
 
             String s1 = "";
-            System.out.println("haa 2");
+
             for (int i = 0; i < documentList.size(); i++) {
                 if (documentList.get(i).getCourse_name().equals(event.getMessage().getCourseName())) {
                     s1 = documentList.get(i).getPath();
@@ -216,7 +244,11 @@ public class EditGrade {
     void initialize() {
         int msgId=0;
         word_scan.setVisible(false);
-        student_scan_label.setVisible(false);
+       // student_scan_label.setVisible(false);
+        word_scan_label.setVisible(false);
+        insert_grade_but.setVisible(false);
+        insert_grade_field.setVisible(false);
+        insert_grade_label.setVisible(false);
         EventBus.getDefault().register(this);
 
         Message msg=new Message("give me students id");

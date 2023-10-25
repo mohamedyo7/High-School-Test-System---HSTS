@@ -802,6 +802,7 @@ public class SimpleServer extends AbstractServer {
 						message.setExamsScans_list_from_server(examsScans);
 						message.setExams_list_from_server(exams);
 						message.setDocuments_list_from_server(getAllLDecuments());
+						message.setCourses_list_from_server(getAllCourses());
 						client.sendToClient(message);
 					}
 				else if (request.equals("give me word scan")) {
