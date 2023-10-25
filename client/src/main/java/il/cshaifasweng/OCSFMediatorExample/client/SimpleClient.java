@@ -161,8 +161,9 @@ public class SimpleClient extends AbstractClient {
 			EventBus.getDefault().post(new MessageEvent(message));
 		} else if(message.getMessage().equals("exam id already exists")) {
 			EventBus.getDefault().post(new MessageEvent(message));
-	}
-		else {
+		} else if(message.getMessage().equals("reload")) {
+			EventBus.getDefault().post(new MessageEvent(message));
+		}else {
 		//EventBus.getDefault().post(new MessageEvent(message));
 		}
 
