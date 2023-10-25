@@ -19,8 +19,11 @@ public class CoursesReg {
 
     @FXML
     void Back_Reg(ActionEvent event) throws IOException {
-       SimpleChatClient.setRoot("FirstPage");
-
+       if(SimpleClient.Type.equals("Teacher"))
+        SimpleChatClient.setRoot("TeacherPage");
+        else if(SimpleClient.Type.equals("Student")){
+            SimpleChatClient.setRoot("StudentController");
+       }
     }
 
     @FXML

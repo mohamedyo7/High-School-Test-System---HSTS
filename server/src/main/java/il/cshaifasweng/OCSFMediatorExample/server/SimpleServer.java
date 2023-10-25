@@ -994,9 +994,7 @@ public class SimpleServer extends AbstractServer {
 						 message.setCourses_list_from_server_reg(courseRegs);
 						 client.sendToClient(message);
 					}
-				else if (request.equals("give me exams info")){
-					message.setMessage("i will give you exams info");
-					message.setExamInfos(getAllExamInfo());
+				else if (request.equals("reload")){
 					client.sendToClient(message);
 
 				} else {

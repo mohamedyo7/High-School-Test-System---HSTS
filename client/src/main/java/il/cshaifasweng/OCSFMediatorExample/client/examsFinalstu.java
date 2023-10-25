@@ -137,6 +137,21 @@ public class examsFinalstu {
     @FXML
     void Submit_but(ActionEvent event) {
         conditionMet=true;
+        examInfo.setNumberOfCompletedStudents(1);
+        System.out.println("enifo  " + examInfo.getId());
+        msg.setExamInfo(examInfo);
+        msg.setMessage("exam is over");
+        msg.setExam_id(exam_id);
+        submit_textfield.setText("");
+        submit_but.setVisible(false);
+        submit_exam.setVisible(false);
+        submit_textfield.setVisible(false);
+        msg.setExam(examsTable.getSelectionModel().getSelectedItem());
+        msg.setStudentId(Integer.parseInt(studenid.getText()));
+        msg.setCourseName(coursesList.getSelectionModel().getSelectedItem());
+        sendMessage(msg);
+        System.out.println("exam is over");
+        sendMessage(msg);
         Message msg=new Message("update document");
         msg.setExam(examsTable.getSelectionModel().getSelectedItem());
         msg.setStudentId(Integer.parseInt(studenid.getText()));

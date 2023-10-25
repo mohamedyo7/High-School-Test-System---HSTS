@@ -29,25 +29,27 @@ public class RegisterPage {
     private TextField Password_Text;
     @FXML
     private ChoiceBox<String> choose_Login;
-
+    Message msg=new Message("");
     int c=0;
 
     @FXML
     void Back_RegLogin_but(ActionEvent event) throws IOException {
-SimpleChatClient.setRoot("FirstPage");
+        SimpleChatClient.setRoot("FirstPage");
     }
 
     @FXML
     void Reg_Done(ActionEvent event) throws IOException {
         //SimpleChatClient.setRoot("CoursesReg");
-        Message msg=new Message("");
+        c=0;
+        msg.setId(Integer.parseInt(ID_Text.getText()));
+        msg.setFirst_name(FirstName_Text.getText());
+        msg.setLast_name(LastName_Text.getText());
+        msg.setPassword(Password_Text.getText());
         if(choose_Login.getSelectionModel().getSelectedItem().equals("Student")) {
+            System.out.println("in");
             msg.setMessage("check id exist");
+            SimpleClient.Type = "Student";
            // msg.setMessage("Save The Student Details");
-            msg.setId(Integer.parseInt(ID_Text.getText()));
-            msg.setFirst_name(FirstName_Text.getText());
-            msg.setLast_name(LastName_Text.getText());
-            msg.setPassword(Password_Text.getText());
             msg.setLogin_name("Student");
             Student s=new Student(msg.getId(), msg.getFirst_name(), msg.getLast_name(), msg.getPassword());
             msg.setStudent(s);
@@ -57,10 +59,7 @@ SimpleChatClient.setRoot("FirstPage");
         if(choose_Login.getSelectionModel().getSelectedItem().equals("Teacher")) {
             msg.setMessage("check id exist");
             //msg.setMessage("Save The Teacher Details");
-            msg.setId(Integer.parseInt(ID_Text.getText()));
-            msg.setFirst_name(FirstName_Text.getText());
-            msg.setLast_name(LastName_Text.getText());
-            msg.setPassword(Password_Text.getText());
+            SimpleClient.Type = "Teacher";
             msg.setLogin_name("Teacher");
             Lecturer lec=new Lecturer(msg.getId(), msg.getFirst_name(), msg.getLast_name(), msg.getPassword());
             msg.setLec(lec);
@@ -70,10 +69,6 @@ SimpleChatClient.setRoot("FirstPage");
         if(choose_Login.getSelectionModel().getSelectedItem().equals("Mediator")) {
             //msg.setMessage("check id exist");
             msg.setMessage("Save The Mediator Details");
-            msg.setId(Integer.parseInt(ID_Text.getText()));
-            msg.setFirst_name(FirstName_Text.getText());
-            msg.setLast_name(LastName_Text.getText());
-            msg.setPassword(Password_Text.getText());
             msg.setLogin_name("Mediator");
             Mediator lec=new Mediator(msg.getId(), msg.getFirst_name(), msg.getLast_name(), msg.getPassword());
             msg.setMediator(lec);
@@ -119,7 +114,7 @@ SimpleChatClient.setRoot("FirstPage");
                 }
                 if (c == 1) {
                     //Message msg=new Message("");
-                    sendMessage("");
+                    sendMessage("reload");
 
                 } else {
                     SimpleChatClient.setRoot("CoursesReg");
@@ -148,7 +143,7 @@ SimpleChatClient.setRoot("FirstPage");
                 }
                 if (c == 1) {
                     //Message msg=new Message("");
-                    sendMessage("");
+                    sendMessage("reload");
 
                 } else {
                     SimpleChatClient.setRoot("CoursesReg");
@@ -171,9 +166,9 @@ SimpleChatClient.setRoot("FirstPage");
 
             }
         }
-        else if (event.getMessage().getMessage().equals("I Saved The Mediator Details")) {
-
-        }
+/*        else if (event.getMessage().getMessage().equals("reload")) {
+            SimpleChatClient.setRoot("RegisterPage");
+        }*/
     }
 
 
