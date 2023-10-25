@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="565.0" prefWidth="762.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.ScanPage">
+<AnchorPane prefHeight="565.0" prefWidth="682.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.ScanPage">
    <children>
       <ListView fx:id="exam_list" layoutX="16.0" layoutY="33.0" prefHeight="181.0" prefWidth="200.0" />
       <Label layoutX="226.0" layoutY="125.0" text="Correct Answer">
@@ -19,12 +19,12 @@
          <font>
             <Font name="System Bold" size="12.0" />
          </font></Label>
-      <Button layoutX="704.0" layoutY="10.0" mnemonicParsing="false" onAction="#Back_but" text="Back" />
+      <Button layoutX="560.0" layoutY="10.0" mnemonicParsing="false" onAction="#Back_but" text="Back" />
       <TextArea fx:id="Your_ans" layoutX="313.0" layoutY="48.0" prefHeight="45.0" prefWidth="288.0" />
       <TextArea fx:id="Corr_Ans" layoutX="313.0" layoutY="111.0" prefHeight="45.0" prefWidth="288.0" />
       <ListView fx:id="Questions_exam_list" layoutX="14.0" layoutY="283.0" onMousePressed="#Questions_exam_list_press" prefHeight="192.0" prefWidth="200.0" />
       <Button layoutX="16.0" layoutY="216.0" mnemonicParsing="false" onAction="#Show_Ques" text="Show Questions" />
-      <Label fx:id="wrong_ans" layoutX="612.0" layoutY="61.0" text="Wrong Answer!!" textFill="#e33107">
+      <Label fx:id="wrong_ans" layoutX="468.0" layoutY="93.0" text="Wrong Answer!!" textFill="#e33107">
          <font>
             <Font name="Copperplate Gothic Bold" size="14.0" />
          </font>

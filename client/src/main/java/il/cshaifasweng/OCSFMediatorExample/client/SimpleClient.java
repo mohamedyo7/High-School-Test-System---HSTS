@@ -29,139 +29,126 @@ public class SimpleClient extends AbstractClient {
 
 		if (message.getMessage().equals("client added successfully")) {
 		} else if (message.getMessage().equals("i will give you the students")) {
-		EventBus.getDefault().post(new MessageEvent(message));
+			EventBus.getDefault().post(new MessageEvent(message));
 		} else if (message.getMessage().equals("i will give you the students2")) {
-		ID = message.getId();
-		Type=message.getLogin_name();
-		EventBus.getDefault().post(new MessageEvent(message));
+			ID = message.getId();
+			Type=message.getLogin_name();
+			EventBus.getDefault().post(new MessageEvent(message));
 		} else if (message.getMessage().equals("i will check id exist")) {
-		EventBus.getDefault().post(new MessageEvent(message));
+			EventBus.getDefault().post(new MessageEvent(message));
 		} else if (message.getMessage().equals("i will give you the student grades")) {
-		EventBus.getDefault().post(new MessageEvent(message));
+			EventBus.getDefault().post(new MessageEvent(message));
 		} else if (message.getMessage().equals("i created question")) {
-		EventBus.getDefault().post(new MessageEvent(message));
+			EventBus.getDefault().post(new MessageEvent(message));
 		} else if (message.getMessage().equals("i will give you the courses")) {
-		EventBus.getDefault().post(new MessageEvent(message));
+			EventBus.getDefault().post(new MessageEvent(message));
 		} else if (message.getMessage().equals("i will give you the courses2")) {
-		EventBus.getDefault().post(new MessageEvent(message));
+			EventBus.getDefault().post(new MessageEvent(message));
 		} else if (message.getMessage().equals("i will give you the student grades 2")) {
-		EventBus.getDefault().post(new MessageEvent(message));
+			EventBus.getDefault().post(new MessageEvent(message));
 		} else if (message.getMessage().equals("i will give you students id")) {
 			EventBus.getDefault().post(new MessageEvent(message));
 		} else if (message.getMessage().equals("i will give you students id2")) {
 			EventBus.getDefault().post(new MessageEvent(message));
-		}
-		else if (message.getMessage().equals("i will add note")) {
-
-
-
+		} else if (message.getMessage().equals("i will add note")) {
 			EventBus.getDefault().post(new MessageEvent(message));
-		}
-		else if (message.getMessage().equals("i finished editing")) {
-
-
-
+		} else if (message.getMessage().equals("i finished editing")) {
 			EventBus.getDefault().post(new MessageEvent(message));
 		} else if (message.getMessage().equals("i will give you exams questions")) {
 			EventBus.getDefault().post(new MessageEvent(message));
-		}
-		else if (message.getMessage().equals("i will give you teacher exams")) {
+		} else if (message.getMessage().equals("i will give you teacher exams")) {
 			EventBus.getDefault().post(new MessageEvent(message));
-		}
-		 else if(message.getMessage().equals("i will give you exams info")) {
-		EventBus.getDefault().post(new MessageEvent(message));
-	}
-
-		else if (message.getMessage().equals("i will Show Answers")) {
+		} else if(message.getMessage().equals("i will give you exams info")) {
+			EventBus.getDefault().post(new MessageEvent(message));
+		} else if (message.getMessage().equals("i will Show Answers")) {
 			EventBus.getDefault().post(new MessageEvent(message));
 		} else if (message.getMessage().equals("i will save data")) {
 			EventBus.getDefault().post(new MessageEvent(message));
 		} else if (message.getMessage().equals("i will give you exams scans")) {
 			EventBus.getDefault().post(new MessageEvent(message));
 		} else if (message.getMessage().equals("i changed the grade")) {
-		EventBus.getDefault().post(new MessageEvent(message));
-		}else if (message.getMessage().equals("exam is over done")) {
-		EventBus.getDefault().post(new MessageEvent(message));
-		}else if (message.getMessage().equals("extra time")) {EventBus.getDefault().post(new MessageEvent(message));
-		}else if(message.getMessage().equals("i added the course")) {
-		EventBus.getDefault().post(new MessageEvent(message));
+			EventBus.getDefault().post(new MessageEvent(message));
+		} else if (message.getMessage().equals("exam is over done")) {
+			EventBus.getDefault().post(new MessageEvent(message));
+		} else if (message.getMessage().equals("extra time")) {
+			 EventBus.getDefault().post(new MessageEvent(message));
+		} else if(message.getMessage().equals("i added the course")) {
+			EventBus.getDefault().post(new MessageEvent(message));
 		} else if(message.getMessage().equals("i will show questions")) {
 			EventBus.getDefault().post(new MessageEvent(message));
-		}
-		else if(message.getMessage().equals("i will download the exam")) {
+		} else if(message.getMessage().equals("i will download the exam")) {
 			EventBus.getDefault().post(new MessageEvent(message));
-		}
-		else if(message.getMessage().equals("i will give you word scan")) {
+		} else if(message.getMessage().equals("i will give you word scan")) {
 			EventBus.getDefault().post(new MessageEvent(message));
-		}
-		else if(message.getMessage().equals("I Saved The Student Details")){
-		ID= message.getId();
-		EventBus.getDefault().post(new MessageEvent(message));
+		} else if(message.getMessage().equals("I Saved The Student Details")){
+			ID= message.getId();
+			EventBus.getDefault().post(new MessageEvent(message));
 		} else if(message.getMessage().equals("I Saved The Mediator Details")){
-		ID= message.getId();
-		EventBus.getDefault().post(new MessageEvent(message));
+			ID= message.getId();
+			EventBus.getDefault().post(new MessageEvent(message));
 		} else if(message.getMessage().equals("I Saved The Teacher Details")){
-		ID= message.getId();
-		EventBus.getDefault().post(new MessageEvent(message));
+			ID= message.getId();
+			EventBus.getDefault().post(new MessageEvent(message));
 		} else if (message.getMessage().equals("course has been registered")) {
-		EventBus.getDefault().post(new MessageEvent(message));
+			EventBus.getDefault().post(new MessageEvent(message));
 		} else if(message.getMessage().equals("i will give you the student data")){
-		EventBus.getDefault().post(new MessageEvent(message));
+			EventBus.getDefault().post(new MessageEvent(message));
 		} else if(message.getMessage().equals("i will give you the teacher data")){
-		EventBus.getDefault().post(new MessageEvent(message));
+			EventBus.getDefault().post(new MessageEvent(message));
 		} else if(message.getMessage().equals("i will give you the mediator data")){
-		EventBus.getDefault().post(new MessageEvent(message));
+			EventBus.getDefault().post(new MessageEvent(message));
 		} else if(message.getMessage().equals("i will give you the teacher stats")){
-		EventBus.getDefault().post(new MessageEvent(message));
+			EventBus.getDefault().post(new MessageEvent(message));
 		} else if(message.getMessage().equals("I Will Show The Courses")) {
-		EventBus.getDefault().post(new MessageEvent(message));
-
+			EventBus.getDefault().post(new MessageEvent(message));
 		} else if(message.getMessage().equals("i will show stats")) {
-		EventBus.getDefault().post(new MessageEvent(message));
+			EventBus.getDefault().post(new MessageEvent(message));
 		}else if (message.getMessage().equals("i will give you the students")) {
-		EventBus.getDefault().post(new MessageEvent(message));
+			EventBus.getDefault().post(new MessageEvent(message));
 		} else if (message.getMessage().equals("i will give you the student grades")) {
-		EventBus.getDefault().post(new MessageEvent(message));
+			EventBus.getDefault().post(new MessageEvent(message));
 		} else if (message.getMessage().equals("i will give you the exams")) {
-		EventBus.getDefault().post(new MessageEvent(message));
+			EventBus.getDefault().post(new MessageEvent(message));
 		} else if (message.getMessage().equals("i will start exam")) {
-		cname=message.getCourseName();
-		EventBus.getDefault().post(new MessageEvent(message));
+			cname=message.getCourseName();
+			EventBus.getDefault().post(new MessageEvent(message));
 		}else if (message.getMessage().equals("i added the exam")) {
-		EventBus.getDefault().post(new MessageEvent(message));
+			EventBus.getDefault().post(new MessageEvent(message));
 		}else if (message.getMessage().equals("i created question")) {
-		EventBus.getDefault().post(new MessageEvent(message));}
+			EventBus.getDefault().post(new MessageEvent(message));}
 		else if (message.getMessage().equals("i will give you the courses")) {
-		EventBus.getDefault().post(new MessageEvent(message));
+			EventBus.getDefault().post(new MessageEvent(message));
 		} else if (message.getMessage().equals("i will give you the student grades 2")) {
-		EventBus.getDefault().post(new MessageEvent(message));
+			EventBus.getDefault().post(new MessageEvent(message));
 		}else if (message.getMessage().equals("i changed the grade")) {
-		EventBus.getDefault().post(new MessageEvent(message));}
-		else if(message.getMessage().equals("i added the course")) {
-		EventBus.getDefault().post(new MessageEvent(message));}
-		else if(message.getMessage().equals("i will show questions")) {
-		EventBus.getDefault().post(new MessageEvent(message));}
-		else if(message.getMessage().equals("i will show questions2")) {
-		EventBus.getDefault().post(new MessageEvent(message));}
-		else if(message.getMessage().equals("the grade is")) {
-		EventBus.getDefault().post(new MessageEvent(message));}
-		else if(message.getMessage().equals("test") && message.getToid()==ID) {
 			EventBus.getDefault().post(new MessageEvent(message));
-		}
-		else if(message.getMessage().equals("wrong code or id")) {
+		} else if(message.getMessage().equals("i added the course")) {
 			EventBus.getDefault().post(new MessageEvent(message));
-		}
-		else if(message.getMessage().equals("i will show mediator requests")) {
+		} else if(message.getMessage().equals("i will show questions")) {
+			EventBus.getDefault().post(new MessageEvent(message));
+		} else if(message.getMessage().equals("i will show questions2")) {
+			EventBus.getDefault().post(new MessageEvent(message));
+		} else if(message.getMessage().equals("the grade is")) {
+			EventBus.getDefault().post(new MessageEvent(message));
+		} else if(message.getMessage().equals("test") && message.getToid()==ID) {
+			EventBus.getDefault().post(new MessageEvent(message));
+		} else if(message.getMessage().equals("wrong code or id")) {
+			EventBus.getDefault().post(new MessageEvent(message));
+		} else if(message.getMessage().equals("i will show mediator requests")) {
 			EventBus.getDefault().post(new MessageEvent(message));
 		}else if(message.getMessage().equals("extra time accepted" )) {
 			EventBus.getDefault().post(new MessageEvent(message));
 		} else if(message.getMessage().equals("i will give you exams info")) {
-		EventBus.getDefault().post(new MessageEvent(message));
+			EventBus.getDefault().post(new MessageEvent(message));
 		} else if(message.getMessage().equals("questions id exist")) {
 			EventBus.getDefault().post(new MessageEvent(message));
 		} else if(message.getMessage().equals("exam id already exists")) {
 			EventBus.getDefault().post(new MessageEvent(message));
-		} else if(message.getMessage().equals("reload")) {
+		} else if(message.getMessage().equals("This id already exists check again please")) {
+			show = true;
+			EventBus.getDefault().post(new MessageEvent(message));
+		} else if(message.getMessage().equals("Wrong id or password")) {
+			show = true;
 			EventBus.getDefault().post(new MessageEvent(message));
 		}else {
 		//EventBus.getDefault().post(new MessageEvent(message));

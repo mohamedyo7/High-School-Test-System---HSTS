@@ -114,7 +114,7 @@ public class RegisterPage {
                 }
                 if (c == 1) {
                     //Message msg=new Message("");
-                    sendMessage("reload");
+                    sendMessage("This id already exists check again please");
 
                 } else {
                     SimpleChatClient.setRoot("CoursesReg");
@@ -143,7 +143,7 @@ public class RegisterPage {
                 }
                 if (c == 1) {
                     //Message msg=new Message("");
-                    sendMessage("reload");
+                    sendMessage("This id already exists check again please");
 
                 } else {
                     SimpleChatClient.setRoot("CoursesReg");
@@ -158,17 +158,9 @@ public class RegisterPage {
                     c = 0;
                     sendMessage(msg);
 
-
-
-
                 }
-
-
             }
         }
-/*        else if (event.getMessage().getMessage().equals("reload")) {
-            SimpleChatClient.setRoot("RegisterPage");
-        }*/
     }
 
 

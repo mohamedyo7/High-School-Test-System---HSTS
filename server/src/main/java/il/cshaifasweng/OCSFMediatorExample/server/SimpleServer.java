@@ -994,7 +994,11 @@ public class SimpleServer extends AbstractServer {
 						 message.setCourses_list_from_server_reg(courseRegs);
 						 client.sendToClient(message);
 					}
-				else if (request.equals("reload")){
+				else if (request.equals("Wrong id or password")){
+					client.sendToClient(message);
+
+				}
+				else if (request.equals("This id already exists check again please")){
 					client.sendToClient(message);
 
 				} else {

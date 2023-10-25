@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
+import javassist.Loader;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import java.io.File;
@@ -91,6 +92,7 @@ public class SimpleChatClient extends Application {
     @Subscribe
     public void onMessageEvent(MessageEvent message) {
         if(SimpleClient.show) {
+            SimpleClient.show=false;
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
             Platform.runLater(() -> {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION,

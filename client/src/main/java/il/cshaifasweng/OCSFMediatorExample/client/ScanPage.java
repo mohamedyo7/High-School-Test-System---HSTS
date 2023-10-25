@@ -273,7 +273,6 @@ public static String course_ID;
     @FXML
     void initialize() {
         wrong_ans.setVisible(false);
-        Correct_ans.setVisible(false);
         if(SimpleClient.Type.equals("Teacher"))
             Std_notes.setVisible(false);
         if(SimpleClient.Type.equals("Student")) {

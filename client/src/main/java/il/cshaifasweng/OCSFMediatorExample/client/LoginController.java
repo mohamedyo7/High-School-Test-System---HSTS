@@ -144,7 +144,7 @@ public class LoginController {
                 }
                 if (c == 0) {
                     //Message msg=new Message("");
-                    sendMessage("");
+                    sendMessage("Wrong id or password");
 
                 } else {
                     try {
@@ -180,7 +180,7 @@ public class LoginController {
                 }
                 if (c == 0) {
                     //Message msg=new Message("");
-                    sendMessage("");
+                    sendMessage("Wrong id or password");
 
                 } else {
                     try {
@@ -213,7 +213,7 @@ public class LoginController {
                 }
                 if (c == 0) {
                     //Message msg=new Message("");
-                    sendMessage("");
+                    sendMessage("Wrong id or password");
 
                 } else {
                     try {
