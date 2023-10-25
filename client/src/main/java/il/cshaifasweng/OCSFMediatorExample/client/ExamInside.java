@@ -250,6 +250,7 @@ public class ExamInside {
                 }else {
                     delay2 = new PauseTransition(Duration.millis(1000 * 60 * eTime));
                     delay2.setOnFinished(d -> {
+                        if(conditionMet)
                         examInfo.setNumberOfFailedStudents(1);
                         msg.setExamInfo(examInfo);
                         msg.setMessage("exam is over");

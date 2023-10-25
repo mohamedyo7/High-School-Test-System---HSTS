@@ -619,7 +619,7 @@ public class SimpleServer extends AbstractServer {
 						}
 						for (int i = 0; i < s.size(); i++) {
 							if (s.get(i).getStudent_id() == message.getId())
-								generateGrades(s.get(i), course, "null", message.getCourseName());
+								generateGrades(s.get(i), course, "No grade yet", message.getCourseName());
 						}
 					}
 					if (message.getLogin_name().equals("Teacher"))

@@ -13,7 +13,6 @@ import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -96,6 +95,10 @@ public class examsFinalstu {
                 } else {
                     delay2 = new PauseTransition(Duration.millis(1000 * 60 * eTime));
                     delay2.setOnFinished(d -> {
+                        if(conditionMet){
+
+                        }
+                        else{
                         examInfo.setNumberOfFailedStudents(1);
                         System.out.println("enifo  " + examInfo.getId());
                         msg.setExamInfo(examInfo);
@@ -113,8 +116,9 @@ public class examsFinalstu {
                         System.out.println("exam is over");
                         sendMessage(msg);
                         msg.setMessage("update document");
-                        sendMessage(msg);
+                        sendMessage(msg);}
                     });
+
                     delay2.play();
                 }
             });
@@ -132,11 +136,9 @@ public class examsFinalstu {
     private TextField submit_textfield;
     @FXML
     void Submit_but(ActionEvent event) {
-
+        conditionMet=true;
         Message msg=new Message("update document");
-        if(examsTable.getSelectionModel().getSelectedItem().getCode().equals(eCode.getText())&&Integer.parseInt(studenid.getText())==SimpleClient.ID) {
-
-        } msg.setExam(examsTable.getSelectionModel().getSelectedItem());
+        msg.setExam(examsTable.getSelectionModel().getSelectedItem());
         msg.setStudentId(Integer.parseInt(studenid.getText()));
         msg.setPath(submit_textfield.getText());
         msg.setCourseName(coursesList.getSelectionModel().getSelectedItem());
