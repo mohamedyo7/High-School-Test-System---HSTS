@@ -176,19 +176,24 @@ public class EditGrade {
 
 
             }
-
-
-            String s1 = "";
-
             for (int i = 0; i < documentList.size(); i++) {
                 if (documentList.get(i).getCourse_name().equals(event.getMessage().getCourseName())) {
-                    s1 = documentList.get(i).getPath();
                     if (!isExitstdoc(documentList, Integer.parseInt(documentList.get(i).getId_student()))){
                         student_word.getItems().add(String.valueOf(documentList.get(i).getId_student()));
 
                 }
+                }
+            }
 
+        }
+        else if (event.getMessage().getMessage().equals("i will give you word scan")) {
+            List<Document> documentList = event.getMessage().getDocuments_list_from_server();
+            String s1 = "";
 
+            for (int i = 0; i < documentList.size(); i++) {
+                if (documentList.get(i).getCourse_name().equals(event.getMessage().getCourseName())&&documentList.get(i).getId_student().equals(String.valueOf(event.getMessage().getStudentId()))) {
+                    s1 = documentList.get(i).getPath();
+                    break;
                 }
             }
             if(s1.equals("0"))
@@ -204,14 +209,17 @@ public class EditGrade {
 
                     }
 
-
-            fis.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+                    fis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
             }
+
+
+
         }
+
 }
 
 

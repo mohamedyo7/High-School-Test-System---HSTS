@@ -7,19 +7,19 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
-import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
 public class examsFinalstu {
     Message msg = new Message("");
     private boolean conditionMet;
@@ -138,7 +138,6 @@ public class examsFinalstu {
         msg.setExamInfo(examInfo);
         msg.setMessage("exam is over");
         msg.setExam_id(exam_id);
-        submit_textfield.setText("");
         submit_but.setVisible(false);
         submit_exam.setVisible(false);
         submit_textfield.setVisible(false);
