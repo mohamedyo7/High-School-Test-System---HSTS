@@ -64,6 +64,10 @@ public class SimpleClient extends AbstractClient {
 		else if(message.getMessage().equals("i will give you word scan")) {
 			EventBus.getDefault().post(new MessageEvent(message));
 		}
+		else if(message.getMessage().equals("question is already exist")) {
+			EventBus.getDefault().post(new MessageEvent(message));
+		}
+
 		else if (message.getMessage().equals("i will Show Answers")) {
 			EventBus.getDefault().post(new MessageEvent(message));
 		} else if (message.getMessage().equals("i will save data")) {

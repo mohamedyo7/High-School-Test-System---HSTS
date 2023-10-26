@@ -103,10 +103,7 @@ public class App {
     }
 
 
-    public static void generateQuestion(Questions questions){
-        session.save(questions);
-        session.flush();
-    }
+
 
     public static void generateQuestions(){
         Questions ques = new Questions("test", "1", "2", "3", "4", "2");
@@ -149,33 +146,6 @@ public class App {
             session.close();
         }
     }
-
-    public static void updatethetime(String examId, double newStat) throws Exception {
-        List<Exams> exams = getAllExams();
-        try {
-            // Find the corresponding Exam entity
-            Exams exam = null;
-            for (Exams e : exams) {
-                if (e.getId().equals(examId)) {
-                    exam = e;
-                    break;
-                }
-            }
-            if (exam == null) {
-                throw new Exception("No exam found with the specified ID.");
-            }
-            exam.setTime(newStat);
-            // Save the updated exam object
-            session.update(exam);
-            session.getTransaction().commit(); // Save everything..commit();
-        } catch (Exception e) {
-            session.getTransaction().rollback();
-        } finally {
-            session.close();
-        }
-    }
-
-
 
     public static void updateExam(Exams updatedExam) throws Exception {
 

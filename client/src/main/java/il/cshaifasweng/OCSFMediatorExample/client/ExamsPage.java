@@ -1,6 +1,5 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
 
-import com.google.protobuf.StringValue;
 import il.cshaifasweng.OCSFMediatorExample.entities.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.CourseReg;
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.Exams;
@@ -12,13 +11,14 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Text;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
-import java.util.ResourceBundle;import javafx.scene.text.Text;
+import java.util.ResourceBundle;
 public class ExamsPage {
     Exams exam = new Exams();
     @FXML
@@ -165,6 +165,10 @@ public class ExamsPage {
         }
         if(event.getMessage().getMessage().equals("exam id already exists")){
             errorText.setText("Error ! exam id already exists");
+
+        }
+        if(event.getMessage().getMessage().equals("question is already exist")){
+            errorText.setText("Error ! question already exists");
 
         }
     }

@@ -150,6 +150,18 @@ public class SimpleServer extends AbstractServer {
 		session.save(lec);
 		session.flush();
 	}
+	public static int generateQuestion(Questions questions){
+		List<Questions> questionsList = getAllQuestions();
+		for (int i = 0; i < questionsList.size(); i++) {
+			if (questionsList.get(i).getQues_id().equals(questions.getQues_id()) && questionsList.get(i).getCourse_name().equals(questions.getCourse_name()) && questionsList.get(i).getId().equals(questions.getId())&& questionsList.get(i).getQuestion().equals(questions.getQuestion())) {
+				return 1;
+			}
+
+		}
+		session.save(questions);
+		session.flush();
+		return 0;
+	}
 
 	public static void generateregcourse(int id, String name) throws Exception {
 		int c = 0;
@@ -662,6 +674,8 @@ public class SimpleServer extends AbstractServer {
 							 generateQuestion(question);
 							 client.sendToClient(message);
 						 }
+
+
 					} else if (request.equals("show questions")) {
 
 						message.setMessage("i will show questions");
@@ -914,7 +928,13 @@ public class SimpleServer extends AbstractServer {
 							client.sendToClient(message);
 						}
 					} else if (request.equals("add ques to exam")) {
-						generateQuestion(message.getQuestion());
+					int x=generateQuestion(message.getQuestion());
+					if(x==1) {
+						message.setMessage("question is already exist");
+						client.sendToClient(message);
+					}
+
+
 
 					} else if (request.equals("start exam")) {
 

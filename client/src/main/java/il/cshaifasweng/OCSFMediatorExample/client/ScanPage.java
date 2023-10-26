@@ -212,7 +212,10 @@ public static String course_ID;
             for(int i=0;i<questionsList.size();i++) {
 
                 if (questionsList.get(i).getQues_id().equals(String.valueOf(event.getMessage().getId()))) {
-                    Questions_exam_list.getItems().add(questionsList.get(i).getQuestion());
+                    if (!isExitst2(questionsList,questionsList.get(i).getQuestion())) {
+                        Questions_exam_list.getItems().add(questionsList.get(i).getQuestion());
+                    }
+
 
                 }
             }
@@ -263,9 +266,9 @@ public static String course_ID;
         }
         return false;
     }
-    public boolean isExitst2(List<ExamsScan> l , int id){
-        for(int i =0 ; i<exam_list.getItems().size();i++){
-            if(exam_list.getItems().get(i).equals(String.valueOf(id))){
+    public boolean isExitst2(List<Questions> l , String id){
+        for(int i =0 ; i<Questions_exam_list.getItems().size();i++){
+            if(Questions_exam_list.getItems().get(i).equals(String.valueOf(id))){
                 return true;
             }
         }
