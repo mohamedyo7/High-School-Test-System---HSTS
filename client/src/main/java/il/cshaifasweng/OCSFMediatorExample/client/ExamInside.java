@@ -187,13 +187,6 @@ public class ExamInside {
     @Subscribe
     public void setDataFromServerTF(MessageEvent event) throws IOException {
         if (event.getMessage().getMessage().equals("i will show questions2")){
-
-           // run.setText("hi rai");
-
-            //out.close();
-            System.out.println("hiiiiiii");
-
-
             ques = event.getMessage().getQuestions_list_from_server();
             exams = event.getMessage().getExams_list_from_server();
             fques.clear();
@@ -217,9 +210,6 @@ public class ExamInside {
                     i++;
                     quenum = fques.size();
 
-            }
-            else {
-                System.out.println("its null");
             }
 
         } else if (event.getMessage().getMessage().equals("i will start exam")) {
@@ -245,10 +235,8 @@ public class ExamInside {
                 if (!conditionMet) {
                     delay2 = new PauseTransition(Duration.millis(1000 * 60 * eTime));
                     delay2.setOnFinished(d -> {
-                        System.out.println("Joined time finish");
                         if(!conditionMet){
                             examInfo.setNumberOfFailedStudents(1);
-                            System.out.println("joined Extra time");
                             msg.setExamInfo(examInfo);
                             msg.setMessage("exam is over");
                             msg.setExam_id(exam_id);
@@ -278,12 +266,9 @@ public class ExamInside {
 
         }
         else if (event.getMessage().getMessage().equals("extra time")){
-            System.out.println(exam_id);
             if(exam_id.equals(event.getMessage().getExam().getId())) {
                 eTime = event.getMessage().geteTime();
             }
-            else
-                System.out.println("no eT");
         }
 
     }

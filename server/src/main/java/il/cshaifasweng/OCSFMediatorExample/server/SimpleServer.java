@@ -714,11 +714,8 @@ public class SimpleServer extends AbstractServer {
 					updateOfflinestate(message.getId(),message.getType());
 				}
 				else if (request.equals("update document")) {
-					System.out.println("ya rb1");
 					Document doc=new Document(String.valueOf(message.getExam().getId()),String.valueOf(message.getStudentId()), message.getPath(),"false", message.getCourseName());
-					System.out.println("ya rb2");
 					generateDocument(doc);
-					System.out.println("ya rb3");
 				}
 				else if (request.equals("download the exam")) {
 					message.setMessage("i will download the exam");
@@ -902,36 +899,21 @@ public class SimpleServer extends AbstractServer {
 
 					} else if (request.equals("add exam")) {
 						 int allow=1;
-						 System.out.println("1");
 						List<Exams> ex = getAllExams();
-						System.out.println("2");
 						for(Exams e : ex){
-							System.out.println(e.getEid());
 							if(e.getEid().equals(message.getExam().getEid())){
 								message.setMessage("exam id already exists");
 								client.sendToClient(message);
 								allow=0;
 							}
-							System.out.println("eeeeeeeeeeeeeeee");
 						}
-						System.out.println("haaaaaaaaaaaaaaaaaa");
 						if(allow == 1) {
 							Exams exam = message.getExam();
 							generateExam(exam);
 							message.setMessage("i added the exam");
 							client.sendToClient(message);
 						}
-
 					} else if (request.equals("add ques to exam")) {
-/*					List<Questions> q = getAllQuestions();
-					for(Questions que : q) {
-						if (que.getQuestion().equals(message.getQuestion().getQuestion()) && que.getCourse_name().equals(message.getQuestion().getCourse_name())) {
-							Questions ques = message.getQuestion();
-							ques.setQues_id(que.getQues_id());
-							client.sendToClient(message);
-
-						}
-					}*/
 						generateQuestion(message.getQuestion());
 
 					} else if (request.equals("start exam")) {

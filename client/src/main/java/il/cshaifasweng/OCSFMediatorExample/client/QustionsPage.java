@@ -73,7 +73,6 @@ int allow=0;
                 q.setToShow(true);
                 String a = idText.getText() + SimpleClient.getCourderid(list.getSelectionModel().getSelectedItem());
                 q.setId(a);
-                System.out.println(a);
                 q.setCourse_name(list.getSelectionModel().getSelectedItem());
                 msg.setQuestion(q);
                 sendMessage(msg);

@@ -49,7 +49,6 @@ public class RegisterPage {
         msg.setLast_name(LastName_Text.getText());
         msg.setPassword(Password_Text.getText());
         if(choose_Login.getSelectionModel().getSelectedItem().equals("Student")) {
-            System.out.println("in");
             msg.setMessage("check id exist");
             SimpleClient.Type = "Student";
            // msg.setMessage("Save The Student Details");

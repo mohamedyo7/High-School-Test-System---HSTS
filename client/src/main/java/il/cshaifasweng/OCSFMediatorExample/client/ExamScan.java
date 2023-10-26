@@ -94,7 +94,6 @@ sendMessage(msg);
 
 
                         Teacher_Courses.getItems().add(Courses_from_server_reg.get(i).getName());
-                        System.out.println(Courses_from_server_reg.get(i).getName());
                     }
             }
             Teacher_Courses.refresh();

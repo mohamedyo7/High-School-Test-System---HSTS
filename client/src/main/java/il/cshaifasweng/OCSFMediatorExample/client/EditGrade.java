@@ -79,15 +79,12 @@ public class EditGrade {
     private Text word_scan_label;
     @FXML
     void insert_grade_but(ActionEvent event) {
-        System.out.println("hi 1"+course_id_to_word);
         Message msg = new Message("change the student grade");
         msg.setGrade(Double.parseDouble(insert_grade_field.getText()));
         msg.setGrade_to_change((int) msg.getGrade());
         msg.setCourse_id(course_id_to_word);
         msg.setStudentId(Integer.parseInt(student_word.getSelectionModel().getSelectedItem()));
         sendMessage(msg);
-        System.out.println("hi 2");
-
         }
 
 
@@ -202,10 +199,8 @@ public class EditGrade {
                     XWPFDocument document = new XWPFDocument(fis);
 
                     for (XWPFParagraph paragraph : document.getParagraphs()) {
-                        System.out.println("haa 4");
                         String text = paragraph.getText();
                         word_scan.setText(text);
-                        System.out.println(text);
 
                     }
 

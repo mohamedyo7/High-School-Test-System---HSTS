@@ -148,10 +148,6 @@ public static String course_ID;
     public void setDataFromServerTF(MessageEvent event) {
         if (event.getMessage().getMessage().equals("i will give you exams scans")) {
             int c = 0;
-            System.out.println("hat nshof"+event.getMessage().getId());
-            System.out.println("hat nshof1"+event.getMessage().getCourseName());
-            System.out.println("hat nshof2"+c);
-
             exam_list.getItems().clear();
 
 
