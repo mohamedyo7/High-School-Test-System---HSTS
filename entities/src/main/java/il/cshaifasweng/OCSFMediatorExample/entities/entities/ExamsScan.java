@@ -119,7 +119,7 @@ public class ExamsScan  implements Serializable {
         setType(type);
         setAnswer(ans);
         setState(state);
-        setStudent_can_scan("false");
+        setStudent_can_scan("");
         setStudent_state_tostart("false");
 
 
@@ -133,7 +133,7 @@ public class ExamsScan  implements Serializable {
         this.type=exam.getType();
         this.answer=exam.answer;
         this.state=exam.state;
-        this.student_can_scan="false";
+        this.student_can_scan="";
         this.Student_state_tostart="false";
     }
 

@@ -26,12 +26,17 @@ public class ScanPage {
     @FXML
     private Label wrong_ans;
     @FXML
-    private TextArea Student_grade_Area;
+    private TextField Student_grade_Area;
 
     @FXML
     private Label student_grade;
     @FXML
     private Label Correct_ans;
+    @FXML
+    private Label student_id;
+
+    @FXML
+    private TextField student_id_field;
      String grade_reason=null;
 
 public static String course_ID;
@@ -187,6 +192,7 @@ public static String course_ID;
             for (int i = 0; i < grades.size(); i++) {
                 if (grades.get(i).getStudent_id() == event.getMessage().getId() && grades.get(i).getCourse_name().equals(event.getMessage().getCourseName())) {
                     Student_grade_Area.setText(grades.get(i).getGrade());
+                    student_id_field.setText(String.valueOf(grades.get(i).getStudent_id()));
                     course_ID= String.valueOf(grades.get(i).getCourseid());
                 }
 

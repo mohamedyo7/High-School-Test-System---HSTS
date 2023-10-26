@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="565.0" prefWidth="682.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.ScanPage">
+<AnchorPane prefHeight="625.0" prefWidth="682.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.ScanPage">
    <children>
       <ListView fx:id="exam_list" layoutX="16.0" layoutY="33.0" prefHeight="181.0" prefWidth="200.0" />
       <Label layoutX="226.0" layoutY="125.0" text="Correct Answer">
@@ -33,11 +33,10 @@
       <TextField fx:id="Ques_notes" layoutX="313.0" layoutY="171.0" prefHeight="45.0" prefWidth="288.0" />
       <TextArea fx:id="Std_notes" layoutX="313.0" layoutY="171.0" prefHeight="45.0" prefWidth="288.0" />
       <Button fx:id="insert_note_but" layoutX="219.0" layoutY="171.0" mnemonicParsing="false" onAction="#insert_note" prefHeight="25.0" prefWidth="87.0" text="Add Note" />
-      <Label fx:id="student_grade" layoutX="355.0" layoutY="14.0" text="Student Grade">
+      <Label fx:id="student_grade" layoutX="374.0" layoutY="14.0" text="Student Grade">
          <font>
             <Font name="System Bold" size="12.0" />
          </font></Label>
-      <TextArea fx:id="Student_grade_Area" layoutX="455.0" layoutY="3.0" prefHeight="17.0" prefWidth="41.0" />
       <TextField fx:id="grade_text" layoutX="415.0" layoutY="393.0" prefHeight="25.0" prefWidth="45.0" />
       <Label fx:id="reson_grade" layoutX="313.0" layoutY="255.0" text="Reason To Change Grade :">
          <font>
@@ -54,6 +53,13 @@
          </font>
       </Label>
       <Label fx:id="student_grade_label11" layoutX="16.0" layoutY="263.0" text="Questions:" textFill="#110000">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <TextField fx:id="Student_grade_Area" layoutX="468.0" layoutY="10.0" prefHeight="25.0" prefWidth="45.0" />
+      <TextField fx:id="student_id_field" layoutX="313.0" layoutY="10.0" prefHeight="25.0" prefWidth="45.0" />
+      <Label fx:id="student_id" layoutX="222.0" layoutY="14.0" text="Student ID">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
