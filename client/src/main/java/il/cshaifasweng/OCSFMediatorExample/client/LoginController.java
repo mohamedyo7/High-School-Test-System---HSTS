@@ -39,6 +39,8 @@ public class LoginController {
 
     private String Std_ID;
     int c;
+    @FXML
+    private Text errorText;
     String pass;
     @FXML
     private Text time_txf;
@@ -143,7 +145,7 @@ public class LoginController {
                     }
                 }
                 if (c == 0) {
-                    //Message msg=new Message("");
+                    errorText.setText("Wrong ID or Password , pleasy try again !");
                     sendMessage("Wrong id or password");
 
                 } else {
@@ -156,12 +158,6 @@ public class LoginController {
                     }
 
                     SimpleChatClient.setRoot("StudentController");
-/*                    Message msg = new Message("give me student data");
-                    // Message msg = new Message("give me the students");
-                    msg.setStudentId(Integer.parseInt(ID_text.getText()));
-                    msg.setId(Integer.parseInt(ID_text.getText()));
-
-                    sendMessage(msg);*/
                     c = 0;
                     pass = "[p]";
 
@@ -179,7 +175,7 @@ public class LoginController {
                     }
                 }
                 if (c == 0) {
-                    //Message msg=new Message("");
+                    errorText.setText("Wrong ID or Password , pleasy try again !");
                     sendMessage("Wrong id or password");
 
                 } else {
@@ -191,9 +187,7 @@ public class LoginController {
                         e.printStackTrace();
                     }
                     SimpleChatClient.setRoot("TeacherPage");
-                    //Message msg = new Message("give me teacher data");
-                    // Message msg = new Message("give me the students");
-                   // msg.setId(Integer.parseInt(ID_text.getText()));
+
                     c = 0;
                     pass = "[p]";
                    // sendMessage(msg);
@@ -213,6 +207,7 @@ public class LoginController {
                 }
                 if (c == 0) {
                     //Message msg=new Message("");
+                    errorText.setText("Wrong ID or Password , pleasy try again !");
                     sendMessage("Wrong id or password");
 
                 } else {
@@ -224,10 +219,6 @@ public class LoginController {
                         e.printStackTrace();
                     }
                     SimpleChatClient.setRoot("MediatorPage");
-                    //Message msg = new Message("give me mediator data");
-                    // Message msg = new Message("give me the students");
-                    //msg.setLogin_name("Mediator");
-                   // msg.setId(Integer.parseInt(ID_text.getText()));
                     c = 0;
                     pass = "[p]";
                     //sendMessage(msg);
@@ -248,20 +239,11 @@ public class LoginController {
 
     @FXML
     void initialize() throws IOException {
-/*        String desktopPath = System.getProperty("user.home") + "/Desktop/output.docx";
-        XWPFDocument document=new XWPFDocument();
-        FileOutputStream out = new FileOutputStream(desktopPath);
-        XWPFParagraph paragraph=document.createParagraph();
-        XWPFRun run=paragraph.createRun();
-        run.setText("hi rai");
-        document.write(out);
-        out.close();
-        System.out.println("hiiiiiii");*/
 
         EventBus.getDefault().register(this);
-
-c=0;
-pass="[p]";
+        errorText.setText("");
+        c=0;
+        pass="[p]";
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
         Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
             LocalTime currentTime = LocalTime.now();
