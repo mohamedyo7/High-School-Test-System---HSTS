@@ -38,7 +38,6 @@
             <Font name="System Bold" size="12.0" />
          </font></Label>
       <TextArea fx:id="Student_grade_Area" layoutX="455.0" layoutY="3.0" prefHeight="17.0" prefWidth="41.0" />
-      <Button fx:id="change_grade_but" layoutX="313.0" layoutY="393.0" mnemonicParsing="false" onAction="#change_grade" text="Change Grade" />
       <TextField fx:id="grade_text" layoutX="415.0" layoutY="393.0" prefHeight="25.0" prefWidth="45.0" />
       <Label fx:id="reson_grade" layoutX="313.0" layoutY="255.0" text="Reason To Change Grade :">
          <font>

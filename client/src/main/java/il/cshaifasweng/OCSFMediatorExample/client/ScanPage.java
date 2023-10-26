@@ -59,27 +59,17 @@ public static String course_ID;
 
     @FXML
     private Label reson_grade;
-    @FXML
-    void change_grade(ActionEvent event) throws IOException {
-        Message msg = new Message("change the student grade");
-        msg.setGrade(Double.parseDouble(grade_text.getText()));
-        msg.setGrade_to_change((int) msg.getGrade());
-        msg.setCourse_id(Integer.parseInt(course_ID));
-        msg.setStudentId(EditGrade.student_id_toaddnote);
-        sendMessage(msg);
-
-
-
-
-
-        //SimpleChatClient.setRoot("ScanPage");
-       // sendMessage(msg1);
-
-
-    }
 
     @FXML
     void Done_send_grade(ActionEvent event) throws IOException {
+        if(!grade_text.getText().isEmpty()){
+            Message msg = new Message("change the student grade");
+            msg.setGrade(Double.parseDouble(grade_text.getText()));
+            msg.setGrade_to_change((int) msg.getGrade());
+            msg.setCourse_id(Integer.parseInt(course_ID));
+            msg.setStudentId(EditGrade.student_id_toaddnote);
+            sendMessage(msg);
+        }
         Message msg=new Message("finish editing");
         msg.setCourseName(EditGrade.course_name);
         msg.setStudentId(EditGrade.student_id_toaddnote);
@@ -169,13 +159,29 @@ public static String course_ID;
             List<Grade> grades = event.getMessage().getGrades_list_from_server();
 
             List<Questions> questionsList = event.getMessage().getQuestions_list_from_server();
-            for (int i = 0; i < examsScanList.size(); i++) {
+            if(SimpleClient.Type.equals("Student")){
+                for (int i = 0; i < examsScanList.size(); i++) {
 
-                if (examsScanList.get(i).getStudent_ID() == event.getMessage().getId() && examsScanList.get(i).getName().equals(event.getMessage().getCourseName())) {
-                    if(!isExitst(examsScanList,examsScanList.get(i).getStudent_ID()))
+                    if (examsScanList.get(i).getStudent_ID() == event.getMessage().getId() && examsScanList.get(i).getName().equals(event.getMessage().getCourseName())) {
+                        if (examsScanList.get(i).getStudent_can_scan().equals("true")) {
+                            if (!isExitst(examsScanList, Integer.parseInt(examsScanList.get(i).getExam_ID())))
 
 
-                        exam_list.getItems().add(examsScanList.get(i).getExam_ID());
+                                exam_list.getItems().add(examsScanList.get(i).getExam_ID());
+                        }
+                    }
+                }
+            }
+            else {
+                for (int i = 0; i < examsScanList.size(); i++) {
+
+                    if (examsScanList.get(i).getStudent_ID() == event.getMessage().getId() && examsScanList.get(i).getName().equals(event.getMessage().getCourseName())) {
+
+                            if (!isExitst(examsScanList, Integer.parseInt(examsScanList.get(i).getExam_ID())))
+
+
+                                exam_list.getItems().add(examsScanList.get(i).getExam_ID());
+                    }
                 }
             }
             for (int i = 0; i < grades.size(); i++) {
@@ -186,19 +192,6 @@ public static String course_ID;
 
 
             }
-            System.out.println("Sd"+SimpleClient.Type);
-/*            if (SimpleClient.Type.equals("Student")) {
-                for (int i = 0; i < examsScanList.size(); i++) {
-
-                    if (examsScanList.get(i).getStudent_ID() == event.getMessage().getId() && examsScanList.get(i).getName().equals(event.getMessage().getCourseName())) {
-                        for (int j = 0; j < exam_list.getItems().size(); j++) {
-                            if (!(exam_list.getItems().isEmpty()))
-                                if (exam_list.getItems().get(j).equals(String.valueOf(examsScanList.get(i).getExam_ID())) && examsScanList.get(i).getStudent_can_scan().equals("false"))
-                                    exam_list.getItems().remove(j);
-                        }
-                    }
-                }
-            }*/
             exam_list.refresh();
 
 
@@ -250,8 +243,6 @@ public static String course_ID;
                 wrong_ans.setVisible(true);
 
             }
-            else
-            Correct_ans.setVisible(true);
 
         }
         else  if (event.getMessage().getMessage().equals("i will add note")) {
@@ -270,9 +261,18 @@ public static String course_ID;
         }
         return false;
     }
+    public boolean isExitst2(List<ExamsScan> l , int id){
+        for(int i =0 ; i<exam_list.getItems().size();i++){
+            if(exam_list.getItems().get(i).equals(String.valueOf(id))){
+                return true;
+            }
+        }
+        return false;
+    }
     @FXML
     void initialize() {
         wrong_ans.setVisible(false);
+
         if(SimpleClient.Type.equals("Teacher"))
             Std_notes.setVisible(false);
         if(SimpleClient.Type.equals("Student")) {
@@ -281,7 +281,6 @@ public static String course_ID;
             done_but.setVisible(false);
             student_grade.setVisible(false);
            Student_grade_Area.setVisible(false);
-           change_grade_but.setVisible(false);
            grade_text.setVisible(false);
            reson_grade.setVisible(false);
            student_grade_label.setVisible(false);
