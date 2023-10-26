@@ -175,6 +175,7 @@ public class ExamInside {
             msg.setMessage("exam is over");
             //msg.setId(exam_id);
             examInfo.setNumberOfCompletedStudents(1);
+            msg.setExam_id(exam_id);
             msg.setExamInfo(examInfo);
             sendMessage(msg);
 
@@ -204,14 +205,9 @@ public class ExamInside {
                 }
 
             }
-
             if(!(fques.isEmpty())){
                 question.setText(fques.get(i).getQuestion());
-
-
                 if(!fques.get(i).getQues_id().equals("empty")) {
-
-
                     answer1.setText(fques.get(i).getAns1());
                     answer2.setText(fques.get(i).getAns2());
                     answer3.setText(fques.get(i).getAns3());
@@ -246,16 +242,18 @@ public class ExamInside {
             delay = new PauseTransition(Duration.millis(1000 * 60 * time));
             conditionMet = false;
             delay.setOnFinished(e -> {
-                if (conditionMet) {
-                }else {
+                if (!conditionMet) {
                     delay2 = new PauseTransition(Duration.millis(1000 * 60 * eTime));
                     delay2.setOnFinished(d -> {
-                        if(conditionMet)
-                        examInfo.setNumberOfFailedStudents(1);
-                        msg.setExamInfo(examInfo);
-                        msg.setMessage("exam is over");
-                        msg.setExam_id(exam_id);
-                        sendMessage(msg);
+                        System.out.println("Joined time finish");
+                        if(!conditionMet){
+                            examInfo.setNumberOfFailedStudents(1);
+                            System.out.println("joined Extra time");
+                            msg.setExamInfo(examInfo);
+                            msg.setMessage("exam is over");
+                            msg.setExam_id(exam_id);
+                            sendMessage(msg);
+                        }
                     });
                     delay2.play();
                     }
@@ -280,6 +278,7 @@ public class ExamInside {
 
         }
         else if (event.getMessage().getMessage().equals("extra time")){
+            System.out.println(exam_id);
             if(exam_id.equals(event.getMessage().getExam().getId())) {
                 eTime = event.getMessage().geteTime();
             }

@@ -73,7 +73,8 @@ public class examsFinalstu {
             submit_but.setVisible(true);
             submit_exam.setVisible(true);
             submit_textfield.setVisible(true);
-            examInfo.setExam_id(examsTable.getSelectionModel().getSelectedItem().getId());
+            exam_id = examsTable.getSelectionModel().getSelectedItem().getId();
+            examInfo.setExam_id(exam_id);
             examInfo.setCourseid(examsTable.getSelectionModel().getSelectedItem().getCourse_name());
             examInfo.setStudentid(SimpleClient.ID);
             examInfo.setActualDuration(time);
@@ -91,14 +92,10 @@ public class examsFinalstu {
             delay = new PauseTransition(Duration.millis(1000 * 60 * time));
             conditionMet = false;
             delay.setOnFinished(e -> {
-                if (conditionMet) {
-                } else {
+                if (!conditionMet) {
                     delay2 = new PauseTransition(Duration.millis(1000 * 60 * eTime));
                     delay2.setOnFinished(d -> {
-                        if(conditionMet){
-
-                        }
-                        else{
+                        if(!conditionMet){
                         examInfo.setNumberOfFailedStudents(1);
                         System.out.println("enifo  " + examInfo.getId());
                         msg.setExamInfo(examInfo);
@@ -169,6 +166,7 @@ public class examsFinalstu {
         if(examsTable.getSelectionModel().getSelectedItem().getCode().equals(eCode.getText())&&Integer.parseInt(studenid.getText())==SimpleClient.ID){
             msg.setMessage("start exam");
             msg.setLogin_name("student");
+            exam_id = examsTable.getSelectionModel().getSelectedItem().getId();
             examInfo.setExam_id(examsTable.getSelectionModel().getSelectedItem().getId());
             examInfo.setCourseid(examsTable.getSelectionModel().getSelectedItem().getCourse_name());
             examInfo.setStudentid(SimpleClient.ID);
@@ -236,6 +234,7 @@ public class examsFinalstu {
                 coursesList.refresh();
 
         } else if (event.getMessage().getMessage().equals("exam is over done")){
+            System.out.println("exam her check " + exam_id+" " + event.getMessage().getExam_id());
             if(exam_id.equals(event.getMessage().getExam_id())){
                 msg.setIs_finished(conditionMet);
                 msg.setMessage("end exam");

@@ -13,8 +13,11 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
 import java.util.List;
+import javafx.scene.text.Text;
 
 public class RegisterPage {
+    @FXML
+    private Text errorText;
 
     @FXML
     private TextField FirstName_Text;
@@ -114,6 +117,7 @@ public class RegisterPage {
                 }
                 if (c == 1) {
                     //Message msg=new Message("");
+                    errorText.setText("This ID already exists!");
                     sendMessage("This id already exists check again please");
 
                 } else {
@@ -143,6 +147,7 @@ public class RegisterPage {
                 }
                 if (c == 1) {
                     //Message msg=new Message("");
+                    errorText.setText("This ID already exists!");
                     sendMessage("This id already exists check again please");
 
                 } else {
@@ -168,7 +173,7 @@ public class RegisterPage {
     void initialize() {
 
         EventBus.getDefault().register(this);
-
+        errorText.setText("");
         c=0;
         // sendMessage("give me the students");
         choose_Login.getItems().add("Student");
