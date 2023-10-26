@@ -111,10 +111,8 @@ public class ExamsPage {
             Message msg = new Message("add exam");
             courseid = SimpleClient.getCourderid(coursesList.getSelectionModel().getSelectedItem());
             String id = exam_id.getText() + courseid;
-            System.out.println(id + "   is the id i printed");
             exam.setId(exam_id.getText() + courseid + courseid);
             exam.setEid(exam_id.getText() + courseid + courseid);
-            System.out.println(exam.getEid());
             exam.setCourse_name(coursesList.getSelectionModel().getSelectedItem());
             msg.setExam(exam);
             sendMessage(msg);

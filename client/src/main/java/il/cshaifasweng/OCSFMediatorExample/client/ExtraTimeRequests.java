@@ -50,7 +50,6 @@ public class ExtraTimeRequests {
         Exams exam = requestsTable.getSelectionModel().getSelectedItem();
         msg.setMessage("extra time accepted");
         msg.setExam(exam);
-        //requestsTable.getItems().remove(exam);
         sendMessage(msg);
         exam.setRequest(false);
         exam.setReason(" ");

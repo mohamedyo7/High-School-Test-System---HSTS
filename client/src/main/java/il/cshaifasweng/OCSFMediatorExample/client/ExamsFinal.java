@@ -137,8 +137,6 @@ public class ExamsFinal {
             examsTable.getItems().clear();
             List<Exams> exams = event.getMessage().getExams_list_from_server();
             List<ExamsScan>examsScanList=event.getMessage().getExamsScans_list_from_server();
-
-
             examsTablemini.setCellValueFactory(new PropertyValueFactory<>("id"));
             numberTable.setCellValueFactory(new PropertyValueFactory<>("ques_number"));
 
@@ -160,8 +158,6 @@ public class ExamsFinal {
                 msg.setMessage("extraTime");
                 sendMessage(msg);
             }
-            else
-                System.out.println("no extra time");
         }
         }
 

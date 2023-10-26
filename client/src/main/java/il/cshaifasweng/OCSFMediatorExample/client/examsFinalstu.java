@@ -18,7 +18,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
-
+import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 public class examsFinalstu {
     Message msg = new Message("");
     private boolean conditionMet;
@@ -35,7 +36,8 @@ public class examsFinalstu {
     List<Exams> exams= new ArrayList<>() ;
     @FXML
     private TableColumn<Exams, String> examsTablemini;
-
+    @FXML
+    private Text errorText;
     @FXML
     private TableColumn<Exams, String> numberTable;
     @FXML
@@ -97,7 +99,6 @@ public class examsFinalstu {
                     delay2.setOnFinished(d -> {
                         if(!conditionMet){
                         examInfo.setNumberOfFailedStudents(1);
-                        System.out.println("enifo  " + examInfo.getId());
                         msg.setExamInfo(examInfo);
                         msg.setMessage("exam is over");
                         msg.setExam_id(exam_id);
@@ -110,7 +111,6 @@ public class examsFinalstu {
                         msg.setPath("0");
                         msg.setCourseName(coursesList.getSelectionModel().getSelectedItem());
                         sendMessage(msg);
-                        System.out.println("exam is over");
                         sendMessage(msg);
                         msg.setMessage("update document");
                         sendMessage(msg);}
@@ -121,7 +121,7 @@ public class examsFinalstu {
             });
             delay.play();
         }
-        else System.out.println("Wrong code");
+        else errorText.setText("Wrong id or password please try again !");
     }
     @FXML
     private Button submit_but;
@@ -135,7 +135,6 @@ public class examsFinalstu {
     void Submit_but(ActionEvent event) {
         conditionMet=true;
         examInfo.setNumberOfCompletedStudents(1);
-        System.out.println("enifo  " + examInfo.getId());
         msg.setExamInfo(examInfo);
         msg.setMessage("exam is over");
         msg.setExam_id(exam_id);
@@ -147,7 +146,6 @@ public class examsFinalstu {
         msg.setStudentId(Integer.parseInt(studenid.getText()));
         msg.setCourseName(coursesList.getSelectionModel().getSelectedItem());
         sendMessage(msg);
-        System.out.println("exam is over");
         sendMessage(msg);
         Message msg=new Message("update document");
         msg.setExam(examsTable.getSelectionModel().getSelectedItem());
@@ -164,6 +162,7 @@ public class examsFinalstu {
     @FXML
     void startB(ActionEvent event) throws IOException {
         if(examsTable.getSelectionModel().getSelectedItem().getCode().equals(eCode.getText())&&Integer.parseInt(studenid.getText())==SimpleClient.ID){
+            errorText.setText(" ");
             msg.setMessage("start exam");
             msg.setLogin_name("student");
             exam_id = examsTable.getSelectionModel().getSelectedItem().getId();
@@ -178,7 +177,7 @@ public class examsFinalstu {
             sendMessage(msg);
 
             } else{
-                System.out.println("Wrong code or id");
+                errorText.setText("Wrong id or password please try again !");
                 sendMessage("wrong code or id");}
         }
 
@@ -234,7 +233,6 @@ public class examsFinalstu {
                 coursesList.refresh();
 
         } else if (event.getMessage().getMessage().equals("exam is over done")){
-            System.out.println("exam her check " + exam_id+" " + event.getMessage().getExam_id());
             if(exam_id.equals(event.getMessage().getExam_id())){
                 msg.setIs_finished(conditionMet);
                 msg.setMessage("end exam");
@@ -333,13 +331,9 @@ public class examsFinalstu {
 
         }
         else if (event.getMessage().getMessage().equals("extra time")){
-            System.out.println("etttttttttt");
             if(exam_id.equals(event.getMessage().getExam().getId())) {
                 eTime = event.getMessage().geteTime();
-                System.out.println("etime is +  " + eTime);
             }
-            else
-                System.out.println("no eT");
         }
     }
 
@@ -365,6 +359,7 @@ public class examsFinalstu {
     @FXML
     void initialize() {
         EventBus.getDefault().register(this);
+        errorText.setText(" ");
         conditionMet = true;
         submit_but.setVisible(false);
         submit_exam.setVisible(false);
