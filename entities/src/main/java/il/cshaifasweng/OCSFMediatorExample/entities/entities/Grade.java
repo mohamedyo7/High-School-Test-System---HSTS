@@ -9,6 +9,15 @@ public class Grade implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int grade_id;
+    String examId="No";
+
+    public String getExamId() {
+        return examId;
+    }
+
+    public void setExamId(String examId) {
+        this.examId = examId;
+    }
 
     @ManyToOne
     @JoinColumn(name = "course_id")

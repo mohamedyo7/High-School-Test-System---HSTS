@@ -294,6 +294,39 @@ public class App {
             session.close();
         }
     }
+    public static void  changeGradetoExam(int studentId, int courseId, int newGrade,String examID) throws Exception {
+
+
+
+        List<Grade> student_grades = getGradesByStudentId(studentId);
+        try {
+
+            // Find the corresponding Grade entity
+            Grade grade = null;
+            for (Grade g : student_grades) {
+                if (g.getCourseid() == courseId) {
+                    grade = g;
+                    break;
+                }
+            }
+
+            if (grade == null) {
+                throw new Exception("No grade found for the specified student and course.");
+            }
+
+
+            // Update the grade
+            grade.setExamId(examID);
+            grade.setGrade(String.valueOf(newGrade));
+            session.update(grade);
+
+            session.getTransaction().commit(); // Save everything..commit();
+        } catch (Exception e) {
+            session.getTransaction().rollback();
+        } finally {
+            session.close();
+        }
+    }
 
     public static List<Exams> getAllExams() throws Exception {
         CriteriaBuilder builder = session.getCriteriaBuilder();

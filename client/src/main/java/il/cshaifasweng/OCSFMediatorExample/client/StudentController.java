@@ -44,7 +44,7 @@ public class StudentController {
          if(Name!= null) {
              int s;
              Message msg = new Message("give me the student grades");
-            s= Integer.parseInt(STD_ID.getItems().get(0));
+             s= Integer.parseInt(STD_ID.getItems().get(0));
              msg.setStudentId(s);
              msg.setId(s);
              sendMessage(msg);
@@ -121,7 +121,8 @@ public class StudentController {
             for (int i = 0; i < grades_list_from_server1.size(); i++) {
                 if(grades_list_from_server1.get(i).getStudent().getStudent_id()==event.getMessage().getId()) {
                     if (grades_list_from_server1.get(i).getCourseName().equals(Student_Courses_Table.getSelectionModel().getSelectedItem())) {
-                       s= (grades_list_from_server1.get(i).getGrade());
+                       if(!grades_list_from_server1.get(i).getExamId().equals("No"))
+                        s= (grades_list_from_server1.get(i).getGrade());
                         //Grade_Text.getItems().add(String.valueOf(s));
                         //Grade_Text.refresh();
                         grade_show.setText((s));
