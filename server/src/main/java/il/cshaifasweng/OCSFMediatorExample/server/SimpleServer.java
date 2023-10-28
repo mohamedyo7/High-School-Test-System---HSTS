@@ -960,8 +960,8 @@ public class SimpleServer extends AbstractServer {
 						client.sendToClient(message);
 
 					} else if (request.equals("end exam")) {
-						message.setMessage("exam is over done");
-						changeGrade(message.getStudentId(), message.getCourse_id(), message.getGrade_to_change());
+						message.setMessage("exam is over done2");
+						//changeGrade(message.getStudentId(), message.getCourse_id(), message.getGrade_to_change());
 						changeGradetoExam(message.getStudentId(), message.getCourse_id(), message.getGrade_to_change(), message.getExam_id());
 						updateExamStat(message.getExam_id(), false, message.getTime());
 						client.sendToClient(message);
