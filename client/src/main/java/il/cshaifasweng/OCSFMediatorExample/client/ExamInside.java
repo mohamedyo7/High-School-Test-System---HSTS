@@ -114,6 +114,7 @@ public class ExamInside {
             if (value.getStat()) {
                 id = String.valueOf(value.getId());
                 msg.setMessage("end exam");
+                msg.setExam_id(exam_id);
                 msg.setExam(value);
                 sendMessage(msg);
                 SimpleChatClient.setRoot("StudentController");

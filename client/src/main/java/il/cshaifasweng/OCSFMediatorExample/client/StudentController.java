@@ -112,12 +112,12 @@ public class StudentController {
             grade_show.clear();
 
 
-            String s="null";
+            String s="No Grade Yet";
 
 
             List<Grade> grades_list_from_server1 = event.getMessage().getGrades_list_from_server();
 
-
+            int in=0;
             for (int i = 0; i < grades_list_from_server1.size(); i++) {
                 if(grades_list_from_server1.get(i).getStudent().getStudent_id()==event.getMessage().getId()) {
                     if (grades_list_from_server1.get(i).getCourseName().equals(Student_Courses_Table.getSelectionModel().getSelectedItem())) {
@@ -126,11 +126,27 @@ public class StudentController {
                         //Grade_Text.getItems().add(String.valueOf(s));
                         //Grade_Text.refresh();
                         grade_show.setText((s));
+                        in =1;
 
-
-                        //break;
+                        break;
                     }
 
+                }
+            }
+            if(in==0) {
+                for (int i = 0; i < grades_list_from_server1.size(); i++) {
+                    if (grades_list_from_server1.get(i).getStudent().getStudent_id() == event.getMessage().getId()) {
+                        if (grades_list_from_server1.get(i).getCourseName().equals(Student_Courses_Table.getSelectionModel().getSelectedItem())) {
+                            if (!grades_list_from_server1.get(i).getExamId().equals("No"))
+                                s = (grades_list_from_server1.get(i).getGrade());
+                            //Grade_Text.getItems().add(String.valueOf(s));
+                            //Grade_Text.refresh();
+                            grade_show.setText((s));
+
+
+                            break;
+                        }
+                    }
                 }
             }
            // Grade_Text.refresh();
