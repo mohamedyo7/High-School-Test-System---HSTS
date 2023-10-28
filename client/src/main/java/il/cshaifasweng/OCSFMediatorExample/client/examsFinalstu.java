@@ -15,6 +15,7 @@ import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -46,7 +47,7 @@ public class examsFinalstu {
     private Button downlodExamid;
     @FXML
     private URL location;
-
+    String text;
     @FXML
     private TextField studenid;
     @FXML
@@ -144,9 +145,22 @@ public class examsFinalstu {
         msg.setExam(examsTable.getSelectionModel().getSelectedItem());
         msg.setStudentId(Integer.parseInt(studenid.getText()));
         msg.setCourseName(coursesList.getSelectionModel().getSelectedItem());
-        sendMessage(msg);
+
+        try {
+            FileInputStream fis = new FileInputStream(submit_textfield.getText());
+            XWPFDocument document = new XWPFDocument(fis);
+            for (XWPFParagraph paragraph : document.getParagraphs()) {
+                text = paragraph.getText();
+                System.out.println(text);
+            }
+            fis.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         sendMessage(msg);
         Message msg=new Message("update document");
+        msg.setData(text);
         msg.setExam(examsTable.getSelectionModel().getSelectedItem());
         msg.setStudentId(Integer.parseInt(studenid.getText()));
         msg.setPath(submit_textfield.getText());

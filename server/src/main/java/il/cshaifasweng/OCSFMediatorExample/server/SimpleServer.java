@@ -729,6 +729,7 @@ public class SimpleServer extends AbstractServer {
 				}
 				else if (request.equals("update document")) {
 					Document doc=new Document(String.valueOf(message.getExam().getId()),String.valueOf(message.getStudentId()), message.getPath(),"false", message.getCourseName());
+					doc.setData(message.getData());
 					generateDocument(doc);
 				}
 				else if (request.equals("download the exam")) {
