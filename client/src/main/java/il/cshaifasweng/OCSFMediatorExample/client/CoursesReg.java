@@ -113,10 +113,7 @@ public class CoursesReg {
             }
             Reg_Courses_Table.refresh();
         }
-
-        }
-
-
+    }
     @FXML
     void initialize() {
         EventBus.getDefault().register(this);

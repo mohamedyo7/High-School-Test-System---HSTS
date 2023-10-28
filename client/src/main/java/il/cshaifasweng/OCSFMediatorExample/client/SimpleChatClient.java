@@ -62,7 +62,6 @@ public class SimpleChatClient extends Application {
         root.getChildren().add(label);
         Scene scene = new Scene(root, 400, 200);*/
         client = SimpleClient.getClient();
-        client.setClient_id("asd");
         client.openConnection();
         scene = new Scene(loadFXML("FirstPage"), 700, 742);
         stage.setScene(scene);

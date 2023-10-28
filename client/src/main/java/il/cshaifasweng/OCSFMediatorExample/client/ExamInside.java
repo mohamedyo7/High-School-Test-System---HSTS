@@ -173,7 +173,6 @@ public class ExamInside {
         else {
             conditionMet=true;
             msg.setMessage("exam is over");
-            //msg.setId(exam_id);
             examInfo.setNumberOfCompletedStudents(1);
             msg.setExam_id(exam_id);
             msg.setExamInfo(examInfo);
@@ -248,10 +247,10 @@ public class ExamInside {
             });
             delay.play();
             sendMessage("show questions2");
-
         }
         else if (event.getMessage().getMessage().equals("exam is over done")){
             if(exam_id.equals(event.getMessage().getExam_id())){
+                conditionMet = true;
                 msg.setIs_finished(conditionMet);
                 msg.setMessage("end exam");
                 msg.setStudentId(SimpleClient.ID);
