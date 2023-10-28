@@ -137,7 +137,7 @@ public class StudentController {
                 for (int i = 0; i < grades_list_from_server1.size(); i++) {
                     if (grades_list_from_server1.get(i).getStudent().getStudent_id() == event.getMessage().getId()) {
                         if (grades_list_from_server1.get(i).getCourseName().equals(Student_Courses_Table.getSelectionModel().getSelectedItem())) {
-                            if (!grades_list_from_server1.get(i).getExamId().equals("No"))
+                            if (!grades_list_from_server1.get(i).getGrade().equals("No Grade Yet"))
                                 s = (grades_list_from_server1.get(i).getGrade());
                             //Grade_Text.getItems().add(String.valueOf(s));
                             //Grade_Text.refresh();
