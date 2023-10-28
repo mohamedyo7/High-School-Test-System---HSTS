@@ -143,8 +143,6 @@ public class StudentController {
                             //Grade_Text.refresh();
                             grade_show.setText((s));
 
-
-                            break;
                         }
                     }
                 }
