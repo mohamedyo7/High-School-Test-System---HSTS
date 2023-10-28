@@ -11,6 +11,15 @@ public class Document implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id= 1000L;
 
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
+
+    String data;
     private String id_exam;
     private String id_student;
     private String path;

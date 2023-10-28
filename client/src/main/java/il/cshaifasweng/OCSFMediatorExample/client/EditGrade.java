@@ -192,29 +192,11 @@ public class EditGrade {
 
             for (int i = 0; i < documentList.size(); i++) {
                 if (documentList.get(i).getCourse_name().equals(event.getMessage().getCourseName())&&documentList.get(i).getId_student().equals(String.valueOf(event.getMessage().getStudentId()))) {
-                    s1 = documentList.get(i).getPath();
+                    s1 = documentList.get(i).getData();
                     break;
                 }
             }
-            if(s1.equals("0"))
-                word_scan.setText("");
-            else {
-                try {
-                    FileInputStream fis = new FileInputStream(s1);
-                    XWPFDocument document = new XWPFDocument(fis);
-
-                    for (XWPFParagraph paragraph : document.getParagraphs()) {
-                        String text = paragraph.getText();
-                        word_scan.setText(text);
-
-                    }
-
-                    fis.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-            }
+            word_scan.setText(s1);
 
 
 
