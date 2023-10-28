@@ -118,7 +118,7 @@ public class ExamsScan  implements Serializable {
         setExam_ID(exam_id);
         setType(type);
         setAnswer(ans);
-        setState(state);
+        setState("");
         setStudent_can_scan("");
         setStudent_state_tostart("false");
 
@@ -132,7 +132,7 @@ public class ExamsScan  implements Serializable {
         this.name=exam.name;
         this.type=exam.getType();
         this.answer=exam.answer;
-        this.state=exam.state;
+        this.state="";
         this.student_can_scan="";
         this.Student_state_tostart="false";
     }
@@ -146,14 +146,7 @@ public class ExamsScan  implements Serializable {
     }
 
 
-   /* public Lecturer getLecturer() {
-        return lecturer;
-    }*/
 
-    /*    public void setLecturer(Lecturer lecturer) {
-            this.lecturer = lecturer;
-            lecturer.getCoursesReg().add(this); // IMPORTANT!
-        }*/
     public ExamsScan() {
     }
 
@@ -161,10 +154,6 @@ public class ExamsScan  implements Serializable {
         this.name = name;
     }
 
- /*   public CourseReg(String name, Lecturer lecturer) {
-        this.name = name;
-        setLecturer(lecturer); // IMPORTANT: Why are we doing this?
-        //this.students = new ArrayList<Student>();
-    }*/
+
 
 }
