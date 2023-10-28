@@ -169,7 +169,7 @@ public class ExamsPage {
         }
         if(event.getMessage().getMessage().equals("question is already exist")){
             errorText.setText("Error ! question already exists");
-
+            qnum--;
         }
     }
     void sendMessage(Message message) {

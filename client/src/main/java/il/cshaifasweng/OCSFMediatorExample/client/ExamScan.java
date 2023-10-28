@@ -91,16 +91,10 @@ sendMessage(msg);
                 // Set the data to the table
                 if(Courses_from_server_reg.get(i).getLecturer()!=null)
                     if(Courses_from_server_reg.get(i).getLecturer().getId()==event.getMessage().getId()){
-
-
                         Teacher_Courses.getItems().add(Courses_from_server_reg.get(i).getName());
                     }
             }
             Teacher_Courses.refresh();
-
-
-
-
         }
         else if (event.getMessage().getMessage().equals("i will show stats")) {
             String Name = Teacher_Courses.getSelectionModel().getSelectedItem();
@@ -108,7 +102,7 @@ sendMessage(msg);
             if (Name == null || ID == null) {
                 sendMessage("");
             } else {
-                ExamInfo examInfo = null;
+                ExamInfo examInfo = new ExamInfo();
                 List<ExamInfo> examInfos = event.getMessage().getExamInfos();
                 for (int i = 0; i < examInfos.size(); i++) {
                     if (examInfos.get(i).getCourseid().equals(Name) && examInfos.get(i).getExam_id().equals(ID)) {

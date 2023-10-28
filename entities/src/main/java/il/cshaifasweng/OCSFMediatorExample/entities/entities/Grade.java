@@ -13,10 +13,6 @@ public class Grade implements Serializable {
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;
-  /*  @ManyToOne
-    @JoinColumn(name = "course_id_Reg")
-    private CourseReg courseReg;*/
-
     @ManyToOne
     @JoinColumn(name = "student_id")
     private Student student;
