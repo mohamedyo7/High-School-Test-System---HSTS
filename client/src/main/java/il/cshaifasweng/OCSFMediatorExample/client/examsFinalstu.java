@@ -171,6 +171,7 @@ public class examsFinalstu {
             msg.setExamInfo(examInfo);
             msg.setExam(examsTable.getSelectionModel().getSelectedItem());
             msg.setCourseName(String.valueOf(examsTable.getSelectionModel().getSelectedItem()));
+            courseid=SimpleClient.getCourderid(coursesList.getSelectionModel().getSelectedItem());
             msg.setCourse_id(Integer.parseInt(courseid));
             SimpleChatClient.setRoot("examInside");
             sendMessage(msg);
@@ -212,14 +213,12 @@ public class examsFinalstu {
                                     if (Exams_from_server.get(j).getStat()) {
 
                                         exams.add(Exams_from_server.get(j));
+                                        if (!isExitst(Courses_from_server_reg,Courses_from_server_reg.get(i).getName())) {
 
-                                        coursesList.getItems().add(Courses_from_server_reg.get(i).getName());
-
-                                        for (int x = 0; x < courses.size(); x++) {
-
-                                            if (Courses_from_server_reg.get(i).getName().equals(courses.get(x).getName()))
-                                                courseid = String.valueOf(courses.get(x).getId());
+                                            coursesList.getItems().add(Courses_from_server_reg.get(i).getName());
                                         }
+
+
                                     }
                                 }
                             }
@@ -334,6 +333,14 @@ public class examsFinalstu {
                 eTime = event.getMessage().geteTime();
             }
         }
+    }
+    public boolean isExitst(List<CourseReg> l , String id){
+        for(int i =0 ; i<coursesList.getItems().size();i++){
+            if(coursesList.getItems().get(i).equals(String.valueOf(id))){
+                return true;
+            }
+        }
+        return false;
     }
 
     void sendMessage(Message message) {

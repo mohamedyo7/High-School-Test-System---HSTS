@@ -236,10 +236,14 @@ public static String course_ID;
             List<ExamsScan>examsScanList=event.getMessage().getExamsScans_list_from_server();
             for(int i=0;i<examsScanList.size();i++) {
 
-                if(examsScanList.get(i).getExam_ID().equals(event.getMessage().getExam_id())&&examsScanList.get(i).getStudent_ID()==(SimpleClient.ID))
+                if(examsScanList.get(i).getExam_ID().equals(event.getMessage().getExam_id()))
                     if (examsScanList.get(i).getType().equals(String.valueOf(event.getMessage().getCourseName()))) {
                         Your_ans.setText(examsScanList.get(i).getAnswer());
-                        Std_notes.setText(examsScanList.get(i).getState());
+                        if(SimpleClient.Type.equals("Student")){
+                            if(examsScanList.get(i).getStudent_ID()==(SimpleClient.ID))
+                                Std_notes.setText(examsScanList.get(i).getState());
+                        }
+
                     }
             }
 

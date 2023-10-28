@@ -5,12 +5,10 @@ import il.cshaifasweng.OCSFMediatorExample.entities.entities.Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.CourseReg;
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.Exams;
 import il.cshaifasweng.OCSFMediatorExample.entities.entities.ExamsScan;
-import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
@@ -120,12 +118,8 @@ public class ExamsFinal {
                     // Set the data to the table
                     if (Courses_from_server_reg.get(i).getLecturer() != null)
                         if (Courses_from_server_reg.get(i).getLecturer().getId() == SimpleClient.ID) {
+                            if (!isExitst(Courses_from_server_reg,Courses_from_server_reg.get(i).getName())) {
                                 coursesList.getItems().add(Courses_from_server_reg.get(i).getName());
-
-
-                            for(int j=0;j<courses.size();j++){
-                                if(Courses_from_server_reg.get(i).getName().equals(courses.get(j).getName()))
-                                    courseid= String.valueOf(courses.get(j).getId());
                             }
 
                         }
@@ -160,6 +154,14 @@ public class ExamsFinal {
             }
         }
         }
+    public boolean isExitst(List<CourseReg> l , String id){
+        for(int i =0 ; i<coursesList.getItems().size();i++){
+            if(coursesList.getItems().get(i).equals(String.valueOf(id))){
+                return true;
+            }
+        }
+        return false;
+    }
 
     void sendMessage(Message message) {
 
