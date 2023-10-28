@@ -7,11 +7,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
-import javassist.Loader;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-import java.io.File;
-import java.io.FileOutputStream;
+
+
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 
@@ -28,39 +27,6 @@ public class SimpleChatClient extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         EventBus.getDefault().register(this);
-     /*   Label label = new Label("Drop files here");
-        label.setOnDragOver(new EventHandler<DragEvent>() {
-            @Override
-            public void handle(DragEvent event) {
-                if (event.getGestureSource() != label && event.getDragboard().hasFiles()) {
-                    event.acceptTransferModes(TransferMode.COPY);
-                }
-                event.consume();
-            }
-        });
-
-        label.setOnDragDropped(new EventHandler<DragEvent>() {
-            @Override
-            public void handle(DragEvent event) {
-                Dragboard db = event.getDragboard();
-                boolean success = false;
-
-                if (db.hasFiles()) {
-                    for (java.io.File file : db.getFiles()) {
-                        // Handle the dropped file here
-                        System.out.println("Dropped file: " + file.getAbsolutePath());
-                    }
-                    success = true;
-                }
-
-                event.setDropCompleted(success);
-                event.consume();
-            }
-        });*/
-
-  /*      StackPane root = new StackPane();
-        root.getChildren().add(label);
-        Scene scene = new Scene(root, 400, 200);*/
         client = SimpleClient.getClient();
         client.openConnection();
         scene = new Scene(loadFXML("FirstPage"), 700, 742);
