@@ -11,9 +11,8 @@ import java.util.List;
 public class Course implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int id=1000;
 
-    // Pay attention to this one: name is a reserved keyword in MySQL.
     @Column(name = "course_name")
     private String name;
 
@@ -21,11 +20,8 @@ public class Course implements Serializable {
     @JoinColumn(name = "lecturer_id")
     private Lecturer lecturer;
 
-
-    //////////////
     @OneToMany(mappedBy = "course")
     private List<Grade> grades = new ArrayList<>();
-
 
     public int getId() {
         return id;
@@ -51,19 +47,20 @@ public class Course implements Serializable {
         this.lecturer = lecturer;
         lecturer.getCourses().add(this); // IMPORTANT!
     }
-
-
     public Course() {
     }
 
     public Course(String name) {
         this.name = name;
     }
+    public Course(String name , int id) {
+        this.name = name;
+        this.id = id;
+    }
 
     public Course(String name, Lecturer lecturer) {
         this.name = name;
         setLecturer(lecturer); // IMPORTANT: Why are we doing this?
-        //this.students = new ArrayList<Student>();
     }
 
 

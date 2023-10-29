@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="466.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.TeacherPage">
+    <children>
+        <Button layoutX="85.0" layoutY="53.0" mnemonicParsing="false" onAction="#GradesB" text="Grades and courses" />
+        <Button layoutX="85.0" layoutY="107.0" mnemonicParsing="false" onAction="#ExamsB" prefHeight="25.0" prefWidth="120.0" text="Exam's" />
+        <Button layoutX="85.0" layoutY="214.0" mnemonicParsing="false" onAction="#StatsB" prefHeight="25.0" prefWidth="120.0" text="Courses Scan's" />
+      <Button layoutX="14.0" layoutY="337.0" mnemonicParsing="false" onAction="#log_out_but" text="LogOut" />
+      <Label layoutX="282.0" layoutY="18.0" text="Teacher ID" textFill="#e80202" />
+      <ListView fx:id="Techer_ID" layoutX="367.0" layoutY="14.0" prefHeight="25.0" prefWidth="34.0" />
+      <Button layoutX="85.0" layoutY="161.0" mnemonicParsing="false" onAction="#Edit_grades" prefHeight="25.0" prefWidth="120.0" text="Edit Grades" />
+      <Button layoutX="85.0" layoutY="265.0" mnemonicParsing="false" onAction="#exams_scans_but" prefHeight="25.0" prefWidth="120.0" text="ExamsScan's" />
+    </children>
+</AnchorPane>

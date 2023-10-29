@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.ExtraTimeRequests">
+   <children>
+      <TableView fx:id="requestsTable" layoutX="121.0" layoutY="79.0" onMouseClicked="#tablemouseclick" prefHeight="200.0" prefWidth="358.0">
+        <columns>
+          <TableColumn fx:id="teacherName" prefWidth="102.0" text="Teacher name" />
+            <TableColumn fx:id="teacherID" prefWidth="75.0" text="Teacher ID" />
+          <TableColumn fx:id="courseName" prefWidth="90.0" text="Course Name" />
+            <TableColumn fx:id="examID" prefWidth="89.0" text="Exam ID" />
+        </columns>
+      </TableView>
+      <Button layoutX="221.0" layoutY="348.0" mnemonicParsing="false" onAction="#acceptRequest" text="Accept" />
+      <Button layoutX="328.0" layoutY="348.0" mnemonicParsing="false" onAction="#ignoreReuest" text="Decline" />
+      <Button layoutX="525.0" layoutY="14.0" mnemonicParsing="false" onAction="#backB" text="Back" />
+      <TextField fx:id="reason" layoutX="25.0" layoutY="302.0" prefHeight="25.0" prefWidth="553.0" />
+   </children>
+</AnchorPane>

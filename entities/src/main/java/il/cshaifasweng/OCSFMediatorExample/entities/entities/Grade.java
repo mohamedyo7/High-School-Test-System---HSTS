@@ -9,16 +9,35 @@ public class Grade implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int grade_id;
+    String examId="No";
+
+    public String getExamId() {
+        return examId;
+    }
+
+    public void setExamId(String examId) {
+        this.examId = examId;
+    }
 
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;
-
     @ManyToOne
     @JoinColumn(name = "student_id")
     private Student student;
 
-    private int grade;
+    private String grade;
+
+    public String getCourse_name() {
+        return course_name;
+    }
+
+    public void setCourse_name(String course_name) {
+        this.course_name = course_name;
+    }
+
+    @Column(name="coursename")
+    private String course_name;
 
 
 
@@ -36,7 +55,7 @@ public class Grade implements Serializable {
     }
 
 
-    public int getGrade() {
+    public String getGrade() {
         // System.out.println("getGrade "+grade);
         return grade;
     }
@@ -50,15 +69,20 @@ public class Grade implements Serializable {
     {
         return course.getId();
     }
+   // public int getCourseid_reg()
+    //{
+       // return courseReg.getId();
+   // }
 
 
-    public void setGrade(int grade) {
+    public void setGrade(String grade) {
         this.grade = grade;
     }
 
     public Course getCourse() {
         return course;
     }
+    /*public CourseReg getCourseReg(){return courseReg;}*/
 
     public Student getStudent() {
         return student;
@@ -67,6 +91,7 @@ public class Grade implements Serializable {
     public void setCourse(Course course) {
         this.course = course;
     }
+    /*public void setCourseReg(CourseReg courseReg){this.courseReg=courseReg;}*/
 
     public void setStudent(Student student) {
         this.student = student;
@@ -76,11 +101,13 @@ public class Grade implements Serializable {
     {
 
     }
-    public Grade(Student student, Course course,int grade)
+    public Grade(Student student, Course course,String grade,String course_name)
     {
 
         setStudent(student);
         setCourse(course);
         this.grade =grade;
+        this.course_name=course_name;
     }
+
 }

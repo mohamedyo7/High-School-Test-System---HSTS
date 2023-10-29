@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 
@@ -21,14 +22,17 @@ public class SimpleChatClient extends Application {
     private static Scene scene;
     private SimpleClient client;
 
+    public static int client_id=0;
+
     @Override
     public void start(Stage stage) throws IOException {
         EventBus.getDefault().register(this);
         client = SimpleClient.getClient();
         client.openConnection();
-        scene = new Scene(loadFXML("primary"), 640, 480);
+        scene = new Scene(loadFXML("FirstPage"), 700, 742);
         stage.setScene(scene);
         stage.show();
+
     }
 
     static void setRoot(String fxml) throws IOException {
@@ -52,25 +56,28 @@ public class SimpleChatClient extends Application {
 
     @Subscribe
     public void onMessageEvent(MessageEvent message) {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
-        Platform.runLater(() -> {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION,
-                    String.format("Message:\nId: %d\nData: %s\nTimestamp: %s\n",
-                            message.getMessage().getId(),
-                            message.getMessage().getMessage(),
-                            message.getMessage().getTimeStamp().format(dtf))
-            );
-            alert.setTitle("new message");
-            alert.setHeaderText("New Message:");
-            alert.show();
-        });
+        if(SimpleClient.show) {
+            SimpleClient.show=false;
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+            Platform.runLater(() -> {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION,
+                        String.format("Message:\nId: %d\nData: %s\nTimestamp: %s\n",
+                                message.getMessage().getId(),
+                                message.getMessage().getMessage(),
+                                message.getMessage().getTimeStamp().format(dtf))
+                );
+                alert.setTitle("new message");
+                alert.setHeaderText("New Message:");
+                alert.show();
+            });
+        }
     }
 
 
     public static void main(String[] args) {
 
+
         launch();
 
-    }
 
-}
+}}

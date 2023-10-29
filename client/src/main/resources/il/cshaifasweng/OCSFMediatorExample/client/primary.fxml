@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -12,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="751.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.PrimaryController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="751.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.PrimaryController">
     <children>
         <ImageView fitHeight="742.0" fitWidth="826.0" pickOnBounds="true" preserveRatio="true">
             <image>
@@ -42,6 +44,9 @@
                             </columns>
                         </TableView>
                         <TextField fx:id="time_txf" alignment="BOTTOM_LEFT" layoutX="14.0" layoutY="17.0" prefHeight="31.0" prefWidth="78.0" style="-fx-background-color: rgba(255, 255, 255, 0.5); -fx-background-radius: 15;" />
+                  <Button layoutX="498.0" layoutY="18.0" mnemonicParsing="false" onAction="#Back_but" text="Back" />
+                  <Label layoutX="25.0" layoutY="79.0" textFill="RED" />
+                  <ListView fx:id="ID_prime" layoutX="70.0" layoutY="72.0" prefHeight="49.0" prefWidth="87.0" />
                     </children>
                 </AnchorPane>
                 <AnchorPane prefHeight="347.0" prefWidth="618.0">

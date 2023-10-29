@@ -4,11 +4,12 @@
 
 package il.cshaifasweng.OCSFMediatorExample.client.ocsf;
 
-import il.cshaifasweng.OCSFMediatorExample.entities.Message;
-
-import java.io.*;
-import java.net.*;
-import java.util.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.InetAddress;
+import java.net.Socket;
+import java.net.SocketException;
 
 /**
  * The <code> AbstractClient </code> contains all the
@@ -98,6 +99,16 @@ public abstract class AbstractClient implements Runnable
    */
   private String host;
 
+  public String getClient_id() {
+    return client_id;
+  }
+
+  public void setClient_id(String client_id) {
+    this.client_id = client_id;
+  }
+
+  private String client_id;
+
   /**
    * The port number.
    */
@@ -170,6 +181,7 @@ public abstract class AbstractClient implements Runnable
    */
   public void sendToServer(Object msg) throws IOException
   {
+    //System.out.println("hi guys");
     if (clientSocket == null || output == null) {
       throw new SocketException("socket does not exist");
     }
